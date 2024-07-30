@@ -1,0 +1,43 @@
+:root{
+    --playlistImgSize: 180px;
+}
+
+.playlistsContainer{
+    display: inline-block;
+    margin-top: 20px;
+    margin-left:5%;
+    margin-right: 5%;
+    width: 90%;
+} 
+
+.playlistBlock{
+    color:var(--page-text-color);
+    text-decoration: none;
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    width: var(--playlistImgSize);
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 20px;
+    padding-bottom: 3px;
+    transition: 150ms ease-in-out;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.playlistBlock:hover{
+    background-color: beige;
+}
+
+.playlistCover {
+    padding: 5px;
+    width: var(--playlistImgSize);
+    height: var(--playlistImgSize);
+   
+}
+
+.playlistCaption {
+    display: block;
+}

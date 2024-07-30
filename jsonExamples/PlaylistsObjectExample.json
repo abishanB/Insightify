@@ -1,0 +1,356 @@
+{
+    "href": "https://api.spotify.com/v1/users/destructopotato/playlists?offset=0&limit=20&locale=en-US,en;q%3D0.9",
+    "limit": 20,
+    "next": null,
+    "offset": 0,
+    "previous": null,
+    "total": 9,
+    "items": [
+        {
+            "collaborative": false,
+            "description": "",
+            "external_urls": {
+                "spotify": "https://open.spotify.com/playlist/340zbI7OyDIQ8C9vH7GmL6"
+            },
+            "href": "https://api.spotify.com/v1/playlists/340zbI7OyDIQ8C9vH7GmL6",
+            "id": "340zbI7OyDIQ8C9vH7GmL6",
+            "images": null,
+            "name": "Mobile",
+            "owner": {
+                "display_name": "abishanB",
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/user/destructopotato"
+                },
+                "href": "https://api.spotify.com/v1/users/destructopotato",
+                "id": "destructopotato",
+                "type": "user",
+                "uri": "spotify:user:destructopotato"
+            },
+            "primary_color": null,
+            "public": true,
+            "snapshot_id": "AAAADn61engHRPJDeqeGhfAEYnxVarJq",
+            "tracks": {
+                "href": "https://api.spotify.com/v1/playlists/340zbI7OyDIQ8C9vH7GmL6/tracks",
+                "total": 11
+            },
+            "type": "playlist",
+            "uri": "spotify:playlist:340zbI7OyDIQ8C9vH7GmL6"
+        },
+        {
+            "collaborative": false,
+            "description": "",
+            "external_urls": {
+                "spotify": "https://open.spotify.com/playlist/0enPLDhHiSdOw4UwSuBFoA"
+            },
+            "href": "https://api.spotify.com/v1/playlists/0enPLDhHiSdOw4UwSuBFoA",
+            "id": "0enPLDhHiSdOw4UwSuBFoA",
+            "images": null,
+            "name": "DBR",
+            "owner": {
+                "display_name": "abishanB",
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/user/destructopotato"
+                },
+                "href": "https://api.spotify.com/v1/users/destructopotato",
+                "id": "destructopotato",
+                "type": "user",
+                "uri": "spotify:user:destructopotato"
+            },
+            "primary_color": null,
+            "public": true,
+            "snapshot_id": "AAAABf/MP2YYUezwud2caAKFD64tySoQ",
+            "tracks": {
+                "href": "   ",
+                "total": 12
+            },
+            "type": "playlist",
+            "uri": "spotify:playlist:0enPLDhHiSdOw4UwSuBFoA"
+        },
+        {
+            "collaborative": false,
+            "description": "",
+            "external_urls": {
+                "spotify": "https://open.spotify.com/playlist/5w42OuzYfIpvG9k9Rs5vDD"
+            },
+            "href": "https://api.spotify.com/v1/playlists/5w42OuzYfIpvG9k9Rs5vDD",
+            "id": "5w42OuzYfIpvG9k9Rs5vDD",
+            "images": null,
+            "name": "local",
+            "owner": {
+                "display_name": "abishanB",
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/user/destructopotato"
+                },
+                "href": "https://api.spotify.com/v1/users/destructopotato",
+                "id": "destructopotato",
+                "type": "user",
+                "uri": "spotify:user:destructopotato"
+            },
+            "primary_color": null,
+            "public": true,
+            "snapshot_id": "AAAAFloFAzezIAz2pPrvaGWcv7eJk1MU",
+            "tracks": {
+                "href": "https://api.spotify.com/v1/playlists/5w42OuzYfIpvG9k9Rs5vDD/tracks",
+                "total": 14
+            },
+            "type": "playlist",
+            "uri": "spotify:playlist:5w42OuzYfIpvG9k9Rs5vDD"
+        },
+        {
+            "collaborative": false,
+            "description": "All kinds of music, picked by your own AI DJ.",
+            "external_urls": {
+                "spotify": "https://open.spotify.com/playlist/37i9dQZF1EYkqdzj48dyYq"
+            },
+            "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EYkqdzj48dyYq",
+            "id": "37i9dQZF1EYkqdzj48dyYq",
+            "images": [
+                {
+                    "height": null,
+                    "url": "https://lexicon-assets.spotifycdn.com/DJ-Beta-CoverArt-300.jpg",
+                    "width": null
+                }
+            ],
+            "name": "DJ",
+            "owner": {
+                "display_name": "Spotify",
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/user/spotify"
+                },
+                "href": "https://api.spotify.com/v1/users/spotify",
+                "id": "spotify",
+                "type": "user",
+                "uri": "spotify:user:spotify"
+            },
+            "primary_color": null,
+            "public": true,
+            "snapshot_id": "AAAAAAAAAACzEDPzO+U0nKHNdhOvJfpi",
+            "tracks": {
+                "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EYkqdzj48dyYq/tracks",
+                "total": 0
+            },
+            "type": "playlist",
+            "uri": "spotify:playlist:37i9dQZF1EYkqdzj48dyYq"
+        },
+        {
+            "collaborative": false,
+            "description": "",
+            "external_urls": {
+                "spotify": "https://open.spotify.com/playlist/5zQ1KXyIDMwSRpAKVn1llX"
+            },
+            "href": "https://api.spotify.com/v1/playlists/5zQ1KXyIDMwSRpAKVn1llX",
+            "id": "5zQ1KXyIDMwSRpAKVn1llX",
+            "images": [
+                {
+                    "height": 640,
+                    "url": "https://mosaic.scdn.co/640/ab67616d00001e02090b1f9557a6d23c0817bd88ab67616d00001e02696b4e67423edd64784bfbb4ab67616d00001e028b52c6b9bc4e43d873869699ab67616d00001e02d5f3cea8affdca01a0dc754f",
+                    "width": 640
+                },
+                {
+                    "height": 300,
+                    "url": "https://mosaic.scdn.co/300/ab67616d00001e02090b1f9557a6d23c0817bd88ab67616d00001e02696b4e67423edd64784bfbb4ab67616d00001e028b52c6b9bc4e43d873869699ab67616d00001e02d5f3cea8affdca01a0dc754f",
+                    "width": 300
+                },
+                {
+                    "height": 60,
+                    "url": "https://mosaic.scdn.co/60/ab67616d00001e02090b1f9557a6d23c0817bd88ab67616d00001e02696b4e67423edd64784bfbb4ab67616d00001e028b52c6b9bc4e43d873869699ab67616d00001e02d5f3cea8affdca01a0dc754f",
+                    "width": 60
+                }
+            ],
+            "name": "n",
+            "owner": {
+                "display_name": "abishanB",
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/user/destructopotato"
+                },
+                "href": "https://api.spotify.com/v1/users/destructopotato",
+                "id": "destructopotato",
+                "type": "user",
+                "uri": "spotify:user:destructopotato"
+            },
+            "primary_color": null,
+            "public": true,
+            "snapshot_id": "AAAAicbIr/r26HIDSN0wDqLAcOCyxP4g",
+            "tracks": {
+                "href": "https://api.spotify.com/v1/playlists/5zQ1KXyIDMwSRpAKVn1llX/tracks",
+                "total": 120
+            },
+            "type": "playlist",
+            "uri": "spotify:playlist:5zQ1KXyIDMwSRpAKVn1llX"
+        },
+        {
+            "collaborative": false,
+            "description": "",
+            "external_urls": {
+                "spotify": "https://open.spotify.com/playlist/4HodwjqYMwXY5Cw77ymSTR"
+            },
+            "href": "https://api.spotify.com/v1/playlists/4HodwjqYMwXY5Cw77ymSTR",
+            "id": "4HodwjqYMwXY5Cw77ymSTR",
+            "images": [
+                {
+                    "height": 640,
+                    "url": "https://mosaic.scdn.co/640/ab67616d00001e020d5a84e4e47399d2726c330cab67616d00001e0241b41e6f7924e530a9b00f9cab67616d00001e02d5f1bbe527fa685633339addab67616d00001e02dea510881ec1e506485303e4",
+                    "width": 640
+                },
+                {
+                    "height": 300,
+                    "url": "https://mosaic.scdn.co/300/ab67616d00001e020d5a84e4e47399d2726c330cab67616d00001e0241b41e6f7924e530a9b00f9cab67616d00001e02d5f1bbe527fa685633339addab67616d00001e02dea510881ec1e506485303e4",
+                    "width": 300
+                },
+                {
+                    "height": 60,
+                    "url": "https://mosaic.scdn.co/60/ab67616d00001e020d5a84e4e47399d2726c330cab67616d00001e0241b41e6f7924e530a9b00f9cab67616d00001e02d5f1bbe527fa685633339addab67616d00001e02dea510881ec1e506485303e4",
+                    "width": 60
+                }
+            ],
+            "name": "new",
+            "owner": {
+                "display_name": "abishanB",
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/user/destructopotato"
+                },
+                "href": "https://api.spotify.com/v1/users/destructopotato",
+                "id": "destructopotato",
+                "type": "user",
+                "uri": "spotify:user:destructopotato"
+            },
+            "primary_color": null,
+            "public": true,
+            "snapshot_id": "AAAA9glImIXObSfmZjJlVXWrOk5M1epF",
+            "tracks": {
+                "href": "https://api.spotify.com/v1/playlists/4HodwjqYMwXY5Cw77ymSTR/tracks",
+                "total": 259
+            },
+            "type": "playlist",
+            "uri": "spotify:playlist:4HodwjqYMwXY5Cw77ymSTR"
+        },
+        {
+            "collaborative": false,
+            "description": "",
+            "external_urls": {
+                "spotify": "https://open.spotify.com/playlist/15uUgIwt0wUJSAtl8kECgb"
+            },
+            "href": "https://api.spotify.com/v1/playlists/15uUgIwt0wUJSAtl8kECgb",
+            "id": "15uUgIwt0wUJSAtl8kECgb",
+            "images": [
+                {
+                    "height": 640,
+                    "url": "https://mosaic.scdn.co/640/ab67616d00001e02072e9faef2ef7b6db63834a3ab67616d00001e028b20e4631fa15d3953528bbcab67616d00001e028fe5d04b06aff90f9fe796f5ab67616d00001e02dea510881ec1e506485303e4",
+                    "width": 640
+                },
+                {
+                    "height": 300,
+                    "url": "https://mosaic.scdn.co/300/ab67616d00001e02072e9faef2ef7b6db63834a3ab67616d00001e028b20e4631fa15d3953528bbcab67616d00001e028fe5d04b06aff90f9fe796f5ab67616d00001e02dea510881ec1e506485303e4",
+                    "width": 300
+                },
+                {
+                    "height": 60,
+                    "url": "https://mosaic.scdn.co/60/ab67616d00001e02072e9faef2ef7b6db63834a3ab67616d00001e028b20e4631fa15d3953528bbcab67616d00001e028fe5d04b06aff90f9fe796f5ab67616d00001e02dea510881ec1e506485303e4",
+                    "width": 60
+                }
+            ],
+            "name": "My Playlist #7",
+            "owner": {
+                "display_name": "abishanB",
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/user/destructopotato"
+                },
+                "href": "https://api.spotify.com/v1/users/destructopotato",
+                "id": "destructopotato",
+                "type": "user",
+                "uri": "spotify:user:destructopotato"
+            },
+            "primary_color": null,
+            "public": true,
+            "snapshot_id": "AAAAf30TNif3a4b3Lu43YFhOFIMBVGbJ",
+            "tracks": {
+                "href": "https://api.spotify.com/v1/playlists/15uUgIwt0wUJSAtl8kECgb/tracks",
+                "total": 120
+            },
+            "type": "playlist",
+            "uri": "spotify:playlist:15uUgIwt0wUJSAtl8kECgb"
+        },
+        {
+            "collaborative": false,
+            "description": "Travis Scott, Drake, Kanye West and more",
+            "external_urls": {
+                "spotify": "https://open.spotify.com/playlist/37i9dQZF1E3a3D7AMk9aYZ"
+            },
+            "href": "https://api.spotify.com/v1/playlists/37i9dQZF1E3a3D7AMk9aYZ",
+            "id": "37i9dQZF1E3a3D7AMk9aYZ",
+            "images": [
+                {
+                    "height": null,
+                    "url": "https://dailymix-images.scdn.co/v2/img/ab6761610000e5eb19c2790744c792d05570bb71/1/en/default",
+                    "width": null
+                }
+            ],
+            "name": "Daily Mix 1",
+            "owner": {
+                "display_name": "Spotify",
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/user/spotify"
+                },
+                "href": "https://api.spotify.com/v1/users/spotify",
+                "id": "spotify",
+                "type": "user",
+                "uri": "spotify:user:spotify"
+            },
+            "primary_color": null,
+            "public": true,
+            "snapshot_id": "AAAAAAAAAABZB3IzrboVxgZXoqkAPfSp",
+            "tracks": {
+                "href": "https://api.spotify.com/v1/playlists/37i9dQZF1E3a3D7AMk9aYZ/tracks",
+                "total": 50
+            },
+            "type": "playlist",
+            "uri": "spotify:playlist:37i9dQZF1E3a3D7AMk9aYZ"
+        },
+        { 
+            "collaborative": false,
+            "description": "",
+            "external_urls": {
+                "spotify": "https://open.spotify.com/playlist/7h3QILoXgq6tHgv23nmBqN"
+            },
+            "href": "https://api.spotify.com/v1/playlists/7h3QILoXgq6tHgv23nmBqN",
+            "id": "7h3QILoXgq6tHgv23nmBqN",
+            "images": [
+                {
+                    "height": 640,
+                    "url": "https://mosaic.scdn.co/640/ab67616d00001e0226f7f19c7f0381e56156c94aab67616d00001e0227298ef27ce2c39f8177d1afab67616d00001e024f0fd9dad63977146e685700ab67616d00001e02e6d6d392a66a7f9172fe57c8",
+                    "width": 640
+                },
+                {
+                    "height": 300,
+                    "url": "https://mosaic.scdn.co/300/ab67616d00001e0226f7f19c7f0381e56156c94aab67616d00001e0227298ef27ce2c39f8177d1afab67616d00001e024f0fd9dad63977146e685700ab67616d00001e02e6d6d392a66a7f9172fe57c8",
+                    "width": 300
+                },
+                {
+                    "height": 60,
+                    "url": "https://mosaic.scdn.co/60/ab67616d00001e0226f7f19c7f0381e56156c94aab67616d00001e0227298ef27ce2c39f8177d1afab67616d00001e024f0fd9dad63977146e685700ab67616d00001e02e6d6d392a66a7f9172fe57c8",
+                    "width": 60
+                }
+            ],
+            "name": "184013519",
+            "owner": {
+                "display_name": "abishanB",
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/user/destructopotato"
+                },
+                "href": "https://api.spotify.com/v1/users/destructopotato",
+                "id": "destructopotato",
+                "type": "user",
+                "uri": "spotify:user:destructopotato"
+            },
+            "primary_color": null,
+            "public": true,
+            "snapshot_id": "AAAAypkH37WExYqJ8R89mtVELWBFdjE5",
+            "tracks": {
+                "href": "https://api.spotify.com/v1/playlists/7h3QILoXgq6tHgv23nmBqN/tracks",
+                "total": 138
+            },
+            "type": "playlist",
+            "uri": "spotify:playlist:7h3QILoXgq6tHgv23nmBqN"
+        }
+    ]
+}

@@ -1,0 +1,33 @@
+.artistList{ /* class keeps content from being bordered by tab-container */
+    position: absolute;
+    margin-top: 1%;
+    width: 80%;
+    left:10%;
+    
+}
+
+.artistTable{
+    table-layout:fixed;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.artistCover{  /* makes image rounded */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    border-radius: 50%;
+
+}
+
+.artistRank{
+    width: 50px;
+    text-align: center;
+    font-size: 35px;
+}
+
+.artistName {
+    font-size: 30px;
+}

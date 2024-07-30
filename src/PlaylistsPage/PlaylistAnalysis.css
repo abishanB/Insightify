@@ -1,0 +1,135 @@
+.card-container{
+  --leftMargin: 40px;
+  --whiteColor: #F2F4F7;
+  --grayColor: #b3b7bd;
+  --blueColor: #3C91E6;
+  --greenColor: #23CE6B;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  width: 1200px;
+  display: block;
+}
+
+ 
+.playlist-card {  
+  overflow:hidden;
+  background-color: #2F374C;
+  border-radius: 20px;
+  font-size: 0;
+  
+}
+
+.playlist-card:not(:first-child){
+  margin-top: 50px;
+}
+ 
+#summary-card{
+  height: 600px;
+}
+
+#top-artists-albums-card {
+  height: 800px;
+}
+
+.card-title{
+  position: relative;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  margin-left: var(--leftMargin);
+  margin-top: 20px;
+  color: var(--whiteColor);
+  font-size: 32px;
+}
+
+
+.by-owner a{
+  position: relative;
+  top:-15px;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  margin-left: var(--leftMargin);
+  text-decoration: none;
+  font-size: 14px;
+  color:var(--grayColor);
+}
+
+.by-owner a:hover{
+  color: var(--blueColor);
+}
+
+#summary-card img {
+  --coverSize: 460px;
+  margin-left: var(--leftMargin);
+  height: var(--coverSize);
+  width: var(--coverSize);
+  
+}
+
+.more-info{
+  height: 460px;
+  width: 600px;
+  float: right;
+  /* outline: 2px solid blueviolet; */
+  display: block;
+  font-size: 28px; 
+  color: var(--whiteColor);
+  
+}
+
+.more-info span{
+  display: inherit;
+}
+
+.more-info span span {
+  margin: 15px;
+  font-weight: bold;
+  font-size: 32px;
+  color: var(--blueColor);
+  display: inline-block;
+}
+
+.top-artists{
+  display: block;
+  margin-left: var(--leftMargin);
+  /* outline: 2px solid purple; */
+  height: 695px;
+  width: calc(50% - 2*var(--leftMargin));
+  overflow-y:auto;  /* automatic scrolling */
+}
+
+.top-artists img{
+  height: 50px;
+  width: 50px;
+}
+
+.playlist-artist-listing {
+  display:table;
+  height: 60px;
+  color:var(--page-text-color);
+  font-size: 24px;
+  max-width: calc(100%);
+}
+
+.playlist-artist-listing td:first-child{
+  text-align: center;
+}
+
+.playlist-artist-listing a{  /* image */
+  display:table-cell;
+  vertical-align:middle;
+}
+
+
+.playlist-artist-listing col{ 
+  
+}
+
+.item-occurences{
+  text-align: right;
+}
+
+
+
