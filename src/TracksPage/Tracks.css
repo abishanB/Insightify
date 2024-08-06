@@ -1,24 +1,33 @@
 .trackTable{
     table-layout:fixed;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* text overflow, dont do overflow on first 2 child- track ranking and images */
+.trackTable td:not(:nth-child(1)):not(:nth-child(2)) {
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .trackCover{
     display: block;
-  margin-left: auto;
-  margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
   
-}
+} 
 .trackRank{
     text-align: center;
     
 }
 .trackList{ /* class keeps content from being bordered by tab-container */
     position: absolute;
-    margin: auto;
-    margin-top: 1%;
-    width: 80%;
-    left: 10%;
+    margin-top: 10px;
+    width: 100%;
+    left: 0;
     text-align: left;
-    font-size: 18px;
-    
+    font-size: 20px;
 }

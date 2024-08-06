@@ -1,6 +1,6 @@
-import React from 'react'; 
+import React from 'react';
 import LoadingIcon from '../components/LoadingIcon';
-import './Artists.css'
+import './Artists.css';
 const imageSize = 80;
 export default function topArtists(props){
   const artistsObj = props.artists
@@ -18,12 +18,12 @@ export default function topArtists(props){
       <table key ={artistRank} class='artistTable'>
         {/*<button onClick={console.log(artistKeys)}>{artistRank}</button>*/}
         <colgroup>
-          <col width="20px"/>{/* Artist Rank*/}
+          <col width="35px"/>{/* Artist Rank*/}
           <col width="95px"/>{/*  Image */}
-          <col width="390px"/>{/* Artist*/}
-          <col width="20px"/>{/* Artist Rank*/}
-          <col width="95px"/>{/*  Image */}
-          <col width="375px"/>{/* Artist*/}
+          <col width="370px"/>{/* Artist*/}
+          <col width="35px"/>{/* Artist Rank*/}
+          <col width="95px"/>{/*  Image */} 
+          <col width="370px"/>{/* Artist*/}
         </colgroup>
 
         <tbody>
@@ -51,6 +51,7 @@ export default function topArtists(props){
     return (
         <div class='artistList'>
           {myLst}
+          <div style={{height:20}}></div>
         </div>
       )
 }

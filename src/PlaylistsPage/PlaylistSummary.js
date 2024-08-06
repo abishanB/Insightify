@@ -1,12 +1,15 @@
 import React from 'react'
 import { playlistCoverURL } from './DisplayPlaylists'
+
+
+
 export default function PlaylistSummary(props) {
   const playlist = props.playlist
   const topArtists = props.topArtists
   const topAlbums = props.topAlbums
   const topGenres = props.topGenres 
-
-
+  const averagePopularity = props.averagePopularity
+  const noData = props.noData
   return (
     <div id="summary-card" className="playlist-card">
       <h1 className="card-title">{playlist.name}</h1>
@@ -23,11 +26,21 @@ export default function PlaylistSummary(props) {
         <span>Tracks: <span>{playlist.tracks.total}</span></span>
         <span>Artists: <span>{topArtists.length}</span></span>
         <span>Followers: <span>{playlist.followers.total}</span></span>
-        <span>Top Artist: <span>{topArtists[0][0]}</span></span>
-        <span>Top Album: <span>{topAlbums[0][0]}</span></span>
-        <span>Top Genre: <span>{topGenres[0][0]}</span></span>
-        
-        {/* <button onClick={()=> console.log(topAlbums)}>EE</button> */}
+        {noData
+        ? <div>
+            <span>Top Artist: <span>N/A</span></span>
+            <span>Top Album: <span>N/A</span></span>
+            <span>Top Genre: <span>N/A</span></span>
+            <span>Popularity Score: <span>N/A</span></span>
+          </div>
+      
+        : <div>
+            <span>Top Artist: <span>{topArtists[0][0]}</span></span>
+            <span>Top Album: <span>{topAlbums[0][0]}</span></span>
+            <span>Top Genre: <span>{topGenres[0][0]}</span></span>
+            <span>Popularity Score: <span>{averagePopularity}</span></span>
+          </div>
+        }
       </div>
     </div>
   )

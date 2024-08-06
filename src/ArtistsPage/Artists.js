@@ -37,9 +37,9 @@ export default class Artists extends Component {
   render() {
     return (
     <div>
-      <div> 
-          <TimeRange topItems={this.state.top_artists} showTopSongs={false}/> 
-      </div>
+      <h1 className="page-title">Your Top Artists</h1>
+      <TimeRange topItems={this.state.top_artists} showTopSongs={false}/> 
+      
     </div>
     )
   }

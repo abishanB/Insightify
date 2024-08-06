@@ -36,9 +36,10 @@ export default class Tracks extends Component {
   render() {
     return (
     <div>
-      <div> 
-          <TimeRange topItems={this.state.top_tracks} showTopSongs={true}/> 
-      </div>
+      
+      <h1 className="page-title">Your Top Tracks</h1>
+      <TimeRange topItems={this.state.top_tracks} showTopSongs={true}/> 
+      
     </div>
   )
   }

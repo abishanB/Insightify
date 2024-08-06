@@ -3,9 +3,11 @@ import fetch from "node-fetch";
 //const clientID = '9d10477046f3462db2028606fde3e774';
 //const clientSecret = '8ccbf4afbda84ef29ced457991685524';
 
+// const clientID = 'ca8aec9757ef4c1e9ea2f772f8a3d9b3'
+// const clientSecret = 'a84859496c82429aa65587a2a488d29f'
 
-const clientID = 'ca8aec9757ef4c1e9ea2f772f8a3d9b3'
-const clientSecret = 'a84859496c82429aa65587a2a488d29f'
+const clientID = 'REMOVED'
+const clientSecret = 'REMOVED'
 export async function getToken(){//client credentials flow
     const response = await fetch('https://accounts.spotify.com/api/token', {
       method:'POST',
@@ -19,9 +21,9 @@ export async function getToken(){//client credentials flow
     return await response.json();
   }
   
-export async function getRefreshToken(refreshToken){
+export async function getTokenWithRefreshToken(refreshToken){//gets access token using previos refresh token
+    console.log("fetching token with refresh token")
     const redirect_uri = 'http://localhost:3000';
-  
     var details = {
         grant_type: 'refresh_token',
         refresh_token: refreshToken,
@@ -45,11 +47,11 @@ export async function getRefreshToken(refreshToken){
       },  
       body: formBody
     });
-  
     return await response.json();
   }
   
-export async function getTokenWithAuthCode(code){
+export async function getTokenWithAuthCode(code){//gets access token using auth code
+    console.log("fetching token with auth code")
     const redirect_uri = 'http://localhost:3000';
   
     var details = {
@@ -90,8 +92,8 @@ export async function getTopItems(access_token,type="tracks", time_range="medium
     return await response.json();;
   } 
 
-export async function getUserPlaylists(access_token, limit=20){
-  const response = await fetch(`https://api.spotify.com/v1/me/playlists?limit=${limit}`, {
+export async function getUserPlaylists(access_token, endpoint){
+  const response = await fetch(endpoint, {
     method:'GET',
     headers: {
       'Authorization': 'Bearer ' + access_token,
@@ -111,8 +113,7 @@ export async function getLikedSongs(access_token, limit=50){
 }
 
 export async function getPlaylist(access_token, playlist_id){
-  //fields
-  //images,public,name,followers,tracks.items(is_local,track),tracks.next
+  console.log("fetching playlist")
   const response = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}`, {
     method:'GET',
     headers: {
@@ -124,6 +125,7 @@ export async function getPlaylist(access_token, playlist_id){
 }
 
 export async function getTracks(access_token, endpoint){//get tracks from playlist from endpoint provided by playlist
+  console.log("fetching playlist tracks")
   const response = await fetch(endpoint, {
     method:'GET',
     headers: {
@@ -135,6 +137,7 @@ export async function getTracks(access_token, endpoint){//get tracks from playli
 
 
 export async function getArtists(access_token, artistIDs){
+  console.log("fetching artists")
   //artists ids must be one string seperated by %
   const response = await fetch(`https://api.spotify.com/v1/artists?ids=${artistIDs}`, {
     method:'GET',

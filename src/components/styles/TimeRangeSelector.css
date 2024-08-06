@@ -13,11 +13,11 @@ tab-container {
 	margin-inline: auto;
 	display: var(--tab-display);
 	justify-content: center;
-	margin-top: 50px;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: auto 1fr;
 	border: solid rgba(255,255,255,0.03);
 	border-radius: .5em;
+	
 }
 /*
 TAB CONTROLS

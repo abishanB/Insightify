@@ -1,12 +1,12 @@
 import { Component } from "react";
 import React from 'react';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
-import {getRefreshToken, getTokenWithAuthCode} from '../apiCalls.js'
+import {getTokenWithRefreshToken, getTokenWithAuthCode} from '../apiCalls.js'
 import Home from '../HomePage/Home.js'
 import Tracks from "../TracksPage/Tracks.js";
 import Artists from "../ArtistsPage/Artists.js";
-import Playlists from "../PlaylistsPage/Playlists.js";
 import PlaylistInfo from "../PlaylistsPage/PlaylistInfo.js";
+import DisplayPlaylists from "../PlaylistsPage/DisplayPlaylists.js";
 import NavigationBar from "./NavigationBar.js";
 //todo
 //create better file names and comments for each file
@@ -76,7 +76,7 @@ export default class Wrapper extends Component{
 
   onGetRefreshToken = (refresh_token) => {//call api function to get refresh token and update state
     var that = this;
-    const promise = getRefreshToken(refresh_token)
+    const promise = getTokenWithRefreshToken(refresh_token)
     promise.then(function(token_promise) {
       that.setState({
         token : token_promise.access_token,
@@ -121,7 +121,7 @@ export default class Wrapper extends Component{
           <Route path='/home' element={<Home />} />
           <Route path='/tracks' element={<Tracks token={this.state.token}/>} />
           <Route path='/artists' element={<Artists token={this.state.token}/>}/>
-          <Route path='/playlists' element={<Playlists token={this.state.token}/>}/>
+          <Route path='/playlists' element={<DisplayPlaylists token={this.state.token}/>}/>
           <Route exact path="/playlists/:playlistID" element={<PlaylistInfo token={this.state.token}/>} />
         </Routes>
       </BrowserRouter>

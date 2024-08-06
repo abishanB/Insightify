@@ -31,7 +31,7 @@
     padding-bottom: 16px ;
     font-family: Verdana, sans-serif;
     font-size: 16px;
-    color: #f6f7f8;
+    color: var(--whiteColor);
     margin-left: 100px;
     
 }

@@ -11,7 +11,7 @@ import TopArtists from '../ArtistsPage/TopArtists';
 export default function timeRange(props){
     return (
         <div>
-            <tab-container>
+        <tab-container>
             <input type="radio" id="tabToggle01" name="tabs" value="1" defaultChecked/>
             <label htmlFor="tabToggle01">Last 4 Weeks</label>
             <input type="radio" id="tabToggle02" name="tabs" value="2" />

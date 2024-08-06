@@ -1,9 +1,9 @@
-.artistList{ /* class keeps content from being bordered by tab-container */
+.artistList{ /* class and position absoolute keeps content from being bordered by tab-container */
     position: absolute;
-    margin-top: 1%;
-    width: 80%;
-    left:10%;
-    
+    margin-top: 20px;
+    left: 0;
+    width: 100%;
+ 
 }
 
 .artistTable{
@@ -12,6 +12,14 @@
     margin-right: auto;
 }
 
+/* text overflow, dont do overflow on artist rank or artist image*/
+.artistTable td:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(4)):not(:nth-child(5)) {
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    
+}
 
 .artistCover{  /* makes image rounded */
     display: block;

@@ -2,7 +2,7 @@ import React from 'react'
 
 function renderArtists(aritsts){
   const myLst =  Object.entries(aritsts).map(([artistIndex, artist]) => 
-    <div key={artistIndex}className="playlist-artist-listing">
+    <div key={artistIndex}className="playlist-top-items-listing">
       <table >
         <colgroup>
           <col width="35px"/>
@@ -15,7 +15,7 @@ function renderArtists(aritsts){
           <tr>
             <td>{parseInt(artistIndex)+1}</td> 
             <td>
-              <a href={artist[1].href} target="_blank" rel="noopener noreferrer">
+              <a className='playlist-artist-image' href={artist[1].href} target="_blank" rel="noopener noreferrer">
                 <img src={artist[1].imageURL} class='artistCover' alt="artistImg" loading='eager'/>
               </a>
             </td>
@@ -29,8 +29,38 @@ function renderArtists(aritsts){
   return myLst
 }
 
+function renderAlbums(albums){
+  const myLst =  Object.entries(albums).map(([albumIndex, album]) => 
+    <div key={albumIndex} className="playlist-top-items-listing">
+      <table >
+        <colgroup>
+          <col width="35px"/>
+          <col width="60px"/>
+          <col width="275px"/>
+          <col width="120px"/>
+        </colgroup>
+  
+        <tbody>
+          <tr>
+            <td>{parseInt(albumIndex)+1}</td> 
+            <td>
+              <a className="playlist-album-image" href={album[1].href} target="_blank" rel="noopener noreferrer">
+                <img src={album[1].imageURL} alt="artistImg" loading='eager'/>
+              </a>
+            </td>
+            <td>{album[0]}</td>
+            <td className='item-occurences'>{album[1].totalOccurences} Songs</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  )
+  return myLst
+}
+
+
 export default function TopArtistsAlbums(props) {
-  const playlist = props.playlist // may not be needed
   const topArtists = props.topArtists //{index: [artist, {id , href, imageURL, totalOccurences}]}
   const topAlbums = props.topAlbums
 
@@ -40,10 +70,15 @@ export default function TopArtistsAlbums(props) {
 
   return (
     <div id="top-artists-albums-card" className="playlist-card">
-      <h1 className="card-title">Top Artists</h1>
       
-      <div className="top-artists">
-        {renderArtists(slicedTopArtists)}
+      <div className='top-items-title-container'>
+        <h1 className="top-artists-title">Top Artists</h1>
+        <h1 className="top-albums-title">Top Albums</h1>
+      </div>
+
+      <div className='top-items-container'>
+        <div className="top-artists">{renderArtists(slicedTopArtists)}</div>
+        <div className="top-albums"> {renderAlbums(slicedTopAlbums)}</div>
       </div>
     </div>
   )
