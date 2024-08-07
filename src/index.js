@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import './App.css';
 import reportWebVitals from './reportWebVitals';
+import App from './App'
 import Wrapper from './components/Wrapper'
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-
-    <Wrapper />
+    <BrowserRouter><Wrapper/></BrowserRouter>
+    
  
 );
 

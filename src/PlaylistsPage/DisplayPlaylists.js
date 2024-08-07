@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { getUserPlaylists } from '../apiCalls.js';
 import LoadingIcon from '../components/LoadingIcon.js'
 import './Playlists.css'; 
+import { Link } from 'react-router-dom';
 
 function removeDJPlaylist(playlistsObj){
   
@@ -25,10 +26,10 @@ export function playlistCoverURL(playlist){//check if playlist cover is given an
 
 function renderPlaylists(playlists) {
   const playlistsLstHTML = Object.entries(playlists).map(([key, playlist]) =>
-    <a class="playlistBlock" key={key} href={`/playlists/${playlist.id}`}>
+    <Link className="playlistBlock" key={key} to={`/playlists/${playlist.id}`}>
       <img src={playlistCoverURL(playlist)} class='playlistCover' alt="playlistImg" loading='lazy'/>
       <span className='playlistCaption'>{playlist.name}</span>
-    </a>
+    </Link>
   )
 
   return playlistsLstHTML

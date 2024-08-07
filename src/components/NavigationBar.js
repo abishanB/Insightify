@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles/NavBar.css';
-
+import { Link } from 'react-router-dom';
 //old app
 //const clientID = '9d10477046f3462db2028606fde3e774';
 //const clientID = 'ca8aec9757ef4c1e9ea2f772f8a3d9b3'
@@ -15,10 +15,10 @@ export default function NavigationBar(props) {
   return (
     <div>
         <ul id="nav">
-          <li><div class='navBarItem'><a href="/home">Home</a></div></li>
-          <li><div class='navBarItem'><a href="/tracks">Tracks</a></div></li>
-          <li><div class='navBarItem'><a href="/artists">Artists</a></div></li>
-          <li><div class='navBarItem'><a href="/playlists">Playlists</a></div></li>
+          <li><div class='navBarItem'><Link to="home">Home</Link></div></li>
+          <li><div class='navBarItem'><Link to="tracks">Tracks</Link></div></li>
+          <li><div class='navBarItem'><Link to="artists">Artists</Link></div></li>
+          <li><div class='navBarItem'><Link to="playlists">Playlists</Link></div></li>
 
           {props.isLoggedIn
             ?  <li><div class='navBarItem'><a href="/home" onClick={props.onLogout}>Logout</a></div></li>

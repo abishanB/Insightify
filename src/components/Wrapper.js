@@ -1,6 +1,6 @@
 import { Component } from "react";
 import React from 'react';
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import { Routes, Route} from 'react-router-dom';
 import {getTokenWithRefreshToken, getTokenWithAuthCode} from '../apiCalls.js'
 import Home from '../HomePage/Home.js'
 import Tracks from "../TracksPage/Tracks.js";
@@ -8,6 +8,7 @@ import Artists from "../ArtistsPage/Artists.js";
 import PlaylistInfo from "../PlaylistsPage/PlaylistInfo.js";
 import DisplayPlaylists from "../PlaylistsPage/DisplayPlaylists.js";
 import NavigationBar from "./NavigationBar.js";
+
 //todo
 //create better file names and comments for each file
 
@@ -27,6 +28,7 @@ export default class Wrapper extends Component{
   }
 
   componentDidMount(){//when page loads and after page loads on login
+    console.log("wrapper mounted")
     const hash = window.location.href
     let code = window.localStorage.getItem("code")
     let refresh_token = window.localStorage.getItem("refresh_token")
@@ -114,17 +116,17 @@ export default class Wrapper extends Component{
 
     return (
     <div className="App">
+      
       <NavigationBar isLoggedIn={this.state.isLoggedIn} onLogout={this.logout}/>
-      <BrowserRouter>
         <Routes>
           <Route index element={<Home/>} />
-          <Route path='/home' element={<Home />} />
-          <Route path='/tracks' element={<Tracks token={this.state.token}/>} />
-          <Route path='/artists' element={<Artists token={this.state.token}/>}/>
-          <Route path='/playlists' element={<DisplayPlaylists token={this.state.token}/>}/>
+          <Route path='home' element={<Home />} />
+          <Route path='tracks' element={<Tracks token={this.state.token}/>} />
+          <Route path='artists' element={<Artists token={this.state.token}/>}/>
+          <Route path='playlists' element={<DisplayPlaylists token={this.state.token}/>}/>
           <Route exact path="/playlists/:playlistID" element={<PlaylistInfo token={this.state.token}/>} />
         </Routes>
-      </BrowserRouter>
+      
     </div>
       )
     }
