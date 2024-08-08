@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 //const clientID = 'ca8aec9757ef4c1e9ea2f772f8a3d9b3'
 const clientID = 'REMOVED'
 const REDIRECT_URI = "http://localhost:3000"
-//const REDIRECT_URI = "https://xgr3v7zh-3000.use.devtunnels.ms/"
+
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
 const RESPONSE_TYPE = "code"
 const SCOPE = 'user-read-private user-read-email user-top-read playlist-read-private user-library-read'

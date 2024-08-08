@@ -13,7 +13,6 @@ function capitalizeFirstLetter(string) {//to capitalize the first letter of genr
 } 
 
 function sortProperties(obj){//sorts artists, albums and genres from most occuring to least
- 
 	var sortable=[];
 
 	for(var key in obj)
@@ -32,7 +31,6 @@ function calculateAveragePopularity(playlistTracks){
   for (let trackObj of Object.values(playlistTracks)) {
     totalPopularity += trackObj.track.popularity
   }
-
   return Math.round(totalPopularity/playlistTracks.length)
 }
 
@@ -117,6 +115,7 @@ export default function PlaylistInfo(props) {
   useEffect(() => {//on page load   
     if (playlist.length!==0){return}
     onGetPlaylist(playlistID)
+    // eslint-disable-next-line
   }, [playlist]);
 
   useEffect(() => {//runs when playlist is recieved 
@@ -126,7 +125,9 @@ export default function PlaylistInfo(props) {
       setReadyToRender(true)
       return
     }
+    
     onGetPlaylistTracks(playlist.tracks.items, playlist.tracks.next)
+    // eslint-disable-next-line
   }, [playlist]);
 
   useEffect(() => {//runs when all playlist tracks have been recieved
@@ -142,7 +143,7 @@ export default function PlaylistInfo(props) {
     getGenres(getPlaylistArtistsResult, props.token)
     setTopAlbumsInPlaylist(getPlaylistAlbums(playlistTracks))//set top albums 
     setAveragePopularity(calculateAveragePopularity(playlistTracks))//set average popularity
-      
+    // eslint-disable-next-line
   }, [playlistTracks]);
 
 
@@ -158,8 +159,8 @@ export default function PlaylistInfo(props) {
     let numOfArtists = playlistArtists.length
     let artistsSetsPerFifty = Math.ceil(numOfArtists/50)
     
-    let topArtistsPlaylistCopy = playlistArtists;//update topAritsts with ImageURL property
-    
+    let playlistsArtistsCopy = playlistArtists;//update topAritsts with ImageURL property
+    let promises = []
     for (let i = 0; i <artistsSetsPerFifty; i++) {//max number of artists per api call is 50, iterate through artists in sets of 50
       let artistsIDs = [];
       for (let artistIndex =50*i; artistIndex<(50*(i+1)); artistIndex++){ //put all ids in a list so it can be passed to api as a string
@@ -167,20 +168,21 @@ export default function PlaylistInfo(props) {
         artistsIDs.push(playlistArtists[artistIndex][1].id)
       }
    
-      const promise = getArtists(access_token, artistsIDs.join(","))
-      promise.then(function(artistsObj) {
-        for (const [key, artist] of Object.entries(artistsObj.artists)) {
-          let artistIndex = parseInt(key) + (i*50)//index of artist in original list
+      promises.push(getArtists(access_token, artistsIDs.join(",")))
+    }
+    Promise.all(promises).then((artistPromiseResults) => {
+      for (const [artistSetNum, artistSet] of Object.entries(artistPromiseResults)) {
+        for (const [artistKey, artist] of Object.entries(artistSet.artists)) {
+          let artistIndex = parseInt(artistKey) + (artistSetNum*50)//index of artist in original playlistsArtistsCopy list
           let artistOccurences = playlistArtists[artistIndex][1].totalOccurences
-
-        
+          
           if (artist.images.length===0){//check if artist image is not availabe
             //set artist image to blank
-            topArtistsPlaylistCopy[artistIndex][1].imageURL= "https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999"
+            playlistsArtistsCopy[artistIndex][1].imageURL= "https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999"
           } else {
-            topArtistsPlaylistCopy[artistIndex][1].imageURL= artist.images[0].url
+            playlistsArtistsCopy[artistIndex][1].imageURL= artist.images[0].url
           }
-          
+
           for (var genre of artist.genres){//iterate through each genre of artist 
             var genreCapitalized = capitalizeFirstLetter(genre)//capitalize first letter of genre name
             if (genreCapitalized in playlistGenres){
@@ -194,19 +196,24 @@ export default function PlaylistInfo(props) {
                 enumerable:true
               });
             }
-        }}
-        
-        if (i+2===artistsSetsPerFifty || artistsSetsPerFifty ===1 ){//check if last iteration, then update states
-          setTopArtistsInPlaylist(topArtistsPlaylistCopy)
-          setTopGenresInPlaylists(sortProperties(playlistGenres))
+          }
         }
-      })
-    }
+      }
+      //when finished loop, update state
+      setTopArtistsInPlaylist(playlistsArtistsCopy)
+      setTopGenresInPlaylists(sortProperties(playlistGenres))
+    })
+    
+
   } 
 
   function onGetPlaylistTracks(playlistTracks, nextEndpoint){
-    //recursivly  
-    if (nextEndpoint === null){
+    //Only 100 songs can be retrived at once
+    //recursivly calls each endpoint to get sets of 100 songs
+    //inital playlist endpoint returns 100 tracks and a next endpoint for the next 100
+    //if next endpoint doesnt exist set state and return func
+    //else make a api call to the endpoint then call function again while adding to the list of tracks
+    if (nextEndpoint === null || playlistTracks.length >= 2500){//dont scan over 2000 tracks
       setPlaylistTracks(playlistTracks)
       return
     }

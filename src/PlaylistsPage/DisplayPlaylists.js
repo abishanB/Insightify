@@ -31,7 +31,6 @@ function renderPlaylists(playlists) {
       <span className='playlistCaption'>{playlist.name}</span>
     </Link>
   )
-
   return playlistsLstHTML
 }
 
@@ -40,14 +39,17 @@ export default function DisplayPlaylists(props) {
   const [playlists, setPlaylists] = useState([])
 
   useEffect(() => {//on page load
-    let limit = 50;//number of playlists to get, max 50
+    let limit = 50;//number of playlists to get, max 50 
     let userPlaylistsEndpoint = `https://api.spotify.com/v1/me/playlists?limit=${limit}` //inital endpoint to get user playlists
     getPlaylists([], userPlaylistsEndpoint)//pass empty lst for inital set of playlists
+    // eslint-disable-next-line
   }, []);
 
 
   function getPlaylists(setOfPlaylists, nextEndpoint){
-    if (nextEndpoint === null) {
+    //if next endpoint doesnt exist set state and return func
+    //else make a api call to the endpoint then call function again while adding to the list of tracks
+    if (nextEndpoint === null || setOfPlaylists >= 100) {//only return up to 100 playlists
       setPlaylists(removeDJPlaylist(setOfPlaylists))
       return
     }

@@ -36,9 +36,9 @@ export default function GenreChart(props) {
   const [chartData, setChartData] = useState(null)
   const topGenres = props.topGenres 
   useEffect(() => {//NESSAACERY WAIT
-    setTimeout(function() {
-      setGenreReadyToRender(true)
-    }, 200);
+    
+    setGenreReadyToRender(true)
+   
   }, []);
 
   useEffect(() => {
@@ -71,9 +71,9 @@ export default function GenreChart(props) {
         }
       ]
   })
+  // eslint-disable-next-line
   }, [genreReadyToRender]);
  
-  
 
   if (chartData===null){
     return <div id="genre-chart-card"className='playlist-card'></div>
