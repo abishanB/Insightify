@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import TimeRange from '../components/TimeRange.js'
 import {getTopItems} from '../apiCalls.js'
+import { ErrorBoundary } from '../ErrorBoundary.js';
 
 
 export default class Artists extends Component {
@@ -12,7 +13,8 @@ export default class Artists extends Component {
         "short_term":[],
         "medium_term":[],
         "long_term":[]
-      }
+      },
+      error: false
     }
     //bind event handler
     this.onGetTopArtists = this.onGetTopArtists.bind(this)
@@ -28,6 +30,11 @@ export default class Artists extends Component {
     const promise = getTopItems(this.props.token, "artists",timeRange)
 
     promise.then(function(topItemsObj) {
+      if (topItemsObj === false){
+        that.setState({error:true})
+        return
+      }
+
       let topAritstsCopy = that.state.top_artists
       topAritstsCopy[timeRange] = topItemsObj.items
       that.setState({top_artists:topAritstsCopy})
@@ -35,10 +42,13 @@ export default class Artists extends Component {
   }
 
   render() {
+    if (this.state.error){throw new Error("Can't fetch tracks")}
     return (
     <div>
       <h1 className="page-title">Your Top Artists</h1>
-      <TimeRange topItems={this.state.top_artists} showTopSongs={false}/> 
+      <ErrorBoundary fallback="TimeRange.js">
+        <TimeRange topItems={this.state.top_artists} showTopSongs={false}/> 
+      </ErrorBoundary>
       
     </div>
     )

@@ -15,14 +15,14 @@ export default function NavigationBar(props) {
   return (
     <div>
         <ul id="nav">
-          <li><div class='navBarItem'><Link to="home">Home</Link></div></li>
-          <li><div class='navBarItem'><Link to="tracks">Tracks</Link></div></li>
-          <li><div class='navBarItem'><Link to="artists">Artists</Link></div></li>
-          <li><div class='navBarItem'><Link to="playlists">Playlists</Link></div></li>
+          <li><div className='navBarItem'><Link to="home">Home</Link></div></li>
+          <li><div className='navBarItem'><Link to="tracks">Tracks</Link></div></li>
+          <li><div className='navBarItem'><Link to="artists">Artists</Link></div></li>
+          <li><div className='navBarItem'><Link to="playlists">Playlists</Link></div></li>
 
           {props.isLoggedIn
-            ?  <li><div class='navBarItem'><a href="/home" onClick={props.onLogout}>Logout</a></div></li>
-            :  <li><div class='navBarItem'><a href={spotifyLogin}>Login</a></div></li>
+            ?  <li><div className='navBarItem'><a href="/home" onClick={props.onLogout}>Logout</a></div></li>
+            :  <li><div className='navBarItem'><a href={spotifyLogin}>Login</a></div></li>
           }
 
 

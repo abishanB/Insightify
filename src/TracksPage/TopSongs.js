@@ -6,13 +6,13 @@ export default function topSongs(props){
 
   if (tracksObj==null || tracksObj.length === 0){//temporary
     return (
-      <div class='trackList'> {/* class keeps content from being bordered by tab-container */}
+      <div className='trackList'> {/* class keeps content from being bordered by tab-container */}
         <LoadingIcon/>
       </div> 
     )
   }
   const myLst =  Object.entries(tracksObj).map(([trackRank, track]) =>
-    <table key= {trackRank} class='trackTable'>
+    <table key= {trackRank} className='trackTable'>
       <colgroup>
         <col width="25px"/>{/* Track Rank*/}
         <col width="48px"/>{/* Track Image */}
@@ -22,11 +22,11 @@ export default function topSongs(props){
       </colgroup>
 
       <tbody>
-        <tr key={trackRank} class='track'>
-          <td class="trackRank">{parseInt(trackRank)+1}</td>
+        <tr key={trackRank} className='track'>
+          <td className="trackRank">{parseInt(trackRank)+1}</td>
           <td>
             <a href={track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-              <img src={track.album.images[0].url} class='trackCover' height="42" width="42" alt="albumImg" loading='lazy'/>
+              <img src={track.album.images[0].url} className='trackCover' height="42" width="42" alt="albumImg" loading='lazy'/>
             </a>
           </td>
           <td> {track.name}</td>
@@ -37,7 +37,7 @@ export default function topSongs(props){
     </table>
   )
   return (
-    <div class='trackList'>
+    <div className='trackList'>
       {myLst}
       <div style={{height:25}}></div>
     </div>

@@ -6,7 +6,7 @@ export default function topArtists(props){
   const artistsObj = props.artists
   if (artistsObj==null ||artistsObj.length===0){//temporary
     return (
-    <div class='trackList'> {/* class keeps content from being bordered by tab-container */}
+    <div className='trackList'> {/* class keeps content from being bordered by tab-container */}
       <LoadingIcon/> 
     </div> 
   )  
@@ -15,7 +15,7 @@ export default function topArtists(props){
     if ((parseInt(artistRank)+1) % 2===0){return null}
   
     return (
-      <table key ={artistRank} class='artistTable'>
+      <table key ={artistRank} className='artistTable'>
         {/*<button onClick={console.log(artistKeys)}>{artistRank}</button>*/}
         <colgroup>
           <col width="35px"/>{/* Artist Rank*/}
@@ -27,29 +27,29 @@ export default function topArtists(props){
         </colgroup>
 
         <tbody>
-          <tr class='track'>
-            <td class="artistRank">{parseInt(artistRank)+1}</td>
+          <tr className='track'>
+            <td className="artistRank">{parseInt(artistRank)+1}</td>
             <td>
               <a href={artistsObj[artistRank].external_urls.spotify} target="_blank" rel="noopener noreferrer">
-                <img src={artistsObj[artistRank].images[2].url} class='artistCover' height={imageSize} width={imageSize} alt="artistImg" loading='lazy'/>
+                <img src={artistsObj[artistRank].images[2].url} className='artistCover' height={imageSize} width={imageSize} alt="artistImg" loading='lazy'/>
               </a>
             </td>
-            <td  class="artistName">{artistsObj[artistRank].name}</td>
+            <td  className="artistName">{artistsObj[artistRank].name}</td>
             
-            <td class="artistRank">{parseInt(artistRank)+2}</td>
+            <td className="artistRank">{parseInt(artistRank)+2}</td>
             <td>
               <a href={artistsObj[parseInt(artistRank)+1].external_urls.spotify} target="_blank" rel="noopener noreferrer">
-                <img src={artistsObj[parseInt(artistRank)+1].images[2].url} class='artistCover' height={imageSize} width={imageSize} alt="artistImg" loading='lazy'/>
+                <img src={artistsObj[parseInt(artistRank)+1].images[2].url} className='artistCover' height={imageSize} width={imageSize} alt="artistImg" loading='lazy'/>
               </a>
             </td>
-            <td class="artistName"> {artistsObj[parseInt(artistRank)+1].name}</td>
+            <td className="artistName"> {artistsObj[parseInt(artistRank)+1].name}</td>
           </tr>
         </tbody>
       </table>
   )})
 
     return (
-        <div class='artistList'>
+        <div className='artistList'>
           {myLst}
           <div style={{height:20}}></div>
         </div>

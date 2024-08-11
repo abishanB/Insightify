@@ -108,10 +108,15 @@ export default function PlaylistInfo(props) {
   const [averagePopularity, setAveragePopularity] = useState([])
   const [noData, setNoData] = useState(false)
 
+  const [error, setError] = useState(false)
+
   const [readyToRender, setReadyToRender] = useState(false)
 
   const {playlistID} =useParams()//gets playlistID passed from router and in URL
   
+
+  if (error){throw new Error("Can't fetch playlist", playlistID)}
+
   useEffect(() => {//on page load   
     if (playlist.length!==0){return}
     onGetPlaylist(playlistID)
@@ -228,6 +233,10 @@ export default function PlaylistInfo(props) {
   function onGetPlaylist (playlist_id){//get playlist object and update state
     const promise = getPlaylist(props.token, playlist_id)
     promise.then(function(playlistObj) {
+      if (playlistObj === false){
+        setError(true)
+        return
+      }
       setPlaylist(playlistObj)
     })
   }

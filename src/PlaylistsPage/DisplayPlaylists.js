@@ -37,13 +37,19 @@ function renderPlaylists(playlists) {
 
 export default function DisplayPlaylists(props) {
   const [playlists, setPlaylists] = useState([])
+  const [error, setError] = useState(false)
 
+  if (error){
+    
+    throw new Error("Can't fetch user playlists")
+  }
   useEffect(() => {//on page load
     let limit = 50;//number of playlists to get, max 50 
     let userPlaylistsEndpoint = `https://api.spotify.com/v1/me/playlists?limit=${limit}` //inital endpoint to get user playlists
     getPlaylists([], userPlaylistsEndpoint)//pass empty lst for inital set of playlists
     // eslint-disable-next-line
   }, []);
+
 
 
   function getPlaylists(setOfPlaylists, nextEndpoint){
@@ -56,19 +62,27 @@ export default function DisplayPlaylists(props) {
     
     const promise = getUserPlaylists(props.token, nextEndpoint)
     promise.then(function(playlistsObj) {
+      if (playlistsObj === false){
+        setError(true)
+        return
+      }
       getPlaylists(setOfPlaylists.concat(playlistsObj.items), playlistsObj.next)
     });
   }
 
+
+ 
   if (playlists==null || playlists.length === 0){//loading effect if api call not finished
     return (<LoadingIcon />)
   }  
 
   return (
     <div>
-      <h1 className="page-title">Your Playlists ({playlists.length}) </h1>
-      <div className="playlistsContainer">
-        {renderPlaylists(playlists)}
+      <div>
+        <h1 className="page-title">Your Playlists ({playlists.length}) </h1>
+        <div className="playlistsContainer">
+          {renderPlaylists(playlists)}
+        </div>
       </div>
     </div>
   )

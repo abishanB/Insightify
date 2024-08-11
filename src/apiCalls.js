@@ -8,6 +8,16 @@ import fetch from "node-fetch";
 
 const clientID = 'REMOVED'
 const clientSecret = 'REMOVED'
+
+
+function checkResponse(response){
+  if (!response.ok){
+    return false
+  }
+  return response.json()
+}
+
+
 export async function getToken(){//client credentials flow
     const response = await fetch('https://accounts.spotify.com/api/token', {
       method:'POST',
@@ -18,7 +28,7 @@ export async function getToken(){//client credentials flow
       body:'grant_type=client_credentials'
     });
   
-    return await response.json();
+    return checkResponse(await response)
   }
   
 export async function getTokenWithRefreshToken(refreshToken){//gets access token using previos refresh token
@@ -47,7 +57,7 @@ export async function getTokenWithRefreshToken(refreshToken){//gets access token
       },  
       body: formBody
     });
-    return await response.json();
+    return checkResponse(await response)
   }
   
 export async function getTokenWithAuthCode(code){//gets access token using auth code
@@ -77,7 +87,7 @@ export async function getTokenWithAuthCode(code){//gets access token using auth 
       },  
       body: formBody
     });
-    return await response.json();
+    return checkResponse(await response)
   }
   
 export async function getTopItems(access_token,type="tracks", time_range="medium_term", limit=50){
@@ -89,7 +99,7 @@ export async function getTopItems(access_token,type="tracks", time_range="medium
     });
 
    
-    return await response.json();;
+    return checkResponse(await response)
   } 
 
 export async function getUserPlaylists(access_token, endpoint){
@@ -99,18 +109,11 @@ export async function getUserPlaylists(access_token, endpoint){
       'Authorization': 'Bearer ' + access_token,
     } 
   });
-  return await response.json()
+ 
+  return checkResponse(await response)
+
 }
 
-export async function getLikedSongs(access_token, limit=50){
-  const response = await fetch(`https://api.spotify.com/v1/me/tracks?limit=${limit}`, {
-    method:'GET',
-    headers: {
-      'Authorization': 'Bearer ' + access_token,
-    } 
-  });
-  return await response.json()
-}
 
 export async function getPlaylist(access_token, playlist_id){
   console.log("fetching playlist")
@@ -121,7 +124,7 @@ export async function getPlaylist(access_token, playlist_id){
     } 
   });
   
-  return await response.json()
+  return checkResponse(await response)
 }
 
 export async function getTracks(access_token, endpoint){//get tracks from playlist from endpoint provided by playlist
@@ -132,9 +135,8 @@ export async function getTracks(access_token, endpoint){//get tracks from playli
       'Authorization': 'Bearer ' + access_token,
     } 
   });
-  return await response.json()
+  return checkResponse(await response)
 }
-
 
 export async function getArtists(access_token, artistIDs){
   console.log("fetching artists")
@@ -145,7 +147,7 @@ export async function getArtists(access_token, artistIDs){
       'Authorization': 'Bearer ' + access_token,
     } 
   });
-  return await response.json()
+  return checkResponse(await response)
 }
 
 
