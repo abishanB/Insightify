@@ -21,36 +21,46 @@ export default class Tracks extends Component {
 
   componentDidMount(){//on page/component load
     if (this.state.top_tracks["short_term"].length!==0){return}//do not call api repeadtly
-    this.onGetTopTracks("short_term");this.onGetTopTracks("medium_term");this.onGetTopTracks("long_term")
+    if (this.props.topTracks === null){
+      this.onGetTopTracks();
+      return
+    }
+
+    this.setState({top_tracks:this.props.topTracks})
   }
 
-  onGetTopTracks = (timeRange) =>{
-    var that = this;
-    const promise = getTopItems(this.props.token, "tracks",timeRange)
+  onGetTopTracks = () =>{
+    var that = this;//cannot access this inside promise
+    const trackPromises = []
+    trackPromises.push(getTopItems(this.props.token, "tracks","short_term"))
+    trackPromises.push(getTopItems(this.props.token, "tracks","medium_term"))
+    trackPromises.push(getTopItems(this.props.token, "tracks","long_term"))
     
-    promise.then(function(topItemsObj) {
-      if (topItemsObj === false){
-        that.setState({error:true})
-        return
+    Promise.all(trackPromises).then((topTracksResults) => {
+      let updatedTopTracks= {
+        "short_term":topTracksResults[0].items,
+        "medium_term":topTracksResults[1].items, 
+        "long_term":topTracksResults[2].items
       }
-
-      let topSongsCopy = that.state.top_tracks
-      topSongsCopy[timeRange] = topItemsObj.items
-      that.setState({top_tracks:topSongsCopy})
+      that.setState({
+        top_tracks:updatedTopTracks
+      })
+      that.props.updateTopTracksFunc(updatedTopTracks)
     })
+    
   }
 
   render() {
     if (this.state.error){throw new Error("Can't fetch tracks")}
 
     return (
-    <div>
+    <React.Fragment>
       <h1 className="page-title">Your Top Tracks</h1>
       <ErrorBoundary fallback="TimeRange.js">
         <TimeRange topItems={this.state.top_tracks} showTopSongs={true}/>
       </ErrorBoundary > 
       
-    </div>
+    </React.Fragment>
   )
   }
 }

@@ -17,40 +17,49 @@ export default class Artists extends Component {
       error: false
     }
     //bind event handler
-    this.onGetTopArtists = this.onGetTopArtists.bind(this)
+    
   }
 
   componentDidMount(){//on page/component load
     if (this.state.top_artists["short_term"].length!==0){return}//do not call api repeadtly
-    this.onGetTopArtists("short_term");this.onGetTopArtists("medium_term");this.onGetTopArtists("long_term")
+    if (this.props.topArtists === null){
+      this.onGetTopArtists();
+      return
+    }
+
+    this.setState({top_artists:this.props.topArtists})
   }
   
-  onGetTopArtists = (timeRange) => {
-    var that = this;
-    const promise = getTopItems(this.props.token, "artists",timeRange)
-
-    promise.then(function(topItemsObj) {
-      if (topItemsObj === false){
-        that.setState({error:true})
-        return
+  onGetTopArtists = () => {
+    var that = this;//cannot access this inside promise
+    const artistPromises = []
+    artistPromises.push(getTopItems(this.props.token, "artists","short_term"))
+    artistPromises.push(getTopItems(this.props.token, "artists","medium_term"))
+    artistPromises.push(getTopItems(this.props.token, "artists","long_term"))
+    
+    Promise.all(artistPromises).then((topArtistsResults) => {
+      let updatedTopArtists= {
+        "short_term":topArtistsResults[0].items,
+        "medium_term":topArtistsResults[1].items, 
+        "long_term":topArtistsResults[2].items
       }
-
-      let topAritstsCopy = that.state.top_artists
-      topAritstsCopy[timeRange] = topItemsObj.items
-      that.setState({top_artists:topAritstsCopy})
+      that.setState({
+        top_artists:updatedTopArtists
+      })
+      that.props.updateTopArtistsFunc(updatedTopArtists)
     })
   }
 
   render() {
     if (this.state.error){throw new Error("Can't fetch tracks")}
     return (
-    <div>
+    <React.Fragment>
       <h1 className="page-title">Your Top Artists</h1>
       <ErrorBoundary fallback="TimeRange.js">
         <TimeRange topItems={this.state.top_artists} showTopSongs={false}/> 
       </ErrorBoundary>
       
-    </div>
+    </React.Fragment>
     )
   }
 }

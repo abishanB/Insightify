@@ -91,6 +91,7 @@ export async function getTokenWithAuthCode(code){//gets access token using auth 
   }
   
 export async function getTopItems(access_token,type="tracks", time_range="medium_term", limit=50){
+    console.log("Fetching top", type)
     const response = await fetch(`https://api.spotify.com/v1/me/top/${type}?time_range=${time_range}&limit=${limit}`, {
       method:'GET',
       headers: {

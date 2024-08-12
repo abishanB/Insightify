@@ -9,6 +9,7 @@ import PlaylistInfo from "./PlaylistsPage/PlaylistInfo.js";
 import DisplayPlaylists from "./PlaylistsPage/DisplayPlaylists.js";
 import NavigationBar from "./components/NavigationBar.js";
 import { ErrorBoundary } from './ErrorBoundary';
+
 export default class App extends Component{
   constructor(props) {
     super(props);
@@ -17,11 +18,10 @@ export default class App extends Component{
       token: "",
       refresh_token: "",
       auth_code:"",
+      top_tracks:null,
+      top_artists:null,
       isLoggedIn:false
     }
-
-    //bind event handler
-    this.logout =this.logout.bind(this)
   }
 
   componentDidMount(){//when page loads and after page loads on login
@@ -71,6 +71,10 @@ export default class App extends Component{
     window.localStorage.clear()
   }
 
+  updateTopTracks = (topTracksObj) => {this.setState({top_tracks:topTracksObj})}
+  updateTopArtists = (topArtistsObj) => {this.setState({top_artists:topArtistsObj})}
+
+
   onGetRefreshToken = (refresh_token) => {//call api function to get refresh token and update state
     var that = this;
     const promise = getTokenWithRefreshToken(refresh_token)
@@ -115,8 +119,8 @@ export default class App extends Component{
         <Routes>
           <Route index element={<Home/>} />
           <Route path='home' element={<Home />} />
-          <Route path='tracks' element={<ErrorBoundary fallback="Tracks.js"><Tracks token={this.state.token}/></ErrorBoundary >} />
-          <Route path='artists' element={<ErrorBoundary fallback="Artists.js"><Artists token={this.state.token}/></ErrorBoundary >}/>
+          <Route path='tracks' element={<ErrorBoundary fallback="Tracks.js"><Tracks token={this.state.token} topTracks={this.state.top_tracks} updateTopTracksFunc={this.updateTopTracks}/></ErrorBoundary >} />
+          <Route path='artists' element={<ErrorBoundary fallback="Artists.js"><Artists token={this.state.token} topArtists={this.state.top_artists} updateTopArtistsFunc={this.updateTopArtists}/></ErrorBoundary >}/>
           <Route path='playlists' element={<ErrorBoundary fallback="DisplayPlaylists.js"><DisplayPlaylists token={this.state.token}/></ErrorBoundary>}/>
           <Route exact path="/playlists/:playlistID" element={<ErrorBoundary fallback="PlaylistInfo.js"><PlaylistInfo token={this.state.token}/></ErrorBoundary>} />
         </Routes>

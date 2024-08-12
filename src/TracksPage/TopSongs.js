@@ -16,9 +16,9 @@ export default function topSongs(props){
       <colgroup>
         <col width="25px"/>{/* Track Rank*/}
         <col width="48px"/>{/* Track Image */}
-        <col width="500px"/>{/* Title*/}
-        <col width="450px"/>{/* Artist*/}
-        <col width="500px"/>{/* Album*/} 
+        <col width="520px"/>{/* Title*/}
+        <col width="350px"/>{/* Artist*/}
+        <col width="520px"/>{/* Album*/} 
       </colgroup>
 
       <tbody>
