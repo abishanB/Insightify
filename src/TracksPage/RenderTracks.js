@@ -1,9 +1,10 @@
 import React from 'react';
 import './Tracks.css';
 import LoadingIcon from '../components/LoadingIcon';
-export default function topSongs(props){  
+//display top tracks in list format
+export default function RenderTracks(props){  
   const tracksObj = props.tracks 
-
+  
   if (tracksObj==null || tracksObj.length === 0){//temporary
     return (
       <div className='trackList'> {/* class keeps content from being bordered by tab-container */}

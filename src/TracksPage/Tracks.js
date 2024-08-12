@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import TimeRange from '../components/TimeRange.js'
+import TimeRangeSelector from '../components/TimeRangeSelector.js'
 import {getTopItems} from '../apiCalls.js'
 import { ErrorBoundary } from '../ErrorBoundary.js';
-
+import RenderTracks from './RenderTracks.js';
 export default class Tracks extends Component {
   constructor(props) {
       super(props);
@@ -21,11 +21,11 @@ export default class Tracks extends Component {
 
   componentDidMount(){//on page/component load
     if (this.state.top_tracks["short_term"].length!==0){return}//do not call api repeadtly
-    if (this.props.topTracks === null){
+    if (this.props.topTracks === null){//if tracks havent been loaded yet
       this.onGetTopTracks();
       return
     }
-
+    //if tracks already loaded, use top tracks passed from parent compoenet
     this.setState({top_tracks:this.props.topTracks})
   }
 
@@ -45,22 +45,22 @@ export default class Tracks extends Component {
       that.setState({
         top_tracks:updatedTopTracks
       })
-      that.props.updateTopTracksFunc(updatedTopTracks)
+      that.props.updateTopTracksFunc(updatedTopTracks)//stores data in parent compoent to avoid multiple fetches on rerender
     })
-    
   }
 
   render() {
     if (this.state.error){throw new Error("Can't fetch tracks")}
 
     return (
-    <React.Fragment>
-      <h1 className="page-title">Your Top Tracks</h1>
-      <ErrorBoundary fallback="TimeRange.js">
-        <TimeRange topItems={this.state.top_tracks} showTopSongs={true}/>
-      </ErrorBoundary > 
-      
-    </React.Fragment>
+      <React.Fragment>
+        <h1 className="page-title">Your Top Tracks</h1>
+        <ErrorBoundary fallback="TimeRange.js">
+          <TimeRangeSelector topItemsComponent={(timeRange) => <RenderTracks tracks={this.state.top_tracks[timeRange]} />}/>
+        </ErrorBoundary>
+
+        
+      </React.Fragment>
   )
   }
 }

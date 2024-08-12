@@ -1,8 +1,10 @@
 import React from 'react';
 import LoadingIcon from '../components/LoadingIcon';
 import './Artists.css';
+//render top artists in a list format
+
 const imageSize = 80;
-export default function topArtists(props){
+export default function RenderArtists(props){
   const artistsObj = props.artists
   if (artistsObj==null ||artistsObj.length===0){//temporary
     return (

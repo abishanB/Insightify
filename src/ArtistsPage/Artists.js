@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import TimeRange from '../components/TimeRange.js'
+import TimeRangeSelector from '../components/TimeRangeSelector.js'
 import {getTopItems} from '../apiCalls.js'
 import { ErrorBoundary } from '../ErrorBoundary.js';
-
+import RenderArtists from "./RenderArtists.js"
 
 export default class Artists extends Component {
   constructor(props) {
@@ -15,18 +15,16 @@ export default class Artists extends Component {
         "long_term":[]
       },
       error: false
-    }
-    //bind event handler
-    
+    } 
   }
 
   componentDidMount(){//on page/component load
     if (this.state.top_artists["short_term"].length!==0){return}//do not call api repeadtly
-    if (this.props.topArtists === null){
+    if (this.props.topArtists === null){//if artists havent already been loaded 
       this.onGetTopArtists();
       return
     }
-
+    //if artists already loaded, use top artists passed from parent compoenet
     this.setState({top_artists:this.props.topArtists})
   }
   
@@ -38,6 +36,7 @@ export default class Artists extends Component {
     artistPromises.push(getTopItems(this.props.token, "artists","long_term"))
     
     Promise.all(artistPromises).then((topArtistsResults) => {
+      console.log("re")
       let updatedTopArtists= {
         "short_term":topArtistsResults[0].items,
         "medium_term":topArtistsResults[1].items, 
@@ -46,7 +45,7 @@ export default class Artists extends Component {
       that.setState({
         top_artists:updatedTopArtists
       })
-      that.props.updateTopArtistsFunc(updatedTopArtists)
+      that.props.updateTopArtistsFunc(updatedTopArtists)//stores data in parent component to avoid multiple fetches on rerender
     })
   }
 
@@ -56,7 +55,7 @@ export default class Artists extends Component {
     <React.Fragment>
       <h1 className="page-title">Your Top Artists</h1>
       <ErrorBoundary fallback="TimeRange.js">
-        <TimeRange topItems={this.state.top_artists} showTopSongs={false}/> 
+        <TimeRangeSelector topItemsComponent={(timeRange) => <RenderArtists artists={this.state.top_artists[timeRange]} />}/> 
       </ErrorBoundary>
       
     </React.Fragment>
