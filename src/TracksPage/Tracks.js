@@ -11,6 +11,7 @@ export default function Tracks(props){
     long_term: [],
   });
   const [error, setError] = useState(false);
+  const [currentTab, setCurrentTab] = useState("short_term")
 
   useEffect(() => {//on component load
     if (props.topTracks === null) {//if tracks havent been loaded yet
@@ -22,7 +23,7 @@ export default function Tracks(props){
     // eslint-disable-next-line
   }, []);
 
-  const onGetTopTracks = () => {
+  function onGetTopTracks(){
     const trackPromises = [
       getTopItems(props.token, 'tracks', 'short_term'),
       getTopItems(props.token, 'tracks', 'medium_term'),
@@ -45,14 +46,16 @@ export default function Tracks(props){
       .catch(() => setError(true));
   };
 
-  if (error) {throw new Error("Failed to fetch tracks");}
+  const onTabSwitch = (tabName) => setCurrentTab(tabName)
 
+
+  if (error) {throw new Error("Failed to fetch tracks");}
   return (
     <React.Fragment>
       <h1 className="page-title">Your Top Tracks</h1>
-      <ErrorBoundary fallback="TimeRange.js">
-        <TimeRangeSelector topItemsComponent={(timeRange) => <RenderTracks tracks={topTracks[timeRange]} />}/>
-      </ErrorBoundary>
+      <TimeRangeSelector tabSwitchHandler={onTabSwitch}/>
+      <RenderTracks tracks={topTracks[currentTab]}/>
+      
     </React.Fragment>
   );
 };

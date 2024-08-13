@@ -11,6 +11,7 @@ export default function Artists(props) {
     long_term: [],
   });
   const [error, setError] = useState(false);
+  const [currentTab, setCurrentTab] = useState("short_term")
 
   useEffect(function() {//on component load
     if (props.topArtists === null) {//if artists havent been loaded yet
@@ -47,17 +48,15 @@ export default function Artists(props) {
     });
   }
 
+  const onTabSwitch = (tabName) => setCurrentTab(tabName)
+
   if (error) {throw new Error("Failed to fetch artists");}
   return (
     <React.Fragment>
       <h1 className="page-title">Your Top Artists</h1>
-      <ErrorBoundary fallback="TimeRange.js">
-        <TimeRangeSelector
-          topItemsComponent={function(timeRange) {
-            return <RenderArtists artists={topArtists[timeRange]} />;
-          }}
-        />
-      </ErrorBoundary>
+      <TimeRangeSelector tabSwitchHandler={onTabSwitch}/>
+      <RenderArtists artists={topArtists[currentTab]}/>
+    
     </React.Fragment>
   );
 }

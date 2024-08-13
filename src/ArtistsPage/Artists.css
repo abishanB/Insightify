@@ -1,5 +1,4 @@
-.artistList{ /* class and position absoolute keeps content from being bordered by tab-container */
-    position: absolute;
+.artistList{ 
     margin-top: 20px;
     left: 0;
     width: 100%;
