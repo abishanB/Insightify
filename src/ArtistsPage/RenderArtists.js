@@ -1,17 +1,15 @@
 import React from 'react';
-import LoadingIcon from '../components/LoadingIcon';
 import './Artists.css';
-//render top artists in a list format
+//render top artists in a list format with 2 coloums
 
-
-function artistListing(artist, artistRank){
+function artistListingHTML(artist, artistRank){
   const imageSize = 80;
   return (
     <table key ={artistRank} className='artistTable'>
         <colgroup>
           <col width="35px"/>{/* Artist Rank*/}
           <col width="95px"/>{/*  Image */}
-          <col width="370px"/>{/* Artist*/}
+          <col width="340px"/>{/* Artist*/}
          
         </colgroup>
 
@@ -20,7 +18,7 @@ function artistListing(artist, artistRank){
             <td className="artistRank">{artistRank}</td>
             <td>
               <a href={artist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-                <img src={artist.images[2].url} className='artistCover' height={imageSize} width={imageSize} alt="artistImg" loading='lazy'/>
+                <img src={artist.images[0].url} className='artistCover' height={imageSize} width={imageSize} alt="artistImg" loading='lazy'/>
               </a>
             </td>
             <td  className="artistName">{artist.name}</td>
@@ -31,27 +29,25 @@ function artistListing(artist, artistRank){
   )
 }
 
-export default function RenderArtists(props){
-  const artistsObj = props.artists.items
-  
-  const leftArtistCol = Object.entries(artistsObj).map(([artistRank, artist]) => {//left column of artists, odd numbers
+export default function RenderArtists({artists}){
+  const leftArtistCol = Object.entries(artists).map(([artistRank, artist]) => {//left column of artists, odd numbers
     if ((parseInt(artistRank)+1) % 2===0){return null}
-    return (artistListing(artist, parseInt(artistRank)+1)) 
+    return (artistListingHTML(artist, parseInt(artistRank)+1)) 
   })
 
-  const rightArtistCol = Object.entries(artistsObj).map(([artistRank, artist]) => {//right column of artists, even numbers
+  const rightArtistCol = Object.entries(artists).map(([artistRank, artist]) => {//right column of artists, even numbers
     if ((parseInt(artistRank)+1) % 2===1){return null}
-    return (artistListing(artist, parseInt(artistRank)+1)) 
+    return (artistListingHTML(artist, parseInt(artistRank)+1)) 
   })
 
-    return (
-        <div className='artistList'>
-          <div>
-            {leftArtistCol}
-          </div>
-          <div>
-            {rightArtistCol}
-          </div>
-        </div>
-      )
+  return (
+    <div className='artistList'>
+      <div>
+        {leftArtistCol}
+      </div>
+      <div>
+        {rightArtistCol}
+      </div>
+    </div>
+  )
 }

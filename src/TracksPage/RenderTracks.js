@@ -1,12 +1,9 @@
 import React from 'react';
 import './Tracks.css';
-import LoadingIcon from '../components/LoadingIcon';
-//display top tracks in list format
-export default function RenderTracks(props){  
-  const tracksObj = props.tracks.items
-  
 
-  const myLst =  Object.entries(tracksObj).map(([trackRank, track]) =>
+//display top tracks in list format
+export default function RenderTracks({tracks}){  
+  const tracksLst =  Object.entries(tracks).map(([trackRank, track]) =>
     <table key= {trackRank} className='trackTable'>
       <colgroup>
         <col width="25px"/>{/* Track Rank*/}
@@ -33,8 +30,7 @@ export default function RenderTracks(props){
   )
   return (
     <div className='trackList'>
-      {myLst}
-      <div style={{height:25}}></div>
+      {tracksLst}
     </div>
   )
 }
