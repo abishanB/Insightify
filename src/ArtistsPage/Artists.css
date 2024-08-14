@@ -1,14 +1,12 @@
 .artistList{ 
     margin-top: 20px;
-    left: 0;
-    width: 100%;
- 
-}
-
-.artistTable{
-    table-layout:fixed;
+    max-width: fit-content;
     margin-left: auto;
     margin-right: auto;
+}
+
+.artistList div{
+    float: left;
 }
 
 /* text overflow, dont do overflow on artist rank or artist image*/
@@ -24,9 +22,7 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-
     border-radius: 50%;
-
 }
 
 .artistRank{
@@ -38,3 +34,4 @@
 .artistName {
     font-size: 30px;
 }
+

@@ -3,15 +3,9 @@ import './Tracks.css';
 import LoadingIcon from '../components/LoadingIcon';
 //display top tracks in list format
 export default function RenderTracks(props){  
-  const tracksObj = props.tracks 
+  const tracksObj = props.tracks.items
   
-  if (tracksObj==null || tracksObj.length === 0){//temporary
-    return (
-      <div className='trackList'> {/* class keeps content from being bordered by tab-container */}
-        <LoadingIcon/>
-      </div> 
-    )
-  }
+
   const myLst =  Object.entries(tracksObj).map(([trackRank, track]) =>
     <table key= {trackRank} className='trackTable'>
       <colgroup>

@@ -91,17 +91,17 @@ export async function getTokenWithAuthCode(code){//gets access token using auth 
   }
   
 export async function getTopItems(access_token,type="tracks", time_range="medium_term", limit=50){
-    console.log("Fetching top", type)
-    const response = await fetch(`https://api.spotify.com/v1/me/top/${type}?time_range=${time_range}&limit=${limit}`, {
-      method:'GET',
-      headers: {
-        'Authorization': 'Bearer ' + access_token,
-      }
-    });
+  console.log("Fetching top", type)
+  const response = await fetch(`https://api.spotify.com/v1/me/top/${type}?time_range=${time_range}&limit=${limit}`, {
+    method:'GET',
+    headers: {
+      'Authorization': 'Bearer ' + access_token,
+    }
+  });
 
-   
-    return checkResponse(await response)
-  } 
+  
+  return checkResponse(await response)
+} 
 
 export async function getUserPlaylists(access_token, endpoint){
   const response = await fetch(endpoint, {
@@ -149,6 +149,19 @@ export async function getArtists(access_token, artistIDs){
     } 
   });
   return checkResponse(await response)
+}
+
+export async function getEndpointResult(access_token, endpoint, endpointType=null){//for calls with custom endpoint, next calls
+  console.log("ENDPOINT CALL -",endpointType)
+  const response = await fetch(endpoint, {
+    method:'GET',
+    headers: {
+      'Authorization': 'Bearer ' + access_token,
+    } 
+  });
+ 
+  return checkResponse(await response)
+
 }
 
 

@@ -3,57 +3,55 @@ import LoadingIcon from '../components/LoadingIcon';
 import './Artists.css';
 //render top artists in a list format
 
-const imageSize = 80;
-export default function RenderArtists(props){
-  const artistsObj = props.artists
-  if (artistsObj==null ||artistsObj.length===0){//temporary
-    return (
-    <div className='trackList'> {/* class keeps content from being bordered by tab-container */}
-      <LoadingIcon/> 
-    </div> 
-  )  
-  }
-  const myLst = Object.keys(artistsObj).map(function(artistRank) {
-    if ((parseInt(artistRank)+1) % 2===0){return null}
-  
-    return (
-      <table key ={artistRank} className='artistTable'>
-        {/*<button onClick={console.log(artistKeys)}>{artistRank}</button>*/}
+
+function artistListing(artist, artistRank){
+  const imageSize = 80;
+  return (
+    <table key ={artistRank} className='artistTable'>
         <colgroup>
           <col width="35px"/>{/* Artist Rank*/}
           <col width="95px"/>{/*  Image */}
           <col width="370px"/>{/* Artist*/}
-          <col width="35px"/>{/* Artist Rank*/}
-          <col width="95px"/>{/*  Image */} 
-          <col width="370px"/>{/* Artist*/}
+         
         </colgroup>
 
         <tbody>
           <tr className='track'>
-            <td className="artistRank">{parseInt(artistRank)+1}</td>
+            <td className="artistRank">{artistRank}</td>
             <td>
-              <a href={artistsObj[artistRank].external_urls.spotify} target="_blank" rel="noopener noreferrer">
-                <img src={artistsObj[artistRank].images[2].url} className='artistCover' height={imageSize} width={imageSize} alt="artistImg" loading='lazy'/>
+              <a href={artist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                <img src={artist.images[2].url} className='artistCover' height={imageSize} width={imageSize} alt="artistImg" loading='lazy'/>
               </a>
             </td>
-            <td  className="artistName">{artistsObj[artistRank].name}</td>
+            <td  className="artistName">{artist.name}</td>
             
-            <td className="artistRank">{parseInt(artistRank)+2}</td>
-            <td>
-              <a href={artistsObj[parseInt(artistRank)+1].external_urls.spotify} target="_blank" rel="noopener noreferrer">
-                <img src={artistsObj[parseInt(artistRank)+1].images[2].url} className='artistCover' height={imageSize} width={imageSize} alt="artistImg" loading='lazy'/>
-              </a>
-            </td>
-            <td className="artistName"> {artistsObj[parseInt(artistRank)+1].name}</td>
           </tr>
         </tbody>
       </table>
-  )})
+  )
+}
+
+export default function RenderArtists(props){
+  const artistsObj = props.artists.items
+  
+  const leftArtistCol = Object.entries(artistsObj).map(([artistRank, artist]) => {//left column of artists, odd numbers
+    if ((parseInt(artistRank)+1) % 2===0){return null}
+    return (artistListing(artist, parseInt(artistRank)+1)) 
+  })
+
+  const rightArtistCol = Object.entries(artistsObj).map(([artistRank, artist]) => {//right column of artists, even numbers
+    if ((parseInt(artistRank)+1) % 2===1){return null}
+    return (artistListing(artist, parseInt(artistRank)+1)) 
+  })
 
     return (
         <div className='artistList'>
-          {myLst}
-          <div style={{height:20}}></div>
+          <div>
+            {leftArtistCol}
+          </div>
+          <div>
+            {rightArtistCol}
+          </div>
         </div>
       )
 }
