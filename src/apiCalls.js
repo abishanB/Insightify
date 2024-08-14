@@ -152,7 +152,8 @@ export async function getArtists(access_token, artistIDs){
 }
 
 export async function getEndpointResult(access_token, endpoint, endpointType=null){//for calls with custom endpoint, next calls
-  console.log("ENDPOINT CALL -",endpointType)
+  if (endpointType!=null) {console.log("ENDPOINT CALL -",endpointType)}
+  
   const response = await fetch(endpoint, {
     method:'GET',
     headers: {

@@ -12,13 +12,22 @@ import { ErrorBoundary } from './ErrorBoundary';
 export default class App extends Component{
   constructor(props) {
     super(props);
-  
+    
+    const topItemsLimit = 50;//limit 1-50 
     this.state = {
       token: "",
       refresh_token: "",
       auth_code:"",
-      top_tracks:null,
-      top_artists:null,
+      top_tracks: {//.next includes inital endpoint
+        short_term: {items:[], next: `https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=${topItemsLimit}`},
+        medium_term: {items:[], next: `https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=${topItemsLimit}`},
+        long_term: {items:[], next: `https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=${topItemsLimit}`},
+      },
+      top_artists:{ 
+        short_term: {items:[], next: `https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=${topItemsLimit}`},
+        medium_term: {items:[], next: `https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=${topItemsLimit}`},
+        long_term: {items:[], next: `https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=${topItemsLimit}`},
+      },
       isLoggedIn:false
     }
   }
@@ -118,8 +127,8 @@ export default class App extends Component{
         <Routes>
           <Route index element={<Home/>} />
           <Route path='home' element={<Home />} />
-          <Route path='tracks' element={<ErrorBoundary fallback="TopItems.js - Tracks"><TopItems token={this.state.token} key={1} type="tracks" storedTopItems={this.state.top_tracks} updateTopItemsFunc={this.updateTopTracks}/></ErrorBoundary >} />
-          <Route path='artists' element={<ErrorBoundary fallback="TopItems.js - Artists"><TopItems token={this.state.token} key={2} type="artists" storedTopItems={this.state.top_artists} updateTopItemsFunc={this.updateTopArtists}/></ErrorBoundary >}/>
+          <Route path='tracks' element={<ErrorBoundary fallback="TopItems.js - Tracks"><TopItems token={this.state.token} key="tracks" type="tracks" storedTopItems={this.state.top_tracks} updateTopItemsFunc={this.updateTopTracks}/></ErrorBoundary >} />
+          <Route path='artists' element={<ErrorBoundary fallback="TopItems.js - Artists"><TopItems token={this.state.token} key="artists"type="artists" storedTopItems={this.state.top_artists} updateTopItemsFunc={this.updateTopArtists}/></ErrorBoundary >}/>
           <Route path='playlists' element={<ErrorBoundary fallback="DisplayPlaylists.js"><DisplayPlaylists token={this.state.token}/></ErrorBoundary>}/>
           <Route exact path="/playlists/:playlistID" element={<ErrorBoundary fallback="PlaylistInfo.js"><PlaylistInfo token={this.state.token}/></ErrorBoundary>} />
         </Routes>

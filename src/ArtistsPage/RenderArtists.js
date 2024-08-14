@@ -7,7 +7,7 @@ function artistListingHTML(artist, artistRank){
   return (
     <table key ={artistRank} className='artistTable'>
         <colgroup>
-          <col width="35px"/>{/* Artist Rank*/}
+          <col width="58px"/>{/* Artist Rank*/}
           <col width="95px"/>{/*  Image */}
           <col width="340px"/>{/* Artist*/}
          

@@ -6,7 +6,7 @@ export default function RenderTracks({tracks}){
   const tracksLst =  Object.entries(tracks).map(([trackRank, track]) =>
     <table key= {trackRank} className='trackTable'>
       <colgroup>
-        <col width="25px"/>{/* Track Rank*/}
+        <col width="38px"/>{/* Track Rank*/}
         <col width="48px"/>{/* Track Image */}
         <col width="520px"/>{/* Title*/}
         <col width="350px"/>{/* Artist*/}
