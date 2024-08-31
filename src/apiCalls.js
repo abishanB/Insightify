@@ -104,6 +104,7 @@ export async function getTopItems(access_token,type="tracks", time_range="medium
 } 
 
 export async function getUserPlaylists(access_token, endpoint){
+  console.log("fetching user playlists")
   const response = await fetch(endpoint, {
     method:'GET',
     headers: {

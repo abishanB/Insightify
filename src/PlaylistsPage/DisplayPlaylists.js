@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getUserPlaylists } from '../apiCalls.js';
 import LoadingIcon from '../components/LoadingIcon.js'
 import './Playlists.css'; 
@@ -16,7 +16,6 @@ function removeDJPlaylist(playlistsObj){
 }
 
 export function playlistCoverURL(playlist){//check if playlist cover is given and render cover
- 
   const noCoverURL='https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999'
   if (playlist.images===null){//if playlist cover is not provided
     return noCoverURL
@@ -35,32 +34,40 @@ function renderPlaylists(playlists) {
 }
 
 
-export default function DisplayPlaylists(props) {
-  const [playlists, setPlaylists] = useState([])
+export default function DisplayPlaylists({token, storedUserPlaylists, updateUserPlaylistsFunc }) {
+  const [playlists, setPlaylists] = useState(storedUserPlaylists)
   const [error, setError] = useState(false)
+  const firstUpdate = useRef(true);//check if component has initially rendered
+  const maxPlaylists = 100;
+  if (error){throw new Error("Can't fetch user playlists")}
 
-  if (error){
-    
-    throw new Error("Can't fetch user playlists")
-  }
   useEffect(() => {//on page load
-    let limit = 50;//number of playlists to get, max 50 
-    let userPlaylistsEndpoint = `https://api.spotify.com/v1/me/playlists?limit=${limit}` //inital endpoint to get user playlists
+    if (playlists.length!==0){return}
+
+    let playlistPerCallLimit = 50;//number of playlists to get each call, max 50 
+    let userPlaylistsEndpoint = `https://api.spotify.com/v1/me/playlists?limit=${playlistPerCallLimit}` //inital endpoint to get user playlists
     getPlaylists([], userPlaylistsEndpoint)//pass empty lst for inital set of playlists
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {//pass playlists to parent component to store to prevent unnessecary api calls
+    if (firstUpdate.current) {//dont run this effect on inital render
+      firstUpdate.current = false;
+      return;}
 
+    updateUserPlaylistsFunc(playlists)
+    // eslint-disable-next-line
+  }, [playlists]);
 
   function getPlaylists(setOfPlaylists, nextEndpoint){
     //if next endpoint doesnt exist set state and return func
     //else make a api call to the endpoint then call function again while adding to the list of tracks
-    if (nextEndpoint === null || setOfPlaylists >= 100) {//only return up to 100 playlists
+    if (nextEndpoint === null || setOfPlaylists >= maxPlaylists) {//only return up to 100 playlists
       setPlaylists(removeDJPlaylist(setOfPlaylists))
       return
     }
     
-    const promise = getUserPlaylists(props.token, nextEndpoint)
+    const promise = getUserPlaylists(token, nextEndpoint)
     promise.then(function(playlistsObj) {
       if (playlistsObj === false){
         setError(true)
@@ -69,8 +76,6 @@ export default function DisplayPlaylists(props) {
       getPlaylists(setOfPlaylists.concat(playlistsObj.items), playlistsObj.next)
     });
   }
-
-
  
   if (playlists==null || playlists.length === 0){//loading effect if api call not finished
     return (<LoadingIcon />)
@@ -79,7 +84,7 @@ export default function DisplayPlaylists(props) {
   return (
     <div>
       <div>
-        <h1 className="page-title">Your Playlists ({playlists.length}) </h1>
+        <h1 className="page-title">Your Playlists ({playlists.length})</h1>
         <div className="playlistsContainer">
           {renderPlaylists(playlists)}
         </div>
