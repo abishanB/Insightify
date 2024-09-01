@@ -16,7 +16,7 @@ function renderArtists(aritsts){
             <td>{parseInt(artistIndex)+1}</td> 
             <td>
               <a className='playlist-artist-image' href={artist[1].href} target="_blank" rel="noopener noreferrer">
-                <img src={artist[1].imageURL} class='artistCover' alt="artistImg" loading='eager'/>
+                <img src={artist[1].imageURL} className='artistCover' alt="artistImg" loading='eager'/>
               </a>
             </td>
             <td>{artist[0]}</td>

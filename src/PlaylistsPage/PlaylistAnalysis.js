@@ -4,8 +4,8 @@ import { getArtists, getPlaylist, getTracks } from '../apiCalls';
 import LoadingIcon from '../components/LoadingIcon';
 import GenreChart from './GenreChart';
 import "./PlaylistAnalysis.css";
-import PlaylistSummary from './PlaylistSummary';
-import TopArtistsAlbums from './TopArtistsAlbums'
+import PlaylistSummary from './PlaylistSummaryCard';
+import TopArtistsAlbums from './PlaylistTopArtistsAlbums'
 
 
 function capitalizeFirstLetter(string) {//to capitalize the first letter of genre names
@@ -26,6 +26,16 @@ function sortProperties(obj){//sorts artists, albums and genres from most occuri
 	return sortable; // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
 }
 
+function filterPlaylistTracks(playlistTracks){
+  let filteredPlaylistTracks = []
+  for (let trackObj of Object.values(playlistTracks)) {
+    if (trackObj.track===null){continue;}//dont include tracks that cant be found
+    if (trackObj.track.type!=="track"){continue;}//dont include podcasts etc
+    filteredPlaylistTracks.push(trackObj)
+  }
+  return filteredPlaylistTracks
+}
+
 function calculateAveragePopularity(playlistTracks){
   let totalPopularity = 0
   for (let trackObj of Object.values(playlistTracks)) {
@@ -38,7 +48,7 @@ function getPlaylistArtists(playlistTracks){//collect how many times a artist ap
   let playlistArtists = {};
   for (let trackObj of Object.values(playlistTracks)) {
     if (trackObj.is_local){continue}//skip local songs
-
+   
     trackObj.track.artists.forEach(artist => {//iterate each artist credited on a song
       if (artist.name in playlistArtists){//if artist has already appeared in list
         playlistArtists[artist.name].totalOccurences+=1
@@ -92,7 +102,7 @@ function getPlaylistAlbums(playlistTracks){//collect how many times a album appe
       Object.defineProperty(playlistAlbums[trackObj.track.album.name], 'imageURL', {
         value: trackObj.track.album.images[0].url,
         writable: true,
-      });
+      })
     }
   }
 
@@ -150,7 +160,6 @@ export default function PlaylistInfo(props) {
     setAveragePopularity(calculateAveragePopularity(playlistTracks))//set average popularity
     // eslint-disable-next-line
   }, [playlistTracks]);
-
 
   useEffect(() => {//when playlist artists and ids are recieved to get genres
     if (topGenresInPlaylists.length===0){return}  
@@ -219,7 +228,7 @@ export default function PlaylistInfo(props) {
     //if next endpoint doesnt exist set state and return func
     //else make a api call to the endpoint then call function again while adding to the list of tracks
     if (nextEndpoint === null || playlistTracks.length >= 2500){//dont scan over 2000 tracks
-      setPlaylistTracks(playlistTracks)
+      setPlaylistTracks(filterPlaylistTracks(playlistTracks))
       return
     }
 

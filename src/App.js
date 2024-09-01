@@ -4,7 +4,7 @@ import { Routes, Route} from 'react-router-dom';
 import {getTokenWithRefreshToken, getTokenWithAuthCode} from './apiCalls.js'
 import Home from './HomePage/Home.js'
 import TopItems from "./components/TopItems.js";
-import PlaylistInfo from "./PlaylistsPage/PlaylistInfo.js";
+import PlaylistInfo from "./PlaylistsPage/PlaylistAnalysis.js";
 import DisplayPlaylists from "./PlaylistsPage/DisplayPlaylists.js";
 import NavigationBar from "./components/NavigationBar.js";
 import { ErrorBoundary } from './ErrorBoundary';
