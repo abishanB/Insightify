@@ -9,8 +9,8 @@ function calculateGenreComposition(playlistGenres){
   let genreData = [];  
   const numOfTopGenres = 11;//number of genre categories not including other to display, the rest will be grouped as 'other'
   const topMostGenres = playlistGenres.slice(0,numOfTopGenres)
-  const bottomMostGenres= playlistGenres.slice(numOfTopGenres, playlistGenres.length)
-
+  const bottomMostGenres = playlistGenres.slice(numOfTopGenres, playlistGenres.length)
+  
   for (const genre of topMostGenres) {
     genreData.push({ 
       name: genre[0], 
@@ -66,7 +66,7 @@ export default function GenreChart(props) {
             "#D3D8AC",
             "#C48431",
           ],
-          borderColor: "black",
+          borderColor: "#2F374C",
           borderWidth: 2
         }
       ]
@@ -81,8 +81,7 @@ export default function GenreChart(props) {
   return (
     <div id="genre-chart-card"className='playlist-card'>
       <h1 className="card-title">Genres</h1>
-     
-
+    
       <div>
       <Doughnut
         data={chartData}
@@ -93,6 +92,11 @@ export default function GenreChart(props) {
           }
           },
           plugins: {
+            legend: {
+              labels: {
+                color: "#b3b7bd"
+              }
+            }
           }
         }}
       />

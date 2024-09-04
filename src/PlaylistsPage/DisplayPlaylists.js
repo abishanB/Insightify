@@ -57,11 +57,11 @@ export default function DisplayPlaylists({token, storedUserPlaylists, updateUser
     // eslint-disable-next-line
   }, [playlists]);
 
-  function getPlaylists(setOfPlaylists, nextEndpoint){
+  function getPlaylists(playlistsArr, nextEndpoint){
     //if next endpoint doesnt exist set state and return func
     //else make a api call to the endpoint then call function again while adding to the list of tracks
-    if (nextEndpoint === null || setOfPlaylists >= maxPlaylists) {//only return up to 100 playlists
-      setPlaylists(removeDJPlaylist(setOfPlaylists))
+    if (nextEndpoint === null || playlistsArr >= maxPlaylists) {//only return up to 100 playlists
+      setPlaylists(removeDJPlaylist(playlistsArr))
       return
     }
     
@@ -71,7 +71,7 @@ export default function DisplayPlaylists({token, storedUserPlaylists, updateUser
         setError(true)
         return
       }
-      getPlaylists(setOfPlaylists.concat(playlistsObj.items), playlistsObj.next)
+      getPlaylists(playlistsArr.concat(playlistsObj.items), playlistsObj.next)
     });
   }
  

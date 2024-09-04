@@ -123,7 +123,6 @@ export default class App extends Component{
     }
     return (
     <div className="App">
-      
       <NavigationBar isLoggedIn={this.state.isLoggedIn} onLogout={this.logout}/>
         <Routes>
           <Route index element={<Home/>} />
