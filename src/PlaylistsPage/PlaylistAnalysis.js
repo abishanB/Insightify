@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getArtists, getPlaylist, getTracks } from '../apiCalls';
+import { getEndpointResult } from '../apiCalls';
 import LoadingIcon from '../components/LoadingIcon';
 import GenreChart from './GenreChart';
 import "./PlaylistAnalysis.css";
@@ -31,6 +31,7 @@ function filterPlaylistTracks(playlistTracks){
   for (let trackObj of Object.values(playlistTracks)) {
     if (trackObj.track===null){continue;}//dont include tracks that cant be found
     if (trackObj.track.type!=="track"){continue;}//dont include podcasts etc
+    if (trackObj.is_local){continue}//skip local songs
     filteredPlaylistTracks.push(trackObj)
   }
   return filteredPlaylistTracks
@@ -47,8 +48,6 @@ function calculateAveragePopularity(playlistTracks){
 function getPlaylistArtists(playlistTracks){//collect how many times a artist appears in the playlist and returns it sorted
   let playlistArtists = {};
   for (let trackObj of Object.values(playlistTracks)) {
-    if (trackObj.is_local){continue}//skip local songs
-   
     trackObj.track.artists.forEach(artist => {//iterate each artist credited on a song
       if (artist.name in playlistArtists){//if artist has already appeared in list
         playlistArtists[artist.name].totalOccurences+=1
@@ -84,7 +83,6 @@ function getPlaylistAlbums(playlistTracks){//collect how many times a album appe
   let playlistAlbums = {};
 
   for (let trackObj of Object.values(playlistTracks)) {//iterate all tracks
-    if (trackObj.is_local){continue}//skip local files
     if(trackObj.track.album.total_tracks===1){continue}//skip albums with only 1 song(singles)
 
     if (trackObj.track.album.name in playlistAlbums){
@@ -115,23 +113,21 @@ export default function PlaylistInfo(props) {
   const [topArtistsInPlaylist, setTopArtistsInPlaylist] = useState([])//{index: [artist, {id , href, imageURL, totalOccurences}]}
   const [topGenresInPlaylists, setTopGenresInPlaylists] = useState([])
   const [topAlbumsInPlaylist, setTopAlbumsInPlaylist] = useState([])
-  const [averagePopularity, setAveragePopularity] = useState([])
+  const [averagePopularity, setAveragePopularity] = useState()
   const [noData, setNoData] = useState(false)
 
   const [error, setError] = useState(false)
 
   const [readyToRender, setReadyToRender] = useState(false)
 
-  const {playlistID} =useParams()//gets playlistID passed from router and in URL
+  const {playlistID} = useParams()//gets playlistID passed from router and in URL
   
-
   if (error){throw new Error("Can't fetch playlist", playlistID)}
 
   useEffect(() => {//on page load   
     if (playlist.length!==0){return}
     onGetPlaylist(playlistID)
-    // eslint-disable-next-line
-  }, [playlist]);
+  }, []);
 
   useEffect(() => {//runs when playlist is recieved 
     if (playlist.length===0){return}
@@ -168,7 +164,8 @@ export default function PlaylistInfo(props) {
 
   function getGenres(playlistArtists, access_token){//get genres of artists in playlists, as well as sets artist Image URL
     //included in parent function to access useState
-    
+    //makes a call to artist endpoint where artist genre can be found
+
     let playlistGenres = {} //{playlistGenre: number of occurences}
     let numOfArtists = playlistArtists.length
     let artistsSetsPerFifty = Math.ceil(numOfArtists/50)
@@ -181,8 +178,8 @@ export default function PlaylistInfo(props) {
         if (artistIndex >= numOfArtists){break;}
         artistsIDs.push(playlistArtists[artistIndex][1].id)
       }
-   
-      promises.push(getArtists(access_token, artistsIDs.join(",")))
+      
+      promises.push(getEndpointResult(access_token, `https://api.spotify.com/v1/artists?ids=${artistsIDs.join(",")}`, "fetching artists"))
     }
     Promise.all(promises).then((artistPromiseResults) => {
       for (const [artistSetNum, artistSet] of Object.entries(artistPromiseResults)) {
@@ -217,8 +214,6 @@ export default function PlaylistInfo(props) {
       setTopArtistsInPlaylist(playlistsArtistsCopy)
       setTopGenresInPlaylists(sortProperties(playlistGenres))
     })
-    
-
   } 
 
   function onGetPlaylistTracks(playlistTracks, nextEndpoint){
@@ -232,7 +227,7 @@ export default function PlaylistInfo(props) {
       return
     }
 
-    const promise = getTracks(props.token, nextEndpoint)
+    const promise = getEndpointResult(props.token, nextEndpoint, "Fetching tracks")
     promise.then(function(tracksObject) {
       //setPlaylistTracks(playlistTracks.concat(tracksObject.items))
       onGetPlaylistTracks(playlistTracks.concat(tracksObject.items), tracksObject.next)
@@ -240,7 +235,7 @@ export default function PlaylistInfo(props) {
   }
 
   function onGetPlaylist (playlist_id){//get playlist object and update state
-    const promise = getPlaylist(props.token, playlist_id)
+    const promise = getEndpointResult(props.token, `https://api.spotify.com/v1/playlists/${playlist_id}`, "Fetching playlist")
     promise.then(function(playlistObj) {
       if (playlistObj === false){
         setError(true)

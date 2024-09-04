@@ -1,12 +1,11 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import { getUserPlaylists } from '../apiCalls.js';
+import { getEndpointResult } from '../apiCalls.js';
 import LoadingIcon from '../components/LoadingIcon.js'
 import './Playlists.css'; 
 import { Link } from 'react-router-dom';
 
 function removeDJPlaylist(playlistsObj){
-  
   for (var i = playlistsObj.length - 1; i >= 0; i--) {//remove spotify generated playlists
     if (playlistsObj[i].name==="DJ") { 
       playlistsObj.splice(i, 1);
@@ -23,16 +22,15 @@ export function playlistCoverURL(playlist){//check if playlist cover is given an
   return playlist.images[0].url
 }
 
-function renderPlaylists(playlists) {
+function renderPlaylists(playlists) {//jsx for playlist buttons
   const playlistsLstHTML = Object.entries(playlists).map(([key, playlist]) =>
     <Link className="playlistBlock" key={key} to={`/playlists/${playlist.id}`}>
-      <img src={playlistCoverURL(playlist)} class='playlistCover' alt="playlistImg" loading='lazy'/>
+      <img src={playlistCoverURL(playlist)} className='playlistCover' alt="playlistImg" loading='lazy'/>
       <span className='playlistCaption'>{playlist.name}</span>
     </Link>
   )
   return playlistsLstHTML
 }
-
 
 export default function DisplayPlaylists({token, storedUserPlaylists, updateUserPlaylistsFunc }) {
   const [playlists, setPlaylists] = useState(storedUserPlaylists)
@@ -67,7 +65,7 @@ export default function DisplayPlaylists({token, storedUserPlaylists, updateUser
       return
     }
     
-    const promise = getUserPlaylists(token, nextEndpoint)
+    const promise = getEndpointResult(token, nextEndpoint, "fetching user playlists")
     promise.then(function(playlistsObj) {
       if (playlistsObj === false){
         setError(true)

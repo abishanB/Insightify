@@ -14,8 +14,6 @@ export default function TimeRangeSelector({tabSwitchHandler}){
         <label htmlFor="tabToggle02">Last 6 Months</label>
         <input onClick={()=> tabSwitchHandler("long_term")} type="radio" id="tabToggle03" name="tabs" value="3" />
         <label htmlFor="tabToggle03">Last 12 Months</label>
-        
-        
       </tab-container>
     </React.Fragment>
   )

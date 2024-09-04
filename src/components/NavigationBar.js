@@ -24,8 +24,6 @@ export default function NavigationBar(props) {
             ?  <li><div className='navBarItem'><a href="/home" onClick={props.onLogout}>Logout</a></div></li>
             :  <li><div className='navBarItem'><a href={spotifyLogin}>Login</a></div></li>
           }
-
-
         </ul>
         <div className="gradient">
           

@@ -9,14 +9,12 @@ import fetch from "node-fetch";
 const clientID = 'REMOVED'
 const clientSecret = 'REMOVED'
 
-
 function checkResponse(response){
   if (!response.ok){
     return false
   }
   return response.json()
 }
-
 
 export async function getToken(){//client credentials flow
     const response = await fetch('https://accounts.spotify.com/api/token', {
@@ -90,68 +88,6 @@ export async function getTokenWithAuthCode(code){//gets access token using auth 
     return checkResponse(await response)
   }
   
-export async function getTopItems(access_token,type="tracks", time_range="medium_term", limit=50){
-  console.log("Fetching top", type)
-  const response = await fetch(`https://api.spotify.com/v1/me/top/${type}?time_range=${time_range}&limit=${limit}`, {
-    method:'GET',
-    headers: {
-      'Authorization': 'Bearer ' + access_token,
-    }
-  });
-
-  
-  return checkResponse(await response)
-} 
-
-export async function getUserPlaylists(access_token, endpoint){
-  console.log("fetching user playlists")
-  const response = await fetch(endpoint, {
-    method:'GET',
-    headers: {
-      'Authorization': 'Bearer ' + access_token,
-    } 
-  });
- 
-  return checkResponse(await response)
-
-}
-
-
-export async function getPlaylist(access_token, playlist_id){
-  console.log("fetching playlist")
-  const response = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}`, {
-    method:'GET',
-    headers: {
-      'Authorization': 'Bearer ' + access_token,
-    } 
-  });
-  
-  return checkResponse(await response)
-}
-
-export async function getTracks(access_token, endpoint){//get tracks from playlist from endpoint provided by playlist
-  console.log("fetching playlist tracks")
-  const response = await fetch(endpoint, {
-    method:'GET',
-    headers: {
-      'Authorization': 'Bearer ' + access_token,
-    } 
-  });
-  return checkResponse(await response)
-}
-
-export async function getArtists(access_token, artistIDs){
-  console.log("fetching artists")
-  //artists ids must be one string seperated by %
-  const response = await fetch(`https://api.spotify.com/v1/artists?ids=${artistIDs}`, {
-    method:'GET',
-    headers: {
-      'Authorization': 'Bearer ' + access_token,
-    } 
-  });
-  return checkResponse(await response)
-}
-
 export async function getEndpointResult(access_token, endpoint, endpointType=null){//for calls with custom endpoint, next calls
   if (endpointType!=null) {console.log("ENDPOINT CALL -",endpointType)}
   
@@ -163,12 +99,7 @@ export async function getEndpointResult(access_token, endpoint, endpointType=nul
   });
  
   return checkResponse(await response)
-
 }
-
-
-
-
 
 //originally in Wrapper.js, if client credentials is needed
 /*onGetToken = () => {//clientCredentials
