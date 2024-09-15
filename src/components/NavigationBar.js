@@ -1,10 +1,9 @@
 import React from 'react';
 import './styles/NavBar.css';
 import { Link } from 'react-router-dom';
-//old app
-//const clientID = '9d10477046f3462db2028606fde3e774';
-//const clientID = 'ca8aec9757ef4c1e9ea2f772f8a3d9b3'
-const clientID = 'REMOVED'
+import apiCredentials from "../apiCredentials.json"
+
+const clientID = apiCredentials.clientID
 const REDIRECT_URI = "http://localhost:3000"
 
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
@@ -15,7 +14,7 @@ export default function NavigationBar(props) {
   return (
     <div>
         <ul id="nav">
-          <li><div className='navBarItem'><Link to="home">Home</Link></div></li>
+          <li><div className='navBarItem'><Link to="..">Home</Link></div></li> {/*links to root home page */}
           <li><div className='navBarItem'><Link to="tracks">Tracks</Link></div></li>
           <li><div className='navBarItem'><Link to="artists">Artists</Link></div></li>
           <li><div className='navBarItem'><Link to="playlists">Playlists</Link></div></li>

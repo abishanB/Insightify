@@ -1,0 +1,59 @@
+.top-item-card{
+    --home_card_height: 15vw;
+    --image_size: 14vw;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page-card-container div{
+    margin-top: 1.5vh;
+}
+
+.view-top-items {
+    background-color: #2F374C; 
+    width: calc(100% - var(--home_card_height)/2);
+    height: var(--home_card_height);
+    float: left;
+}
+
+.view-top-items:nth-child(2){
+    /* top track card */
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+
+.view-top-items:nth-child(1){
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+}
+
+.top-item-img{
+    background-color: #2F374C; 
+    height: var(--home_card_height);
+    width: calc(var(--home_card_height)/2);
+    float: left;
+}
+
+.top-item-img:nth-child(1){
+    border-radius: 150px 0 0 150px;
+}
+
+.top-item-img:nth-child(2){
+    border-radius: 150px 0 0 150px;
+    transform: rotate(180deg);
+}
+
+.top-item-img img {
+    height:var(--image_size);
+    width: var(--image_size);
+    position: relative;
+    border-radius: 50%;
+    left:calc(var(--home_card_height)/2 - var(--image_size)/2);
+    top: calc(var(--home_card_height)/2 - var(--image_size)/2);
+}
+
+.top-item-img:nth-child(2) img{
+    /* flip image because parent div was flipped */
+    transform: rotate(180deg);
+}

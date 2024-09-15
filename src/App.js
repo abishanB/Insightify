@@ -9,6 +9,7 @@ import DisplayPlaylists from "./PlaylistsPage/DisplayPlaylists.js";
 import NavigationBar from "./components/NavigationBar.js";
 import { ErrorBoundary } from './ErrorBoundary';
 
+
 export default class App extends Component{
   constructor(props) {
     super(props);
@@ -125,12 +126,12 @@ export default class App extends Component{
     <div className="App">
       <NavigationBar isLoggedIn={this.state.isLoggedIn} onLogout={this.logout}/>
         <Routes>
-          <Route index element={<Home/>} />
-          <Route path='home' element={<Home />} />
-          <Route path='tracks' element={<ErrorBoundary fallback="TopItems.js - Tracks"><TopItems token={this.state.token} key="tracks" type="tracks" storedTopItems={this.state.top_tracks} updateTopItemsFunc={this.updateTopTracks}/></ErrorBoundary >} />
-          <Route path='artists' element={<ErrorBoundary fallback="TopItems.js - Artists"><TopItems token={this.state.token} key="artists"type="artists" storedTopItems={this.state.top_artists} updateTopItemsFunc={this.updateTopArtists}/></ErrorBoundary >}/>
-          <Route path='playlists' element={<ErrorBoundary fallback="DisplayPlaylists.js"><DisplayPlaylists token={this.state.token} storedUserPlaylists={this.state.userPlaylists} updateUserPlaylistsFunc={this.updateUserPlaylists}/></ErrorBoundary>}/>
-          <Route exact path="/playlists/:playlistID" element={<ErrorBoundary fallback="PlaylistInfo.js"><PlaylistInfo token={this.state.token}/></ErrorBoundary>} />
+          (<Route index element={<Home token={this.state.token} topTracksObj={this.state.top_tracks} updateTopTracksFunc={this.updateTopTracks}
+                                topArtistsObj={this.state.top_artists} updateTopArtistsFunc={this.updateTopArtists}/>} />)
+          <Route path='tracks' element={<TopItems token={this.state.token} key="tracks" type="tracks" storedTopItems={this.state.top_tracks} updateTopItemsFunc={this.updateTopTracks}/>} />
+          <Route path='artists' element={<TopItems token={this.state.token} key="artists" type="artists" storedTopItems={this.state.top_artists} updateTopItemsFunc={this.updateTopArtists}/>}/>
+          <Route path='playlists' element={<DisplayPlaylists token={this.state.token} storedUserPlaylists={this.state.userPlaylists} updateUserPlaylistsFunc={this.updateUserPlaylists}/>}/>
+          <Route exact path="/playlists/:playlistID" element={<PlaylistInfo token={this.state.token}/>} />
         </Routes>
     </div>
       )

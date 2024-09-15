@@ -1,13 +1,7 @@
 import fetch from "node-fetch";
-//old app
-//const clientID = '9d10477046f3462db2028606fde3e774';
-//const clientSecret = '8ccbf4afbda84ef29ced457991685524';
-
-// const clientID = 'ca8aec9757ef4c1e9ea2f772f8a3d9b3'
-// const clientSecret = 'a84859496c82429aa65587a2a488d29f'
-
-const clientID = 'REMOVED'
-const clientSecret = 'REMOVED'
+import apiCredentials from "./apiCredentials.json"
+const clientID = apiCredentials.clientID
+const clientSecret = apiCredentials.clientSecret
 
 function checkResponse(response){
   if (!response.ok){

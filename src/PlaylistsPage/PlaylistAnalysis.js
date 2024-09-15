@@ -127,6 +127,7 @@ export default function PlaylistInfo(props) {
   useEffect(() => {//on page load   
     if (playlist.length!==0){return}
     onGetPlaylist(playlistID)
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {//runs when playlist is recieved 
