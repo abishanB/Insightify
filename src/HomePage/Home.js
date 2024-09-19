@@ -70,19 +70,31 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
   if (topTrackImg==null || topArtistImg==null) return <LoadingIcon/>
   return (
     <div className='page-card-container'>
-      <div className="top-item-card">
-        <div className="top-item-img">
-          <img src={topTrackImg} alt="topTrackImg" loading='lazy'/>
+      <Link to="tracks" style={{ textDecoration: 'none' }}>
+        <div className="top-item-card">
+          <div className="top-item-img">
+            <img src={topTrackImg} alt="topTrackImg" loading='lazy'/>
+          </div>
+          <div className="view-top-items">
+            <div className="view-top-items-link">
+                <span>View Your Top Tracks</span>
+            </div>    
+          </div>
         </div>
-        <div className="view-top-items"></div>
-      </div>
+      </Link>
 
-      <div className="top-item-card">
-        <div className="view-top-items"></div>
-        <div className="top-item-img">
-          <img src={topArtistImg} alt="topArtistImg" loading='lazy'/>
-        </div>   
-      </div>
+      <Link to="artists" style={{ textDecoration: 'none' }}>
+        <div className="top-item-card">
+          <div className="view-top-items">
+            <div className="view-top-items-link">
+                <span>View Your Top Artists</span>
+            </div>
+          </div>
+          <div className="top-item-img">
+            <img src={topArtistImg} alt="topArtistImg" loading='lazy'/>
+          </div>   
+        </div>
+      </Link>
     </div>
   )
 } 
