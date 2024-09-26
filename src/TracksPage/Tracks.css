@@ -4,8 +4,6 @@
     margin-right: auto;
     
 }
-
-
 /* text overflow, dont do overflow on first 2 child- track ranking and images */
 .trackTable td:not(:nth-child(1)):not(:nth-child(2)) {
     max-width: 0;

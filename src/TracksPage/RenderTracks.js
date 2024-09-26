@@ -8,9 +8,9 @@ export default function RenderTracks({tracks}){
       <colgroup>
         <col width="38px"/>{/* Track Rank*/}
         <col width="48px"/>{/* Track Image */}
-        <col width="520px"/>{/* Title*/}
+        <col width="420px"/>{/* Title*/}
         <col width="350px"/>{/* Artist*/}
-        <col width="520px"/>{/* Album*/} 
+        <col width="420px"/>{/* Album*/} 
       </colgroup>
 
       <tbody>

@@ -36,10 +36,10 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
       updatedItems.short_term.items = moreItemsResult.items
       updatedItems.short_term.next = moreItemsResult.next
 
-      if (type=='tracks'){
+      if (type==='tracks'){
         getArtistImg(updatedItems.short_term.items[0].artists[0].href, updatedItems)
       }
-      if (type=="artists"){
+      if (type==="artists"){
         setTopArtistImg(updatedItems.short_term.items[0].images[0].url)
         updateTopArtistsFunc(updatedItems)
       }
@@ -60,7 +60,6 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
         value: artistResult.images[0].url,
         writable:false
       })
-      console.log(updatedTopTracks)
       setTopTrackImg(artistResult.images[0].url)
       updateTopTracksFunc(updatedTopTracks)
       
@@ -71,7 +70,7 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
   return (
     <div className='page-card-container'>
       <Link to="tracks" style={{ textDecoration: 'none' }}>
-        <div className="top-item-card">
+        <div className="home-cards">
           <div className="top-item-img">
             <img src={topTrackImg} alt="topTrackImg" loading='lazy'/>
           </div>
@@ -84,7 +83,7 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
       </Link>
 
       <Link to="artists" style={{ textDecoration: 'none' }}>
-        <div className="top-item-card">
+        <div className="home-cards">
           <div className="view-top-items">
             <div className="view-top-items-link">
                 <span>View Your Top Artists</span>
@@ -95,8 +94,17 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
           </div>   
         </div>
       </Link>
+
+      <Link to="playlists" style={{ textDecoration: 'none' }}>
+         <div className="home-cards">
+            <div className="home-playlist-card">
+              <div>
+                <span>View Your Playlists</span>
+                <span>Get an analysis for your playlists</span>
+              </div>
+            </div>
+         </div>
+      </Link>
     </div>
   )
 } 
-
-
