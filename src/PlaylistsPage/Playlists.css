@@ -1,6 +1,5 @@
-:root{
-    --playlistImgSize: 180px;
-}
+/* css for displaying user playlists page */
+:root{--playlistImgSize: 180px;}
 
 .playlistsContainer{
     display: block;
@@ -8,9 +7,7 @@
     margin-left: auto;
     margin-right: auto; 
     width: 90%;
-    
 } 
-
 .playlistBlock{
     color:var(--page-text-color);
     text-decoration: none;
@@ -39,9 +36,7 @@
    
 }
 
-
-
 .playlistCaption {
-    
+    font-size: 0.95rem;
     display: block;
 }

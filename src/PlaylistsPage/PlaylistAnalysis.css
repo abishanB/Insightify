@@ -147,8 +147,6 @@
   overflow-y:auto;  /* scrolling */
 }
 
-
-
 .top-items-container img{
   height: 50px;
   width: 50px;
@@ -169,22 +167,17 @@
  white-space: nowrap;
 }
 
-
 .playlist-artist-image{  /* image */
   display:table-cell;
   vertical-align:middle;
   text-align: center;
 }
 
-
 .playlist-album-image img{
   margin: auto;
   vertical-align: middle; 
   display: inline-block;
-
 }
-
-
 .item-occurences{
   text-align: right;
 }

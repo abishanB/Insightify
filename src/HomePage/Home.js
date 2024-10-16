@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react'
 import "./Home.css"
 import { getEndpointResult } from '../apiCalls';
 import LoadingIcon from '../components/LoadingIcon';
-
 import { Link } from 'react-router-dom';
+//Links to tracks, artists, and playlists page
+//Displays top track's artist image and top artist image
 
 export default function Home({token , topTracksObj, updateTopTracksFunc, topArtistsObj, updateTopArtistsFunc}) {
   const [topTrackImg, setTopTrackImg] = useState(null)
@@ -12,20 +13,23 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
 
   useEffect(() => {//on component load, fetches top items if nessecary
     if (topTracksObj.short_term.items.length===0){//if any tracks havent been loaded 
-      getTopItems(topTracksObj, "tracks")
+      getFirstSetTopItems(topTracksObj, "tracks")
     } 
     else if (topTracksObj.short_term.hasOwnProperty("topTrackArtistImg")){//the artists image for the top track has been loaded
       setTopTrackImg(topTracksObj.short_term.topTrackArtistImg)
-    } else {//if tracks have been loaded but top track artist image hasnt been retrieved
-      getArtistImg(topTracksObj.short_term.items[0].artists[0].href, topTracksObj)
+    } else {//if tracks have been loaded but top track's artist image hasnt been retrieved
+      getTopTrackArtistImg(topTracksObj.short_term.items[0].artists[0].href, topTracksObj)
     }
       
-    if (topArtistsObj.short_term.items.length===0){
-      getTopItems(topArtistsObj, "artists")
+    if (topArtistsObj.short_term.items.length===0){//if top artists hasnt been loaded
+      getFirstSetTopItems(topArtistsObj, "artists")
     } else {setTopArtistImg(topArtistsObj.short_term.items[0].images[0].url)}
+    // eslint-disable-next-line
   }, []);
 
-  function getTopItems(topItems, type){
+  function getFirstSetTopItems(topItems, type){
+    //retrieves the first 50 topItems, tracks or artists, so that images can be displayed on home page
+    //Items are passed to parent function so that they need not to be reloaded on tracks or artists page
     const promise = getEndpointResult(token, topItems.short_term.next, `fetching more ${type} - short_term`);
     promise.then((moreItemsResult) => {
       if (moreItemsResult === false){
@@ -37,7 +41,7 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
       updatedItems.short_term.next = moreItemsResult.next
 
       if (type==='tracks'){
-        getArtistImg(updatedItems.short_term.items[0].artists[0].href, updatedItems)
+        getTopTrackArtistImg(updatedItems.short_term.items[0].artists[0].href, updatedItems)
       }
       if (type==="artists"){
         setTopArtistImg(updatedItems.short_term.items[0].images[0].url)
@@ -47,16 +51,16 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
     }).catch(() => setError(true));
   }
 
-  function getArtistImg(artistEndpoint, updatedTopTracks){
+  function getTopTrackArtistImg(artistEndpoint, updatedTopTracks){
     //get top artist image to display for the top track which is not given by top_items endpoint
-    //cannot use track image because image needs to be
+    //cannot use track image because image needs to be circle
     const promise = getEndpointResult(token, artistEndpoint, `fetching artist image URL`);
     promise.then((artistResult) => {
       if (artistResult === false){
         setError(true);
         return;
       }
-      Object.defineProperty(updatedTopTracks.short_term, "topTrackArtistImg",{
+      Object.defineProperty(updatedTopTracks.short_term, "topTrackArtistImg",{//define property for image
         value: artistResult.images[0].url,
         writable:false
       })

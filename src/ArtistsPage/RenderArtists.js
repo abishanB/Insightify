@@ -21,8 +21,7 @@ function artistListingHTML(artist, artistRank){
                 <img src={artist.images[0].url} className='artistCover' height={imageSize} width={imageSize} alt="artistImg" loading='lazy'/>
               </a>
             </td>
-            <td  className="artistName">{artist.name}</td>
-            
+            <td className="artistName">{artist.name}</td>
           </tr>
         </tbody>
       </table>
