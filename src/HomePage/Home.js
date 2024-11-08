@@ -3,15 +3,32 @@ import "./Home.css"
 import { getEndpointResult } from '../apiCalls';
 import LoadingIcon from '../components/LoadingIcon';
 import { Link } from 'react-router-dom';
+import spotifyLogo from "../components/Spotify_Primary_Logo_RGB_White.png"
+import apiCredentials from "../apiCredentials.json"  
 //Links to tracks, artists, and playlists page
 //Displays top track's artist image and top artist image
 
-export default function Home({token , topTracksObj, updateTopTracksFunc, topArtistsObj, updateTopArtistsFunc}) {
+
+function getSpotifyLoginURL(redirect_uri="http://localhost:3000"){//return spotify login url with correct redirectURI
+  const clientID = apiCredentials.clientID
+  const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
+  const RESPONSE_TYPE = "code"
+  const SCOPE = 'user-read-private user-read-email user-top-read playlist-read-private user-library-read'
+  return `${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${redirect_uri}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
+}
+//`${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRCT_URI2}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
+export default function Home({token , topTracksObj, updateTopTracksFunc, topArtistsObj, updateTopArtistsFunc, isLoggedIn}) {
   const [topTrackImg, setTopTrackImg] = useState(null)
   const [topArtistImg, setTopArtistImg] = useState(null)
   const [error, setError] = useState(false);
 
   useEffect(() => {//on component load, fetches top items if nessecary
+    if (isLoggedIn === false){
+      setTopTrackImg(spotifyLogo)
+      setTopArtistImg(spotifyLogo)
+      return
+    }
+
     if (topTracksObj.short_term.items.length===0){//if any tracks havent been loaded 
       getFirstSetTopItems(topTracksObj, "tracks")
     } 
@@ -70,27 +87,37 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
     }).catch(() => setError(true));
   }
 
-  if (topTrackImg==null || topArtistImg==null) return <LoadingIcon/>
+  if ((topTrackImg==null || topArtistImg==null) && isLoggedIn===true) return <LoadingIcon/>
   return (
+    <React.Fragment>
+    {!isLoggedIn 
+    ?
+    <a href={getSpotifyLoginURL("http://localhost:3000")}>
+      <div className='login-btn'>
+          <span>Login With Spoitfy</span>
+      </div>
+    </a>
+    :<></>
+    }
     <div className='page-card-container'>
-      <Link to="tracks" style={{ textDecoration: 'none' }}>
+      <Link to={isLoggedIn ? "tracks" : getSpotifyLoginURL("http://localhost:3000/tracks")} style={{ textDecoration: 'none' }}>
         <div className="home-cards">
           <div className="top-item-img">
             <img src={topTrackImg} alt="topTrackImg" loading='lazy'/>
           </div>
           <div className="view-top-items">
-            <div className="view-top-items-link">
-                <span>View Your Top Tracks</span>
+            <div>
+              <span>View Your Top Tracks</span>
             </div>    
           </div>
         </div>
       </Link>
 
-      <Link to="artists" style={{ textDecoration: 'none' }}>
+      <Link to={isLoggedIn ? "artists" : getSpotifyLoginURL("http://localhost:3000/artists")} style={{ textDecoration: 'none' }}>
         <div className="home-cards">
           <div className="view-top-items">
-            <div className="view-top-items-link">
-                <span>View Your Top Artists</span>
+            <div>
+              <span>View Your Top Artists</span>
             </div>
           </div>
           <div className="top-item-img">
@@ -99,7 +126,7 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
         </div>
       </Link>
 
-      <Link to="playlists" style={{ textDecoration: 'none' }}>
+      <Link to={isLoggedIn ? "playlists" : getSpotifyLoginURL("http://localhost:3000/playlists")} style={{ textDecoration: 'none' }}>
          <div className="home-cards">
             <div className="home-playlist-card">
               <div>
@@ -110,5 +137,6 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
          </div>
       </Link>
     </div>
+    </React.Fragment>
   )
 } 

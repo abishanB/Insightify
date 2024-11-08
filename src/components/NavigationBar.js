@@ -10,14 +10,11 @@ const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
 const RESPONSE_TYPE = "code"
 const SCOPE = 'user-read-private user-read-email user-top-read playlist-read-private user-library-read'
 let spotifyLogin = `${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
-
-
-
+ 
 export default function NavigationBar(props) {
   return (
     <div className='nav-background'>
         <ul id ="nav">
-
           <li><div className='nav-bar-item'><Link to="..">Home</Link></div></li> {/*links to root home page */}
           <li><div className='nav-bar-item'><Link to="tracks">Tracks</Link></div></li>
           <li><div className='nav-bar-item'><Link to="artists">Artists</Link></div></li>

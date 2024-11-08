@@ -79,6 +79,8 @@ export default class App extends Component{
       isLoggedIn:false
     })
     window.localStorage.clear()
+
+
   }
 
   updateTopTracks = (topTracksObj) => {this.setState({top_tracks:topTracksObj})}
@@ -103,7 +105,12 @@ export default class App extends Component{
 
   onGetAuthCode= (code) => {//authorization flow, get auth code
     var that = this;
-    const promise = getTokenWithAuthCode(code)
+    var currentURL = window.location.href.split("?")[0]//remove ?code= 
+    if (currentURL.slice(-1) == '/'){
+      //when url is localhost:3000/ the '/' must be dropped so the api accepts the redirectURI
+      currentURL = currentURL.slice(0, -1)
+    }
+    const promise = getTokenWithAuthCode(code, currentURL)
     promise.then(function(token_promise) {
       that.setState({
         token : token_promise.access_token, 
@@ -119,20 +126,23 @@ export default class App extends Component{
       return(
         <div className="App">
           <NavigationBar isLoggedIn={this.state.isLoggedIn} onLogout={this.logout}/>
+          <Home token={null} topTracksObj={null} updateTopTracksFunc={null}
+                                  topArtistsObj={null} updateTopArtistsFunc={null} isLoggedIn={this.state.isLoggedIn}/>
         </div>
       )
     }
     return (
     <div className="App">
       <NavigationBar isLoggedIn={this.state.isLoggedIn} onLogout={this.logout}/>
-        <Routes>
-          (<Route index element={<Home token={this.state.token} topTracksObj={this.state.top_tracks} updateTopTracksFunc={this.updateTopTracks}
-                                topArtistsObj={this.state.top_artists} updateTopArtistsFunc={this.updateTopArtists}/>} />)
-          <Route path='tracks' element={<TopItems token={this.state.token} key="tracks" type="tracks" storedTopItems={this.state.top_tracks} updateTopItemsFunc={this.updateTopTracks}/>} />
-          <Route path='artists' element={<TopItems token={this.state.token} key="artists" type="artists" storedTopItems={this.state.top_artists} updateTopItemsFunc={this.updateTopArtists}/>}/>
-          <Route path='playlists' element={<DisplayPlaylists token={this.state.token} storedUserPlaylists={this.state.userPlaylists} updateUserPlaylistsFunc={this.updateUserPlaylists}/>}/>
-          <Route exact path="/playlists/:playlistID" element={<PlaylistInfo token={this.state.token}/>} />
-        </Routes>
+      <Routes>
+        (<Route index element={<Home token={this.state.token} topTracksObj={this.state.top_tracks} updateTopTracksFunc={this.updateTopTracks}
+                              topArtistsObj={this.state.top_artists} updateTopArtistsFunc={this.updateTopArtists} isLoggedIn={this.state.isLoggedIn}/>} />)
+        
+        <Route path='tracks' element={<TopItems token={this.state.token} key="tracks" type="tracks" storedTopItems={this.state.top_tracks} updateTopItemsFunc={this.updateTopTracks}/>} />
+        <Route path='artists' element={<TopItems token={this.state.token} key="artists" type="artists" storedTopItems={this.state.top_artists} updateTopItemsFunc={this.updateTopArtists}/>}/>
+        <Route path='playlists' element={<DisplayPlaylists token={this.state.token} storedUserPlaylists={this.state.userPlaylists} updateUserPlaylistsFunc={this.updateUserPlaylists}/>}/>
+        <Route exact path="/playlists/:playlistID" element={<PlaylistInfo token={this.state.token}/>} />
+      </Routes>
     </div>
       )
     }

@@ -1,7 +1,7 @@
 .home-cards {
     --home-card-height: 13.5vw;
     --image_size: calc(calc(var(--home-card-height)) - calc(1vw));
-    --card-margin-top: 5.2vh;
+    --card-margin-top: 3vh;
     width: 55%;
     margin-left: auto;
     margin-right: auto;
@@ -44,7 +44,7 @@
 
 .top-item-img:nth-child(1){
     border-radius: 150px 0 0 150px;
-}
+}  
 
 .top-item-img:nth-child(2){
     margin-top: var(--card-margin-top);
@@ -119,3 +119,23 @@
     font-family: var(--page-font-family);
     color: var(--grayColor);
 }
+
+.login-btn {
+    display: flex;
+    width: 15%;
+    height: 35px;
+   
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    border-radius: 14px;
+    background-color: #1ED760; 
+    color: #FFFFFF;
+    font-family: var(--page-font-family);
+    font-size: 1.2rem;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+   
+}
+
