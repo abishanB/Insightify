@@ -107,6 +107,27 @@ function getPlaylistAlbums(playlistTracks){//collect how many times a album appe
   return sortProperties(playlistAlbums)
 }
 
+function likedSongsToPlaylist(likedSongsObj){//convert likedSongs object to playlist Object by adding corresponding properties
+  Object.defineProperty(likedSongsObj, "owner",{
+    value : { "external_urls": {
+      "spotify": "https://open.spotify.com/collection/tracks"
+    }
+  }})
+  Object.defineProperty(likedSongsObj, "external_urls",{
+    value : {"spotify": "https://open.spotify.com/collection/tracks"}
+  })
+  Object.defineProperty(likedSongsObj, "images",{
+    value :[{url: 'https://misc.scdn.co/liked-songs/liked-songs-300.png'}]
+  })
+  Object.defineProperty(likedSongsObj, "tracks",{
+    value : {"total": likedSongsObj.total}
+  })
+  Object.defineProperty(likedSongsObj, "followers",{
+    value : {"total": "N/A"}
+  })
+  return likedSongsObj
+}
+
 export default function PlaylistInfo(props) {
   const [playlist, setPlaylist]= useState([])
   const [playlistTracks, setPlaylistTracks] = useState([])
@@ -132,13 +153,17 @@ export default function PlaylistInfo(props) {
 
   useEffect(() => {//runs when playlist is recieved 
     if (playlist.length===0){return}
-    if (playlist.tracks.total===0){
+    if (playlistID != "liked_songs" && playlist.tracks.total===0 || playlistID == "liked_songs" && playlist.total===0){
+      //if playlist is empty or only contains local songs
       setNoData(true)
       setReadyToRender(true)
       return
     }
-    
-    onGetPlaylistTracks(playlist.tracks.items, playlist.tracks.next)
+    if (playlistID == "liked_songs"){
+      onGetPlaylistTracks(playlist.items, playlist.next)
+    } else {
+      onGetPlaylistTracks(playlist.tracks.items, playlist.tracks.next)
+    }
     // eslint-disable-next-line
   }, [playlist]);
 
@@ -235,13 +260,19 @@ export default function PlaylistInfo(props) {
     })
   }
 
-  function onGetPlaylist (playlist_id){//get playlist object and update state
-    const promise = getEndpointResult(props.token, `https://api.spotify.com/v1/playlists/${playlist_id}`, "Fetching playlist")
+  function onGetPlaylist (playlistID){//get playlist object and update state
+    if (playlistID == "liked_songs"){
+      var promise = getEndpointResult(props.token, `https://api.spotify.com/v1/me/tracks?limit=50`, "Fetching Liked Songs")
+    } else {
+      var promise = getEndpointResult(props.token, `https://api.spotify.com/v1/playlists/${playlistID}`, "Fetching Playlist")
+    }
     promise.then(function(playlistObj) {
       if (playlistObj === false){
         setError(true)
         return
       }
+      //add properties to handle liked songs as a playlist
+      if (playlistID == "liked_songs"){ playlistObj = likedSongsToPlaylist(playlistObj)}
       setPlaylist(playlistObj)
     })
   }

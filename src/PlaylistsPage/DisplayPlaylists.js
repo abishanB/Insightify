@@ -44,7 +44,12 @@ export default function DisplayPlaylists({token, storedUserPlaylists, updateUser
 
     let playlistPerCallLimit = 50;//number of playlists to get each call, max 50 
     let userPlaylistsEndpoint = `https://api.spotify.com/v1/me/playlists?limit=${playlistPerCallLimit}` //inital endpoint to get user playlists
-    getPlaylists([], userPlaylistsEndpoint)//pass empty lst for inital set of playlists
+    let likedSongsPlaylist = {
+      id: 'liked_songs',
+      name: "Liked Songs",
+      images: [{url: 'https://misc.scdn.co/liked-songs/liked-songs-300.png'}]
+    }
+    getPlaylists([likedSongsPlaylist], userPlaylistsEndpoint)//pass empty lst for inital set of playlists
     // eslint-disable-next-line
   }, []);
 
@@ -52,7 +57,6 @@ export default function DisplayPlaylists({token, storedUserPlaylists, updateUser
     if (firstUpdate.current) {//dont run this effect on inital render
       firstUpdate.current = false;
       return;}
-
     updateUserPlaylistsFunc(playlists)
     // eslint-disable-next-line
   }, [playlists]);
