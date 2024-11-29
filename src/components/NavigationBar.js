@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import apiCredentials from "../apiCredentials.json"
 import spotifyLogo from "./Spotify_Primary_Logo_RGB_White.png"
 const clientID = apiCredentials.clientID
+const APP_SCOPE = apiCredentials.scope
 const REDIRECT_URI = "http://localhost:3000"
 
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
 const RESPONSE_TYPE = "code"
-const SCOPE = 'user-read-private user-read-email user-top-read playlist-read-private user-library-read'
-let spotifyLogin = `${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
+let spotifyLogin = `${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${APP_SCOPE}`
  
 export default function NavigationBar(props) {
   return (
@@ -36,9 +36,7 @@ export default function NavigationBar(props) {
           }
         </ul>
         <div className="gradient">
-          
         </div>
     </div>
-  
   )
 }

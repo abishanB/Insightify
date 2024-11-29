@@ -7,11 +7,6 @@ import "./PlaylistAnalysis.css";
 import PlaylistSummary from './PlaylistSummaryCard';
 import TopArtistsAlbums from './PlaylistTopArtistsAlbums'
 
-
-function capitalizeFirstLetter(string) {//to capitalize the first letter of genre names
-  return string.charAt(0).toUpperCase() + string.slice(1);
-} 
-
 function sortProperties(obj){//sorts artists, albums and genres from most occuring to least
 	var sortable=[];
 
@@ -153,13 +148,13 @@ export default function PlaylistInfo(props) {
 
   useEffect(() => {//runs when playlist is recieved 
     if (playlist.length===0){return}
-    if (playlistID != "liked_songs" && playlist.tracks.total===0 || playlistID == "liked_songs" && playlist.total===0){
+    if ( (playlistID !== "liked_songs" && playlist.tracks.total===0 ) || ( playlistID === "liked_songs" && playlist.total===0 )){
       //if playlist is empty or only contains local songs
       setNoData(true)
       setReadyToRender(true)
       return
     }
-    if (playlistID == "liked_songs"){
+    if (playlistID === "liked_songs"){
       onGetPlaylistTracks(playlist.items, playlist.next)
     } else {
       onGetPlaylistTracks(playlist.tracks.items, playlist.tracks.next)
@@ -191,6 +186,7 @@ export default function PlaylistInfo(props) {
   function getGenres(playlistArtists, access_token){//get genres of artists in playlists, as well as sets artist Image URL
     //included in parent function to access useState
     //makes a call to artist endpoint where artist genre can be found
+    const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1); //to capitalize the first letter of genre names
 
     let playlistGenres = {} //{playlistGenre: number of occurences}
     let numOfArtists = playlistArtists.length
@@ -248,7 +244,7 @@ export default function PlaylistInfo(props) {
     //inital playlist endpoint returns 100 tracks and a next endpoint for the next 100
     //if next endpoint doesnt exist set state and return func
     //else make a api call to the endpoint then call function again while adding to the list of tracks
-    if (nextEndpoint === null || playlistTracks.length >= 2500){//dont scan over 2000 tracks
+    if (nextEndpoint === null || playlistTracks.length >= 2200){//dont scan over 22 00 tracks
       setPlaylistTracks(filterPlaylistTracks(playlistTracks))
       return
     }
@@ -261,10 +257,11 @@ export default function PlaylistInfo(props) {
   }
 
   function onGetPlaylist (playlistID){//get playlist object and update state
-    if (playlistID == "liked_songs"){
-      var promise = getEndpointResult(props.token, `https://api.spotify.com/v1/me/tracks?limit=50`, "Fetching Liked Songs")
+    var promise;
+    if (playlistID === "liked_songs"){
+      promise = getEndpointResult(props.token, `https://api.spotify.com/v1/me/tracks?limit=50`, "Fetching Liked Songs")//users liked songs endpoint
     } else {
-      var promise = getEndpointResult(props.token, `https://api.spotify.com/v1/playlists/${playlistID}`, "Fetching Playlist")
+      promise = getEndpointResult(props.token, `https://api.spotify.com/v1/playlists/${playlistID}`, "Fetching Playlist")
     }
     promise.then(function(playlistObj) {
       if (playlistObj === false){
@@ -272,7 +269,7 @@ export default function PlaylistInfo(props) {
         return
       }
       //add properties to handle liked songs as a playlist
-      if (playlistID == "liked_songs"){ playlistObj = likedSongsToPlaylist(playlistObj)}
+      if (playlistID === "liked_songs"){ playlistObj = likedSongsToPlaylist(playlistObj) }
       setPlaylist(playlistObj)
     })
   }

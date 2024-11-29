@@ -81,7 +81,7 @@ export async function getTokenWithAuthCode(code, redirect_uri='http://localhost:
     return checkResponse(await response)
   }
   
-export async function getEndpointResult(access_token, endpoint, endpointType=null){//for calls with custom endpoint, next calls
+export async function getEndpointResult(access_token, endpoint, endpointType=null){//for calls with custom endpoint ie next calls
   if (endpointType!=null) {console.log("ENDPOINT CALL -",endpointType)}
   
   const response = await fetch(endpoint, {

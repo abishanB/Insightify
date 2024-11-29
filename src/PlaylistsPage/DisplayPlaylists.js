@@ -5,8 +5,12 @@ import LoadingIcon from '../components/LoadingIcon.js'
 import './Playlists.css'; 
 import { Link } from 'react-router-dom';
 
-function removeDJPlaylist(playlistsObj){
-  for (var i = playlistsObj.length - 1; i >= 0; i--) {//remove spotify generated playlists
+function removeSpotifyPlaylists(playlistsObj){//removes spotify dj & spotify playlists which return as null
+  for (var i = playlistsObj.length - 1; i >= 0; i--) {//remove spotify generated playlists, ie
+    if (playlistsObj[i] == null){//if playlist is null, playlists created by spotify return
+      playlistsObj.splice(i, 1)
+      continue
+    }
     if (playlistsObj[i].name==="DJ") { 
       playlistsObj.splice(i, 1);
     }
@@ -65,7 +69,7 @@ export default function DisplayPlaylists({token, storedUserPlaylists, updateUser
     //if next endpoint doesnt exist set state and return func
     //else make a api call to the endpoint then call function again while adding to the list of tracks
     if (nextEndpoint === null || playlistsArr >= maxPlaylists) {//only return up to 100 playlists
-      setPlaylists(removeDJPlaylist(playlistsArr))
+      setPlaylists(removeSpotifyPlaylists(playlistsArr))
       return
     }
     

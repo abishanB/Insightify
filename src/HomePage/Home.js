@@ -8,7 +8,6 @@ import apiCredentials from "../apiCredentials.json"
 //Links to tracks, artists, and playlists page
 //Displays top track's artist image and top artist image
 
-
 function getSpotifyLoginURL(redirect_uri="http://localhost:3000"){//return spotify login url with correct redirectURI
   const clientID = apiCredentials.clientID
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"

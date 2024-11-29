@@ -40,22 +40,23 @@ export default class App extends Component{
     let code = window.localStorage.getItem("code")
     let refresh_token = window.localStorage.getItem("refresh_token")
 
-    if (refresh_token==null || refresh_token==="undefined") {
-      
-    } else {//if refresh token already exists
+    if (!(refresh_token==null || refresh_token==="undefined")) {
+      //if refresh token already exists
       this.onGetRefreshToken(refresh_token)
-    } 
+      return
+    }
     
     if (code==null || code==="undefined") {
       code = hash.split("=")[1]
       window.location.hash = ""
       window.localStorage.setItem("code", code)
       window.addEventListener('code', this.storeAuthCode)
+      console.log(code)
       if (code==null || code==="undefined"){
         return
       }
-      this.onGetAuthCode(code)//get token and auth code
-        
+      this.getTokenAuthFlow(code)//get token and auth code
+      
       this.setState({
         auth_code:code
       })
@@ -70,19 +71,18 @@ export default class App extends Component{
   } 
   
   logout = (logoutClick) => {
-    logoutClick.preventDefault();
-    console.log("LOGUTOUT")
+    logoutClick.preventDefault();//prevents page reload
+    console.log("LOGOUT")
     this.setState({
       token: "",
       refresh_token: "",
       auth_code:"",
       isLoggedIn:false
     })
-    window.localStorage.clear()
-
-
+    window.localStorage.clear()//clear code, refresh token
   }
 
+  //updates top items and playlists when called from other pages
   updateTopTracks = (topTracksObj) => {this.setState({top_tracks:topTracksObj})}
   updateTopArtists = (topArtistsObj) => {this.setState({top_artists:topArtistsObj})}
   updateUserPlaylists =(userPlaylistsObj) => {this.setState({userPlaylists:userPlaylistsObj})}
@@ -103,9 +103,9 @@ export default class App extends Component{
     })
   }
 
-  onGetAuthCode= (code) => {//authorization flow, get auth code
+  getTokenAuthFlow= (code) => {//get auth code authorization flow
     var that = this;
-    var currentURL = window.location.href.split("?")[0]//remove ?code= 
+    var currentURL = window.location.href.split("?")[0]//splits ?code= 
     if (currentURL.slice(-1) == '/'){
       //when url is localhost:3000/ the '/' must be dropped so the api accepts the redirectURI
       currentURL = currentURL.slice(0, -1)
