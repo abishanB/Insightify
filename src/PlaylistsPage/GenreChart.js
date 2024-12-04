@@ -76,7 +76,7 @@ export default function GenreChart(props) {
       datasets: [
         {  
           radius: 340,
-          label: "Genre Count",
+          label: "",
           data: genreData.map((data) => data.occurrences),
           backgroundColor: [
             "#F4A261", // Soft Orange
