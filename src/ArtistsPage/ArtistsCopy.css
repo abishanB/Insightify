@@ -4,13 +4,13 @@
     flex-wrap: wrap;
     column-gap: var(--gap-size);
     width: calc((var(--artist-Listing-width) * 2 + var(--gap-size)));
+    min-width: 500px;
     
-    max-width:100%;
     margin-left: auto;
     margin-right: auto;
-
-    --gap-size: 30px;
-    --artist-Listing-width: 400px
+    /* outline: 2px solid blue; */
+    --gap-size: 10px;
+    --artist-Listing-width: max(27vw, 250px)
 }
 
 .artistCover{ 
@@ -25,9 +25,10 @@
 }
 
 .artistRank{
-    min-width: 55px;
+    max-width: 3vw;
     text-align: center;
     font-size: 2rem;
+    /* outline: 2px solid brown; */
 }
 
 .artistName {
@@ -35,39 +36,37 @@
     width: 100%;
     max-width: 0;
     overflow: hidden;
-    white-space: nowrap; /* Keeps the text on a single line */
-    text-overflow: ellipsis; /* Adds ellipsis if text overflows */
+  white-space: nowrap; /* Keeps the text on a single line */
+  text-overflow: ellipsis; /* Adds ellipsis if text overflows */
 }
 
-.artist-table-listing{
+
+.artistTableLeft, .artistTableRight{
     justify-content: center;
     align-items: center;
     max-width: var(--artist-Listing-width);
     width:var(--artist-Listing-width);
+    outline: solid 2px red;
     overflow: hidden;
     white-space: nowrap; /* Keeps the text on a single line */
     text-overflow: ellipsis; /* Adds ellipsis if text overflows */
     min-width: 250px;
 }
 
-@media (max-width: 900px) { /* Adjust for smaller screens */
+@media (max-width: 520px) {
     .artistList {
-        column-gap: 0; /* Remove coloumn gaps for small screens */
-        row-gap: 4px;
-        width: min(100%,600px);
+        gap: 0; /* Remove gaps for small screens */
+        max-width: 100%
     }
-    .artist-table-listing{
-        width: 400px;
+    .artistTableLeft, .artistTableRight{
         min-width: 50%;
-        max-width:50%;
     }
     .artistName{
-        font-size: 1.3rem;
-    }
-    .artistRank{
-        min-width: 40px;
-        font-size: 1.4rem;
+        font-size: 1.5rem;
     }
 }
 
 
+.artistTableLeft col:nth-child(1), .artistTableRight col:nth-child(1){
+    min-width: 55px;
+}

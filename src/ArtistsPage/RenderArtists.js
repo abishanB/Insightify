@@ -5,11 +5,11 @@ import './Artists.css';
 function artistListingHTML(artist, artistRank){
   const imageSize = 80;
   return (
-    <table key ={artistRank} className='artistTable'>
+    <table key ={artistRank} className="artist-table-listing">
         <colgroup>
-          <col width="58px"/>{/* Artist Rank*/}
-          <col width="95px"/>{/*  Image */}
-          <col width="340px"/>{/* Artist*/}
+          <col />{/* Artist Rank*/}
+          <col />{/*  Image */}
+          <col/>{/* Artist Name*/}
          
         </colgroup>
 
@@ -29,24 +29,18 @@ function artistListingHTML(artist, artistRank){
 }
 
 export default function RenderArtists({artists}){
-  const leftArtistCol = Object.entries(artists).map(([artistRank, artist]) => {//left column of artists, odd numbers
-    if ((parseInt(artistRank)+1) % 2===0){return null}
+  const artistListings = Object.entries(artists).map(([artistRank, artist]) => {//left column of artists, odd numbers
+    
     return (artistListingHTML(artist, parseInt(artistRank)+1)) 
   })
 
-  const rightArtistCol = Object.entries(artists).map(([artistRank, artist]) => {//right column of artists, even numbers
-    if ((parseInt(artistRank)+1) % 2===1){return null}
-    return (artistListingHTML(artist, parseInt(artistRank)+1)) 
-  })
+
 
   return (
     <div className='artistList'>
-      <div>
-        {leftArtistCol}
-      </div>
-      <div>
-        {rightArtistCol}
-      </div>
+
+      {artistListings}
+     
     </div>
   )
 }
