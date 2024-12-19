@@ -1,30 +1,67 @@
-.trackTable{
+.track-table-container{ 
+    margin-top: 10px;
+    width: 100%;
+    text-align: left;
+    /* outline: 2px solid blue; */
+}
+.track-table{
     table-layout:fixed;
     margin-left: auto;
     margin-right: auto;
+    /* outline: 2px solid purple; */
 }
-/* text overflow, dont do overflow on first 2 child- track ranking and images */
-.trackTable td:not(:nth-child(1)):not(:nth-child(2)) {
+
+.track-name, .track-artist-name, .track-album {
     max-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 1.3rem;
+    /* outline: 2px solid red; */
 }
 
-.trackCover{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  
-} 
-.trackRank{
+.track-rank{
     text-align: center;
-    
+    font-size: 1.25rem;
 }
-.trackList{ 
-    margin-top: 10px;
-    width: 100%;
-    left: 0;
-    text-align: left;
-    font-size: 1.3rem;
+
+.track-cover{
+    display: block;
+    margin-left: auto; 
+    margin-right: auto;
+    height: 48px;
+    width: 48px;
+} 
+
+@media (max-width: 1000px) { /* Adjust for smaller screens */
+    .track-rank{
+        font-size: 0.9rem;
+    }
+    .track-name, .track-artist-name, .track-album {
+        font-size: 1rem;
+    }
+    .track-cover{
+        max-width: 36px;
+        height: 36px;
+        width: 36px;
+    }
+}
+
+@media (max-width: 525px) { /* Adjust for smaller screens */
+    .track-rank{
+        font-size: 0.9rem;
+        
+    }
+    .track-name, .track-artist-name, .track-album {
+        font-size: 0.775rem;
+    }
+    .track-cover{
+        max-width: 28px;
+        height: 28px;
+        width: 28px;
+    }
+    .track-table{
+        max-width: 100%;
+        min-width: 100%;
+    }
 }

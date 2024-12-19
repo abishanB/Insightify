@@ -9,8 +9,7 @@ function artistListingHTML(artist, artistRank){
         <colgroup>
           <col />{/* Artist Rank*/}
           <col />{/*  Image */}
-          <col/>{/* Artist Name*/}
-         
+          <col />{/* Artist Name*/}
         </colgroup>
 
         <tbody>
@@ -30,17 +29,11 @@ function artistListingHTML(artist, artistRank){
 
 export default function RenderArtists({artists}){
   const artistListings = Object.entries(artists).map(([artistRank, artist]) => {//left column of artists, odd numbers
-    
     return (artistListingHTML(artist, parseInt(artistRank)+1)) 
   })
-
-
-
   return (
     <div className='artistList'>
-
       {artistListings}
-     
     </div>
   )
 }
