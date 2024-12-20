@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { getEndpointResult } from '../apiCalls.js';
 import LoadingIcon from '../components/LoadingIcon.js'
-import './Playlists.css'; 
+import './DisplayPlaylists.css'; 
 import { Link } from 'react-router-dom';
 
 function removeSpotifyPlaylists(playlistsObj){//removes spotify dj & spotify playlists which return as null
@@ -28,9 +28,9 @@ export function playlistCoverURL(playlist){//check if playlist cover is given an
 
 function renderPlaylists(playlists) {//jsx for playlist buttons
   const playlistsLstHTML = Object.entries(playlists).map(([key, playlist]) =>
-    <Link className="playlistBlock" key={key} to={`/playlists/${playlist.id}`}>
-      <img src={playlistCoverURL(playlist)} className='playlistCover' alt="playlistImg" loading='lazy'/>
-      <span className='playlistCaption'>{playlist.name}</span>
+    <Link className="playlist-item" key={key} to={`/playlists/${playlist.id}`}>
+      <img src={playlistCoverURL(playlist)} className='playlist-cover' alt="playlistImg" loading='lazy'/>
+      <span className='playlist-name'>{playlist.name}</span>
     </Link>
   )
   return playlistsLstHTML
@@ -91,7 +91,7 @@ export default function DisplayPlaylists({token, storedUserPlaylists, updateUser
     <div>
       <div>
         <h1 className="page-title">Your Playlists ({playlists.length})</h1>
-        <div className="playlistsContainer">
+        <div className="playlist-container">
           {renderPlaylists(playlists)}
         </div>
       </div>
