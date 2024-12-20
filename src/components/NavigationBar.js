@@ -2,7 +2,7 @@ import React from 'react';
 import './styles/NavBar.css';
 import { Link } from 'react-router-dom';
 import apiCredentials from "../apiCredentials.json"
-import spotifyLogo from "./Spotify_Primary_Logo_RGB_White.png"
+import spotifyIcon from "./Spotify_Primary_Logo_RGB_White.png"
 const clientID = apiCredentials.clientID
 const APP_SCOPE = apiCredentials.scope
 const REDIRECT_URI = "http://localhost:3000"
@@ -13,30 +13,32 @@ let spotifyLogin = `${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRE
  
 export default function NavigationBar(props) {
   return (
-    <div className='nav-background'>
+    <div>
         <ul id ="nav">
-          <li><div className='nav-bar-item'><Link to="..">Home</Link></div></li> {/*links to root home page */}
-          <li><div className='nav-bar-item'><Link to="tracks">Tracks</Link></div></li>
-          <li><div className='nav-bar-item'><Link to="artists">Artists</Link></div></li>
-          <li><div className='nav-bar-item'><Link to="playlists">Playlists</Link></div></li>
+          <li className='nav-bar-logo'><Link to="..">BreakdownMusic</Link></li> {/*links to root home page */}
+          <li className='nav-bar-link'><Link to="tracks">Tracks</Link></li>
+          <li className='nav-bar-link'><Link to="artists">Artists</Link></li>
+          <li className='nav-bar-link'><Link to="playlists">Playlists</Link></li>
 
           {props.isLoggedIn
-            ?  <li>
-                <div className='nav-bar-item'>
-                  <a href="/home" onClick={props.onLogout}>Logout</a>
-                  <img src={spotifyLogo} className="spotify-logo" alt="SpotifyLogo"></img>
-                </div>
-              </li>
+            ? 
+                <li>
+                  <a className='logout-btn' href="/home" onClick={props.onLogout}>
+                  Logout
+                  <img src={spotifyIcon} className="spotify-icon" alt="SpotifyIcon"></img>
+                  </a>
+                </li>
             :  <li>
-                <div className='nav-bar-item'>
-                  <a href={spotifyLogin}>Login</a>
-                  <img src={spotifyLogo} className="spotify-logo" alt="SpotifyLogo"></img>
-                </div>
+                <a href={spotifyLogin}>
+                  Login
+                  <img src={spotifyIcon} className="spotify-logo" alt="SpotifyLogo"></img>
+                </a>
               </li>
           }
+        
         </ul>
-        <div className="gradient">
-        </div>
+    
+        <div className="gradient"></div>
     </div>
   )
 }
