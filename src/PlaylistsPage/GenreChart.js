@@ -115,9 +115,7 @@ export default function GenreChart(props) {
         data={chartData}
         options={{
           layout: {
-            padding: {
-              bottom: 450
-          }
+            autoPadding:false
           },
           plugins: {
             legend: {
