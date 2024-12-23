@@ -1,6 +1,6 @@
 import React from 'react'
 import { playlistCoverURL } from './DisplayPlaylists'
-
+import "./styles/PlaylistSummary.css"
 
 
 export default function PlaylistSummary(props) {
@@ -12,19 +12,22 @@ export default function PlaylistSummary(props) {
   const noData = props.noData
   return (
     <div id="summary-card" className="playlist-card">
-      <h1 className="card-title">{playlist.name}</h1>
+      <div className='card-title'>
+        <span>{playlist.name}</span>
+      </div >
       
-      <h2 className="by-owner"> 
-        <a href={playlist.owner.external_urls.spotify} target="_blank" rel="noopener noreferrer">{playlist.owner.display_name}</a> 
-      </h2>
+     <div className="by-owner">
+       <span> 
+         <a href={playlist.owner.external_urls.spotify} target="_blank" rel="noopener noreferrer">{playlist.owner.display_name}</a> 
+       </span>
+     </div>
 
-      
       <div className='summary-container'>
         <a href={playlist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
           <img src={playlistCoverURL(playlist)} alt="playlistCover" width="100" height="100"></img>
         </a>
         
-        <div className='more-info'>
+        <div className='details'>
           <span>Tracks: <span>{playlist.tracks.total}</span></span>
           <span>Artists: <span>{topArtists.length}</span></span>
           <span>Followers: <span>{playlist.followers.total}</span></span>
@@ -35,7 +38,6 @@ export default function PlaylistSummary(props) {
               <span>Top Genre: <span>N/A</span></span>
               <span>Popularity Score: <span>N/A</span></span>
             </>
-        
           : <>
               <span>Top Artist: <span>{topArtists[0][0]}</span></span>
               <span>Top Album: <span>{topAlbums[0][0]}</span></span>

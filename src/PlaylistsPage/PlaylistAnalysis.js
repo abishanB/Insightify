@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getEndpointResult } from '../apiCalls';
 import LoadingIcon from '../components/LoadingIcon';
 import GenreChart from './GenreChart';
-import "./PlaylistAnalysis.css";
+import "./styles/PlaylistAnalysis.css";
 import PlaylistSummary from './PlaylistSummaryCard';
 import TopArtistsAlbums from './PlaylistTopArtistsAlbums'
 
@@ -103,6 +103,9 @@ function getPlaylistAlbums(playlistTracks){//collect how many times a album appe
 }
 
 function likedSongsToPlaylist(likedSongsObj){//convert likedSongs object to playlist Object by adding corresponding properties
+  Object.defineProperty(likedSongsObj, "name",{
+    value : "Liked Songs"
+  })
   Object.defineProperty(likedSongsObj, "owner",{
     value : { "external_urls": {
       "spotify": "https://open.spotify.com/collection/tracks"

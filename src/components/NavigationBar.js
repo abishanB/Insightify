@@ -22,22 +22,21 @@ export default function NavigationBar(props) {
 
           {props.isLoggedIn
             ? 
-                <li>
-                  <a className='logout-btn' href="/home" onClick={props.onLogout}>
-                  Logout
-                  <img src={spotifyIcon} className="spotify-icon" alt="SpotifyIcon"></img>
-                  </a>
-                </li>
-            :  <li>
-                <a href={spotifyLogin}>
-                  Login
-                  <img src={spotifyIcon} className="spotify-logo" alt="SpotifyLogo"></img>
-                </a>
-              </li>
+            <li>
+              <a href="/home" onClick={props.onLogout}>
+              Logout
+              <img src={spotifyIcon} className="spotify-icon" alt="SpotifyIcon"></img>
+              </a>
+            </li>
+            :  
+            <li>
+              <a href={spotifyLogin}>
+                Login
+                <img src={spotifyIcon} className="spotify-icon" alt="SpotifyLogo"></img>
+              </a>
+            </li>
           }
-        
         </ul>
-    
         <div className="gradient"></div>
     </div>
   )

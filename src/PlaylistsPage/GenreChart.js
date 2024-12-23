@@ -55,14 +55,14 @@ function calculateGenreComposition(data){
       percentage: otherPercentage,
     });
   }
-
   return topGenres
 }
 
 export default function GenreChart(props) {
   const [genreReadyToRender, setGenreReadyToRender] = useState(false)
   const [chartData, setChartData] = useState(null)
-  const topGenres = props.topGenres 
+  const topGenres = props.topGenres
+  
   useEffect(() => {//NESSAACERY WAIT
     setGenreReadyToRender(true)
   }, []);
@@ -109,23 +109,32 @@ export default function GenreChart(props) {
   }
   return (
     <div id="genre-chart-card"className='playlist-card'>
-      <h1 className="card-title">Genres</h1>
-      <div>
-      <Doughnut
-        data={chartData}
-        options={{
-          layout: {
-            autoPadding:false
-          },
-          plugins: {
-            legend: {
-              labels: {
-                color: "#b3b7bd"
+      <div className="card-title">
+        <span>Genres</span>
+      </div>
+      <div className='chart-container'>
+        <Doughnut
+          width={1000}
+          height={800}
+          data={chartData}
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  boxWidth: 24,
+                  color: "#b3b7bd",
+                  font: {
+                    size: 12
+                }
+                }
               }
             }
-          }
-        }}
-      />
+          }}
+        />
       </div>
     </div>
   )

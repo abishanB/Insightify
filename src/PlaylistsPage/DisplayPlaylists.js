@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { getEndpointResult } from '../apiCalls.js';
 import LoadingIcon from '../components/LoadingIcon.js'
-import './DisplayPlaylists.css'; 
+import './styles/DisplayPlaylists.css'; 
 import { Link } from 'react-router-dom';
 
 function removeSpotifyPlaylists(playlistsObj){//removes spotify dj & spotify playlists which return as null
