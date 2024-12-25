@@ -14,13 +14,13 @@ function artistListingHTML(artist, artistRank){
 
         <tbody>
           <tr className='track'>
-            <td className="artistRank">{artistRank}</td>
-            <td>
+            <td className="artist-rank">{artistRank}</td>
+            <td className='artist-cover'>
               <a href={artist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-                <img src={artist.images[0].url} className='artistCover' height={imageSize} width={imageSize} alt="artistImg" loading='lazy'/>
+                <img src={artist.images[0].url}  height={imageSize} width={imageSize} alt="artistImg" loading='lazy'/>
               </a>
             </td>
-            <td className="artistName">{artist.name}</td>
+            <td className="artist-name">{artist.name}</td>
           </tr>
         </tbody>
       </table>
@@ -32,7 +32,7 @@ export default function RenderArtists({artists}){
     return (artistListingHTML(artist, parseInt(artistRank)+1)) 
   })
   return (
-    <div className='artistList'>
+    <div className='artist-list'>
       {artistListings}
     </div>
   )

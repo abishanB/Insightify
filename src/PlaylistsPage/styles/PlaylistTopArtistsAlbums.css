@@ -46,6 +46,9 @@
   margin: auto;
   vertical-align: middle;
 }
+.playlist-artist-cover{ /* make artist image rounded */
+  border-radius: 50%;
+}
 .item-occurences{
   text-align: right;
 }

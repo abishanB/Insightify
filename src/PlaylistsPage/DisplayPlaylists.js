@@ -88,13 +88,12 @@ export default function DisplayPlaylists({token, storedUserPlaylists, updateUser
   }  
 
   return (
-    <div>
-      <div>
-        <h1 className="page-title">Your Playlists ({playlists.length})</h1>
-        <div className="playlist-container">
-          {renderPlaylists(playlists)}
-        </div>
+    <React.Fragment>
+      <h1 className="page-title">Your Playlists ({playlists.length})</h1>
+      <div className="playlist-container">
+        {renderPlaylists(playlists)}
       </div>
-    </div>
+      <div  style={{height: 20}}></div>
+    </React.Fragment>
   )
 }

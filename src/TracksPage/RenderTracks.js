@@ -16,9 +16,9 @@ export default function RenderTracks({tracks}){
       <tbody>
         <tr key={trackRank} className='track'>
           <td className="track-rank">{parseInt(trackRank)+1}</td>
-          <td>
+          <td className='track-cover'>
             <a href={track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-              <img src={track.album.images[0].url} className='track-cover' height="42" width="42" alt="albumImg" loading='lazy'/>
+              <img src={track.album.images[0].url} height="42" width="42" alt="albumImg" loading='lazy'/>
             </a>
           </td>
           <td className='track-name'> {track.name}</td>

@@ -1,141 +1,158 @@
 .home-cards {
-    --home-card-height: 13.5vw;
-    --image_size: calc(calc(var(--home-card-height)) - calc(1vw));
-    --card-margin-top: 3vh;
-    width: 55%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: var(--card-margin-top);
+  --home-card-height: 13.5vw;
+  --image_size: calc(calc(var(--home-card-height)) - calc(1vw));
+  --card-margin-top: 3vh;
+  width: 55%;
+  min-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: var(--card-margin-top);
 }
 
- body:has(.view-top-items:nth-child(2):hover) .top-item-img:nth-child(1), body:has(.top-item-img:nth-child(1):hover) .view-top-items:nth-child(2), /* top track card */
- body:has(.view-top-items:nth-child(1):hover) .top-item-img:nth-child(2), body:has(.top-item-img:nth-child(2):hover) .view-top-items:nth-child(1), /* top artist card */
- .view-top-items:hover, .top-item-img:hover,
- .home-playlist-card:hover {
-    background-color: #262d3f;
+body:has(.view-top-items:nth-child(2):hover) .top-item-img:nth-child(1), body:has(.top-item-img:nth-child(1):hover) .view-top-items:nth-child(2), /* top track card */
+body:has(.view-top-items:nth-child(1):hover) .top-item-img:nth-child(2), body:has(.top-item-img:nth-child(2):hover) .view-top-items:nth-child(1), /* top artist card */
+.view-top-items:hover, .top-item-img:hover,
+.home-playlist-card:hover {
+background-color: #262d3f;
 }
 
 .view-top-items {
-    background-color: #2F374C; 
-    width: calc(100% - var(--home-card-height)/2);
-    height: var(--home-card-height);
-    float: left;
+  background-color: #2F374C; 
+  width: calc(100% - var(--home-card-height)/2);
+  height: var(--home-card-height);
+  float: left;
+  text-align: center;
+  align-items: center;
+  line-height: var(--home-card-height ); /* Match the line-height to the container's height */
+}
+
+.view-top-items , .home-playlist-card span:nth-child(1){
+  font-size: 3.2vw;
+  font-family: var(--page-font-family);
+  color: var(--whiteColor);
 }
 
 .view-top-items:nth-child(2){
-    /* top track card */
-    border-top-right-radius: 40px;
-    border-bottom-right-radius: 40px;
+  /* top track card */
+  border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px;
 }
 
 .view-top-items:nth-child(1){
-    /* top artist card */
-    margin-top: var(--card-margin-top);
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
+  /* top artist card */
+  margin-top: var(--card-margin-top);
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
 }
 
 .top-item-img{
-    background-color: #2F374C; 
-    height: var(--home-card-height);
-    width: calc(var(--home-card-height)/2);
-    float: left;
+  background-color: #2F374C; 
+  height: var(--home-card-height);
+  width: calc(var(--home-card-height)/2);
+  float: left;
 }
 
 .top-item-img:nth-child(1){
-    border-radius: 150px 0 0 150px;
+  /* top tracks */
+
+  border-radius: 150px 0 0 150px;
 }  
 
 .top-item-img:nth-child(2){
-    margin-top: var(--card-margin-top);
-    border-radius: 150px 0 0 150px;
-    transform: rotate(180deg);
+  /* top artists */
+  margin-top: var(--card-margin-top);
+  border-radius: 150px 0 0 150px;
+  transform: rotate(180deg);
 }
 
 .top-item-img img {
-    height:var(--image_size);
-    width: var(--image_size);
-    position: relative;
-    border-radius: 50%;
-    left:calc(var(--home-card-height)/2 - var(--image_size)/2);
-    top: calc(var(--home-card-height)/2 - var(--image_size)/2);
+  height:var(--image_size);
+  width: var(--image_size);
+  position: relative;
+  border-radius: 50%;
+  left:calc(var(--home-card-height)/2 - var(--image_size)/2);
+  top: calc(var(--home-card-height)/2 - var(--image_size)/2);
 }
 
 .top-item-img:nth-child(2) img{
-    /* flip image because parent div was flipped */
-    transform: rotate(180deg);
-}
-
-.view-top-items div{
-    position: relative;
-    width: calc(calc(100%) -  calc(var(--image_size)));
-    top: 50%;
-    transform: translateY(-50%);
-}
-.view-top-items div span, .home-playlist-card span:nth-child(1){
-    font-size: 3.2vw;
-    font-family: var(--page-font-family);
-    color: var(--whiteColor);
+  /* flip image because parent div was flipped */
+  transform: rotate(180deg);
 }
 
 .view-top-items:nth-child(2) div{
-    /* top track card */
-    left: calc(var(--image_size)/2);
-    text-align: right;
+  /* top track card */
+  left: calc(var(--image_size)/2);
+  text-align: right;
 }
 
 .view-top-items:nth-child(1) div{
-    /* top artist card */
-    left: calc(var(--image_size)/2);
-    text-align: left;
+  /* top artist card */
+  left: calc(var(--image_size)/2);
+  text-align: left;
 }
 
 .home-playlist-card{
-    display: flex;
-    background-color: #2F374C; 
-    width: calc(100%);
-    border-radius: 40px;
-    height: var(--home-card-height);
-    margin-top: var(--card-margin-top);
-    float: left;
+  display: flex;
+  background-color: #2F374C; 
+  width: calc(100%);
+  border-radius: 40px;
+  height: var(--home-card-height);
+  margin-top: var(--card-margin-top);
+  float: left;
 
-    justify-content: center;
-    text-align: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .home-playlist-card div{
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    height: fit-content;
-    display: block;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  height: fit-content;
+  display: block;
 }
 
 .home-playlist-card span:nth-child(2){
-    /* View an analysis of your playlists */
-    display: block;
-    margin-top: 4px;
-    font-size: 1vw;
-    font-family: var(--page-font-family);
-    color: var(--grayColor);
+  /* View an analysis of your playlists text */
+  display: block;
+  margin-top: 4px;
+  font-size: 1vw;
+  font-family: var(--page-font-family);
+  color: var(--grayColor);
 }
 
 .login-btn {
-    display: flex;
-    width: 15%;
-    height: 35px;
-   
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    border-radius: 14px;
-    background-color: #1ED760; 
-    color: #FFFFFF;
-    font-family: var(--page-font-family);
-    font-size: 1.2rem;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-   
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  padding: 8px 14px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  border-radius: 14px;
+  background-color: #1ED760; 
+  color: #FFFFFF;
+  font-family: var(--page-font-family);
+  font-size: min(2.3vw, 18px);
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+@media (max-width: 750px) { 
+  .home-cards{
+    --home-card-height: 22vw;
+    min-width: 80vw;
+  }
+  .view-top-items , .home-playlist-card span:nth-child(1){
+    font-size: 4.5vw;
+  }
+  .home-playlist-card span:nth-child(2){
+    /* View an analysis of your playlists text */
+    font-size: 2.2vw;
+  }
+  .login-btn {
+    font-size: 3vw;
+  }
 }
 

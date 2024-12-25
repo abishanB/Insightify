@@ -105,9 +105,7 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
             <img src={topTrackImg} alt="topTrackImg" loading='lazy'/>
           </div>
           <div className="view-top-items">
-            <div>
               <span>View Your Top Tracks</span>
-            </div>    
           </div>
         </div>
       </Link>
@@ -115,9 +113,7 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
       <Link to={isLoggedIn ? "artists" : getSpotifyLoginURL("http://localhost:3000/artists")} style={{ textDecoration: 'none' }}>
         <div className="home-cards">
           <div className="view-top-items">
-            <div>
               <span>View Your Top Artists</span>
-            </div>
           </div>
           <div className="top-item-img">
             <img src={topArtistImg} alt="topArtistImg" loading='lazy'/>
@@ -136,6 +132,7 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
          </div>
       </Link>
     </div>
+ 
     </React.Fragment>
   )
 } 

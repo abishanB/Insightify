@@ -1,11 +1,10 @@
-.artistList{ 
+.artist-list{ 
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     column-gap: var(--gap-size);
     width: calc((var(--artist-Listing-width) * 2 + var(--gap-size)));
-    
-    max-width:100%;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
 
@@ -13,9 +12,14 @@
     --artist-Listing-width: 400px
 }
 
-.artistCover{ 
-    min-height: 28px;
-    min-width:28px;
+.artist-cover{
+    min-width:max(calc(5vw + 6px), 34px); 
+    /* space between cover and artist name */
+}
+
+.artist-cover img{ 
+    min-height: 32px;
+    min-width: 32px;
     height: 5vw;
     width: 5vw;
     margin-left: auto;
@@ -24,13 +28,13 @@
     border-radius: 50%;
 }
 
-.artistRank{
+.artist-rank{
     min-width: 55px;
     text-align: center;
     font-size: 2rem;
 }
 
-.artistName {
+.artist-name {
     font-size: 1.9rem;
     width: 100%;
     max-width: 0;
@@ -51,23 +55,31 @@
 }
 
 @media (max-width: 900px) { /* Adjust for smaller screens */
-    .artistList {
+    .artist-list {
         column-gap: 0; /* Remove coloumn gaps for small screens */
         row-gap: 4px;
-        width: min(100%,600px);
+        width: min(100vw,600px);
     }
     .artist-table-listing{
         width: 400px;
         min-width: 50%;
         max-width:50%;
     }
-    .artistName{
+    .artist-name{
         font-size: 1.3rem;
     }
-    .artistRank{
+    .artist-rank{
         min-width: 40px;
         font-size: 1.4rem;
     }
 }
 
-
+@media (max-width: 450px) { /* Adjust for smaller screens */
+    .artist-name{
+        font-size: 1.1rem;
+    }
+    .artist-rank{
+        min-width: 24px;
+        font-size: 1.0rem;
+    }
+}

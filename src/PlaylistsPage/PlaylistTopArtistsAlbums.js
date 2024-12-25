@@ -16,10 +16,10 @@ function renderArtists(aritsts){
             <td className='playlist-top-items-rank'>{parseInt(artistIndex)+1}</td> 
             <td className="playlist-top-items-image">
               <a  href={artist[1].href} target="_blank" rel="noopener noreferrer">
-                <img src={artist[1].imageURL} className='artistCover' alt="artistImg" loading='eager'/>
+                <img src={artist[1].imageURL} className='playlist-artist-cover' alt="artistImg" loading='eager'/>
               </a>
             </td>
-            <td className='playlist-artist-name'>{artist[0]}</td>
+            <td >{artist[0]}</td>
             <td className='item-occurences'>{artist[1].totalOccurences} Songs</td>
           </tr>
         </tbody>
