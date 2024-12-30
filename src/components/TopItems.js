@@ -11,7 +11,7 @@ export default function TopItems({ type, token, storedTopItems, updateTopItemsFu
   const [error, setError] = useState(false);
   const [currentTab, setCurrentTab] = useState("short_term");
   const firstUpdate = useRef(true);//check if component has initially rendered
-
+  const maxTopItems = 250//number of top items that can be viewed
   const onTabSwitch = (tabName) => setCurrentTab(tabName);
   
   useEffect(() => {//component Load
@@ -52,9 +52,10 @@ export default function TopItems({ type, token, storedTopItems, updateTopItemsFu
   }
 
   function moreItemsAvailableBtn() {
-    if (items[currentTab].next === null) {//if there are no more tracks dont display button 
+    if (items[currentTab].next === null || items[currentTab].items.length >= maxTopItems) {//if there are no more tracks dont display button 
       return
     }
+    console.log(items)
     return (<button className="more-btn" onClick={() => onGetTopItems()}>View More</button>);
   }
 

@@ -31,10 +31,8 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
     if (topTracksObj.short_term.items.length===0){//if any tracks havent been loaded 
       getFirstSetTopItems(topTracksObj, "tracks")
     } 
-    else if (topTracksObj.short_term.hasOwnProperty("topTrackArtistImg")){//the artists image for the top track has been loaded
-      setTopTrackImg(topTracksObj.short_term.topTrackArtistImg)
-    } else {//if tracks have been loaded but top track's artist image hasnt been retrieved
-      getTopTrackArtistImg(topTracksObj.short_term.items[0].artists[0].href, topTracksObj)
+    else {
+      setTopTrackImg(topTracksObj.short_term.items[0].album.images[0].url)
     }
       
     if (topArtistsObj.short_term.items.length===0){//if top artists hasnt been loaded
@@ -57,31 +55,13 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
       updatedItems.short_term.next = moreItemsResult.next
 
       if (type==='tracks'){
-        getTopTrackArtistImg(updatedItems.short_term.items[0].artists[0].href, updatedItems)
+        setTopTrackImg(updatedItems.short_term.items[0].album.images[0].url)
+        updateTopTracksFunc(updatedItems)
       }
       if (type==="artists"){
         setTopArtistImg(updatedItems.short_term.items[0].images[0].url)
         updateTopArtistsFunc(updatedItems)
       }
-      
-    }).catch(() => setError(true));
-  }
-
-  function getTopTrackArtistImg(artistEndpoint, updatedTopTracks){
-    //get top artist image to display for the top track which is not given by top_items endpoint
-    //cannot use track image because image needs to be circle
-    const promise = getEndpointResult(token, artistEndpoint, `fetching artist image URL`);
-    promise.then((artistResult) => {
-      if (artistResult === false){
-        setError(true);
-        return;
-      }
-      Object.defineProperty(updatedTopTracks.short_term, "topTrackArtistImg",{//define property for image
-        value: artistResult.images[0].url,
-        writable:false
-      })
-      setTopTrackImg(artistResult.images[0].url)
-      updateTopTracksFunc(updatedTopTracks)
       
     }).catch(() => setError(true));
   }
