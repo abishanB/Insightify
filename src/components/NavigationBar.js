@@ -15,7 +15,7 @@ export default function NavigationBar(props) {
   return (
     <div>
         <ul id ="nav">
-          <li className='nav-bar-logo'><Link to="..">BreakdownMusic</Link></li> {/*links to root home page */}
+          <li className='nav-bar-logo'><Link to="..">Insightify</Link></li> {/*links to root home page */}
           <li className='nav-bar-link'><Link to="tracks">Tracks</Link></li>
           <li className='nav-bar-link'><Link to="artists">Artists</Link></li>
           <li className='nav-bar-link'><Link to="playlists">Playlists</Link></li>

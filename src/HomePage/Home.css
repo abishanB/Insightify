@@ -1,9 +1,10 @@
 .home-cards {
-  --home-card-height: 13.5vw;
+  --home-card-height: 13vw;
   --image_size: calc(calc(var(--home-card-height)) - calc(1vw));
   --card-margin-top: 3vh;
   width: 55%;
   min-width: 500px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
   margin-top: var(--card-margin-top);

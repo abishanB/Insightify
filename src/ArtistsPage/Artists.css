@@ -8,8 +8,8 @@
     margin-left: auto;
     margin-right: auto;
 
-    --gap-size: 30px;
-    --artist-Listing-width: 400px
+    --gap-size: 20px;
+    --artist-Listing-width: 420px
 }
 
 .artist-cover{
@@ -35,7 +35,7 @@
 }
 
 .artist-name {
-    font-size: 1.9rem;
+    font-size: 1.7rem;
     width: 100%;
     max-width: 0;
     overflow: hidden;
@@ -52,6 +52,7 @@
     white-space: nowrap; /* Keeps the text on a single line */
     text-overflow: ellipsis; /* Adds ellipsis if text overflows */
     min-width: 250px;
+    /* outline: 2px solid bluex; */
 }
 
 @media (max-width: 900px) { /* Adjust for smaller screens */
