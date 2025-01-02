@@ -1,7 +1,6 @@
 import fetch from "node-fetch";
-import apiCredentials from "./apiCredentials.json"
-const clientID = apiCredentials.clientID
-const clientSecret = apiCredentials.clientSecret
+const clientID = process.env.REACT_APP_CLIENT_ID
+const clientSecret = process.env.REACT_APP_CLIENT_SECRET
 
 function checkResponse(response){
   if (!response.ok){

@@ -1,12 +1,11 @@
 import React from 'react';
 import './styles/NavBar.css';
 import { Link } from 'react-router-dom';
-import apiCredentials from "../apiCredentials.json"
 import spotifyIcon from "../Spotify_Primary_Logo_RGB_White.png"
  
 export default function NavigationBar(props) {
-  const clientID = apiCredentials.clientID
-  const APP_SCOPE = apiCredentials.scope
+  const clientID = process.env.REACT_APP_CLIENT_ID
+  const APP_SCOPE = process.env.REACT_APP_SCOPE
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "code"
   var href = window.location.href

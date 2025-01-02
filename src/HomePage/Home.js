@@ -4,12 +4,12 @@ import { getEndpointResult } from '../apiCalls';
 import LoadingIcon from '../components/LoadingIcon';
 import { Link } from 'react-router-dom';
 import spotifyLogo from "../Spotify_Primary_Logo_RGB_White.png"
-import apiCredentials from "../apiCredentials.json"  
+
 //Links to tracks, artists, and playlists page
 //Displays top track's artist image and top artist image
 
 function getSpotifyLoginURL(redirect_uri){//return spotify login url with correct redirectURI
-  const clientID = apiCredentials.clientID
+  const clientID = process.env.REACT_APP_CLIENT_ID
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "code"
   const SCOPE = 'user-read-private user-read-email user-top-read playlist-read-private user-library-read'

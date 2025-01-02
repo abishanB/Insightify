@@ -45,7 +45,7 @@ export default class App extends Component{
       return
     }
     
-    if (code==null || code==="undefined") {
+    if (code==null || code==="undefined" || code==="access_denied") {
       code = hash.split("=")[1]
       window.location.hash = ""
       window.localStorage.setItem("code", code)
