@@ -13,7 +13,7 @@ function getSpotifyLoginURL(redirect_uri="http://localhost:3000"){//return spoti
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "code"
   const SCOPE = 'user-read-private user-read-email user-top-read playlist-read-private user-library-read'
-  return `${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${redirect_uri}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
+  return `${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${redirect_uri}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}&show_dialog=true`
 }
 //`${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRCT_URI2}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
 export default function Home({token , topTracksObj, updateTopTracksFunc, topArtistsObj, updateTopArtistsFunc, isLoggedIn}) {

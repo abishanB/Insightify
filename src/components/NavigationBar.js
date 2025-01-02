@@ -9,7 +9,7 @@ const REDIRECT_URI = "http://localhost:3000"
 
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
 const RESPONSE_TYPE = "code"
-let spotifyLogin = `${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${APP_SCOPE}`
+let spotifyLogin = `${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${APP_SCOPE}&show_dialog=true`
  
 export default function NavigationBar(props) {
   return (
