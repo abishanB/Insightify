@@ -49,5 +49,13 @@
     .playlist-name{
         font-size: 0.85rem;
     }
-    
+}
+
+@media (max-width: 600px) { 
+    .playlist-container{
+        --playlistImgSize: 96px;
+    }
+    .playlist-name{
+        font-size: 0.7rem;
+    }
 }

@@ -55,7 +55,6 @@ export default function TopItems({ type, token, storedTopItems, updateTopItemsFu
     if (items[currentTab].next === null || items[currentTab].items.length >= maxTopItems) {//if there are no more tracks dont display button 
       return
     }
-    console.log(items)
     return (<button className="more-btn" onClick={() => onGetTopItems()}>View More</button>);
   }
 

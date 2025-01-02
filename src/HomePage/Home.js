@@ -3,12 +3,12 @@ import "./Home.css"
 import { getEndpointResult } from '../apiCalls';
 import LoadingIcon from '../components/LoadingIcon';
 import { Link } from 'react-router-dom';
-import spotifyLogo from "../components/Spotify_Primary_Logo_RGB_White.png"
+import spotifyLogo from "../Spotify_Primary_Logo_RGB_White.png"
 import apiCredentials from "../apiCredentials.json"  
 //Links to tracks, artists, and playlists page
 //Displays top track's artist image and top artist image
 
-function getSpotifyLoginURL(redirect_uri="http://localhost:3000"){//return spotify login url with correct redirectURI
+function getSpotifyLoginURL(redirect_uri){//return spotify login url with correct redirectURI
   const clientID = apiCredentials.clientID
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "code"
@@ -21,13 +21,16 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
   const [topArtistImg, setTopArtistImg] = useState(null)
   const [error, setError] = useState(false);
 
+  var href = window.location.href
+  if (href.includes("localhost")){var URI = "http://localhost:3000"}
+  if (href.includes("10.0.0.7")){var URI = "http://10.0.0.7:3000"}
   useEffect(() => {//on component load, fetches top items if nessecary
     if (isLoggedIn === false){
       setTopTrackImg(spotifyLogo)
       setTopArtistImg(spotifyLogo)
       return
     }
-
+    
     if (topTracksObj.short_term.items.length===0){//if any tracks havent been loaded 
       getFirstSetTopItems(topTracksObj, "tracks")
     } 
@@ -71,7 +74,7 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
     <React.Fragment>
     {!isLoggedIn 
     ?
-    <a href={getSpotifyLoginURL("http://localhost:3000")}>
+    <a href={getSpotifyLoginURL(URI)}>
       <div className='login-btn'>
           <span>Login With Spoitfy</span>
       </div>
@@ -79,7 +82,7 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
     :<></>
     }
     <div className='page-card-container'>
-      <Link to={isLoggedIn ? "tracks" : getSpotifyLoginURL("http://localhost:3000/tracks")} style={{ textDecoration: 'none' }}>
+      <Link to={isLoggedIn ? "tracks" : getSpotifyLoginURL(`${URI}/tracks`)} style={{ textDecoration: 'none' }}>
         <div className="home-cards">
           <div className="top-item-img">
             <img src={topTrackImg} alt="topTrackImg" loading='lazy'/>
@@ -90,7 +93,7 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
         </div>
       </Link>
 
-      <Link to={isLoggedIn ? "artists" : getSpotifyLoginURL("http://localhost:3000/artists")} style={{ textDecoration: 'none' }}>
+      <Link to={isLoggedIn ? "artists" : getSpotifyLoginURL(`${URI}/artists`)} style={{ textDecoration: 'none' }}>
         <div className="home-cards">
           <div className="view-top-items">
               <span>View Your Top Artists</span>
@@ -101,7 +104,7 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
         </div>
       </Link>
 
-      <Link to={isLoggedIn ? "playlists" : getSpotifyLoginURL("http://localhost:3000/playlists")} style={{ textDecoration: 'none' }}>
+      <Link to={isLoggedIn ? "playlists" : getSpotifyLoginURL(`${URI}/playlists`)} style={{ textDecoration: 'none' }}>
          <div className="home-cards">
             <div className="home-playlist-card">
               <div>

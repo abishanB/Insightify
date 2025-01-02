@@ -9,7 +9,6 @@ import DisplayPlaylists from "./PlaylistsPage/DisplayPlaylists.js";
 import NavigationBar from "./components/NavigationBar.js";
 import { ErrorBoundary } from './ErrorBoundary';
 
-
 export default class App extends Component{
   constructor(props) {
     super(props);
@@ -89,7 +88,12 @@ export default class App extends Component{
 
   onGetRefreshToken = (refresh_token) => {//call api function to get refresh token and update state
     var that = this;
-    const promise = getTokenWithRefreshToken(refresh_token)
+    var currentURL = window.location.href
+    if (currentURL.slice(-1) == '/'){
+      //when url is localhost:3000/ the '/' must be dropped so the api accepts the redirectURI
+      currentURL = currentURL.slice(0, -1)
+    }
+    const promise = getTokenWithRefreshToken(refresh_token,currentURL)
     promise.then(function(token_promise) {
       that.setState({
         token : token_promise.access_token,

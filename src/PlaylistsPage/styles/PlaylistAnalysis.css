@@ -75,4 +75,7 @@
   .card-title span{
     font-size: 1rem;
   }
+  .card-title{
+    margin: 2px 0;
+  }
 }

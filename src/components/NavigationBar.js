@@ -2,16 +2,18 @@ import React from 'react';
 import './styles/NavBar.css';
 import { Link } from 'react-router-dom';
 import apiCredentials from "../apiCredentials.json"
-import spotifyIcon from "./Spotify_Primary_Logo_RGB_White.png"
-const clientID = apiCredentials.clientID
-const APP_SCOPE = apiCredentials.scope
-const REDIRECT_URI = "http://localhost:3000"
-
-const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
-const RESPONSE_TYPE = "code"
-let spotifyLogin = `${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${APP_SCOPE}&show_dialog=true`
+import spotifyIcon from "../Spotify_Primary_Logo_RGB_White.png"
  
 export default function NavigationBar(props) {
+  const clientID = apiCredentials.clientID
+  const APP_SCOPE = apiCredentials.scope
+  const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
+  const RESPONSE_TYPE = "code"
+  var href = window.location.href
+  if (href.includes("localhost")){var REDIRECT_URI = "http://localhost:3000"}
+  if (href.includes("10.0.0.7")){var REDIRECT_URI = "http://10.0.0.7:3000"}
+  const spotifyLogin = `${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${APP_SCOPE}&show_dialog=true`
+
   return (
     <div>
         <ul id ="nav">
