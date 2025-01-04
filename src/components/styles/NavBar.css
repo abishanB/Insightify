@@ -28,7 +28,7 @@
     font-size: 1.15rem;
 }
 
-.spotify-icon{
+.spotify-icon, .icon{
     --iconSize: 26px;
     height: var(--iconSize);
     width: var(--iconSize);
@@ -51,4 +51,3 @@
         display: none;
     }
 }
-

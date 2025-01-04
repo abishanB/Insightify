@@ -1,20 +1,27 @@
 #summary-card{
-    --coverSize: 460px;
-    --summaryFontSize: 1.9rem;
-    height: 590px;
-    
+  --coverSize: 460px;
+  --summaryFontSize: 1.9rem;
+  height: 590px;
 }
-#summary-card img {
+.playlistCover{
   margin-left: var(--sideMargin);
   height: var(--coverSize);
   width: var(--coverSize);
 }
 
 .by-owner{
+  width: fit-content;
   margin: 10px 0;
 }
+.by-owner img{
+  margin-left: 3px;
+  width: 22px;
+  height: 22px;
+}
 .by-owner a{  /* playlist owner hyperlink */
-  display: inline-block;
+  display: flex;
+  align-items: center; 
+  text-align: center;
   white-space: nowrap;
   overflow:hidden;
   text-overflow: ellipsis;
@@ -94,7 +101,11 @@
     padding: 3px 0;
   }
   .by-owner{
-    margin: 0 0;
+    margin: 1px 0;
+  }
+  .by-owner img {
+    height: 12px;
+    width: 12px;
   }
   .by-owner a{
     font-size: 0.7rem;

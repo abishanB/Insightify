@@ -30,12 +30,21 @@
   background: #555c66; 
   border-radius: 10px;
 }
-
 .page-title{
+	display: flex;
+	align-items: center; 
+	justify-content: center;  
+}
+h1{
 	color: var(--whiteColor);
 	text-align: center;
 	font-size: 2.5rem;
 	font-weight: normal;
+}
+.page-title img{
+	margin-left: 8px;
+	height: 54px;
+	width: 54px;
 }
 
 .more-btn{
@@ -71,8 +80,12 @@ a {
 }
 
 @media (max-width: 800px) { 
-    .page-title{
+    h1{
 		font-size: 1.8rem;
+	}
+	.page-title img{
+		height: 36px;
+		width: 36px;
 	}
     .more-btn{
 		font-size: 1rem;

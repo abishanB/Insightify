@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import React, { StrictMode } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import './App.css';
@@ -9,13 +9,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { ErrorBoundary } from './ErrorBoundary';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+root.render( 
     
-        <React.StrictMode>
-            <BrowserRouter>
-                <App/>
-            </BrowserRouter>
-        </React.StrictMode>
+        <BrowserRouter>
+            <App/>
+        </BrowserRouter>
     
 );
 

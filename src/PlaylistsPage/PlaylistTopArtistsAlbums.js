@@ -70,12 +70,12 @@ export default function TopArtistsAlbums(props) {
     <div id="top-artists-albums-card" className="playlist-card">
       <div className='top-artists-albums-container'>
         <div>
-          <h1 className="top-items-title">Top Artists</h1>
+          <h2 className="top-items-title">Top Artists</h2>
           <div className="top-items-list">{renderArtists(slicedTopArtists)}</div>
         </div>
 
         <div>
-          <h1 className="top-items-title">Top Albums</h1>
+          <h2 className="top-items-title">Top Albums</h2>
           <div className="top-items-list"> {renderAlbums(slicedTopAlbums)}</div>
         </div>
       </div>

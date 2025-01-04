@@ -2,7 +2,7 @@ import React from 'react';
 import './styles/NavBar.css';
 import { Link } from 'react-router-dom';
 import spotifyIcon from "../Spotify_Primary_Logo_RGB_White.png"
- 
+import InsightifyIcon from "../icon.png"
 export default function NavigationBar(props) {
   const clientID = process.env.REACT_APP_CLIENT_ID
   const APP_SCOPE = process.env.REACT_APP_SCOPE
@@ -16,7 +16,12 @@ export default function NavigationBar(props) {
   return (
     <div>
         <ul id ="nav">
-          <li className='nav-bar-logo'><Link to="..">Insightify</Link></li> {/*links to root home page */}
+          <li className='nav-bar-logo'> 
+              <Link to=".."> {/*links to root home page */}
+              Insightify
+              <img src={InsightifyIcon} className="icon" alt="icon"></img>
+            </Link>
+          </li> 
           <li className='nav-bar-link'><Link to="tracks">Tracks</Link></li>
           <li className='nav-bar-link'><Link to="artists">Artists</Link></li>
           <li className='nav-bar-link'><Link to="playlists">Playlists</Link></li>
@@ -33,7 +38,7 @@ export default function NavigationBar(props) {
             <li>
               <a href={spotifyLogin}>
                 Login
-                <img src={spotifyIcon} className="spotify-icon" alt="SpotifyLogo"></img>
+                <img src={spotifyIcon} className="spotify-icon" alt="SpotifyIcon"></img>
               </a>
             </li>
           }

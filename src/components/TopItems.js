@@ -4,7 +4,7 @@ import { getEndpointResult } from '../apiCalls.js';
 import RenderTracks from '../TracksPage/RenderTracks.js';
 import RenderArtists from '../ArtistsPage/RenderArtists.js';
 import LoadingIcon from './LoadingIcon.js';
-
+import spotifyIcon from "../Spotify_Primary_Logo_RGB_White.png"
 
 export default function TopItems({ type, token, storedTopItems, updateTopItemsFunc }) {
   const [items, setItems] = useState(storedTopItems); //{short_term: {items: [], next: endpoint}...}
@@ -62,7 +62,10 @@ export default function TopItems({ type, token, storedTopItems, updateTopItemsFu
   if (items[currentTab].items.length === 0) {//if api is still loading topItems
     return (
       <div style={{ display: 'grid' }}>
-        <h1 className="page-title">Your Top {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
+        <div className="page-title">
+          <h1>Your Top {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
+          <img src={spotifyIcon} alt="SpotifyIcon"></img>
+        </div>
         <TimeRangeSelector tabSwitchHandler={()=>{}} />
         <LoadingIcon />
       </div>
@@ -70,7 +73,11 @@ export default function TopItems({ type, token, storedTopItems, updateTopItemsFu
   }
   return (
     <div style={{ display: 'grid' }}>
-      <h1 className="page-title">Your Top {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
+      <div className="page-title">
+        <h1>Your Top {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
+        <img src={spotifyIcon} alt="SpotifyIcon"></img>
+      </div>
+    
       <TimeRangeSelector tabSwitchHandler={onTabSwitch} />
       {type === 'tracks' ? (
         <RenderTracks tracks={items[currentTab].items} />
