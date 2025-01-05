@@ -1,14 +1,14 @@
 #nav {
-    --nav-bar-height: 50px;
+    --nav-bar-font-size: 1rem;
     background-color: #181C25;
-    height: var(--nav-bar-height);
+    height: 50px;
     display: flex;
     list-style-type: none;
     justify-content: space-between;   
     align-items: center;
     margin: 0;
     padding: 0 15%;
-    font-size: 1rem;
+    font-size: var(--nav-bar-font-size)
     /* background-image: linear-gradient(to top,#1F2633,#181C25 90%); */
 } 
 .gradient{
@@ -23,22 +23,42 @@
     display: flex; /*  Optional, ensures text aligns in flexbox context */
     align-items: center;
 }
-
 .nav-bar-logo{
     font-size: 1.15rem;
 }
 
 .spotify-icon, .icon{
-    --iconSize: 26px;
-    height: var(--iconSize);
-    width: var(--iconSize);
+    --icon-size: 26px;
+    height: var(--icon-size);
+    width: var(--icon-size);
     margin-left: 6px;
+}
+
+.dropdown-btn{
+    background-color: #181C25;
+    font-family: Verdana, sans-serif;
+    color: var(--whiteColor);
+    font-size: var(--nav-bar-font-size);
+    border: none;
+    cursor: pointer;  /* Change cursor to pointer when hovering over navbar links */
+}
+.dropdown-menu{
+    margin-top: 5px;
+    background-color: #181C25;
+    position: absolute;
+    padding: 7px;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+.dropdown-arrow{
+    height: 11px;
+    width: 11px;
+    margin-left: 5px;
 }
 
 @media (max-width: 900px) { /* Adjust for smaller screens */
     #nav {
         padding: 0 3%;
-        /* justify-content: space-around; */
         font-size: 0.9rem;
     }
 }
