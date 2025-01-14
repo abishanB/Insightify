@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import spotifyIcon from "../Spotify_Primary_Logo_RGB_White.png"
 import InsightifyIcon from "../icon.png"
 import dropdownArrow from "./dropdown.png"
+ 
 export default function NavigationBar(props) {
   const clientID = process.env.REACT_APP_CLIENT_ID
   const APP_SCOPE = process.env.REACT_APP_SCOPE

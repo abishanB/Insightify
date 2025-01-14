@@ -6,6 +6,7 @@ import GenreChart from './GenreChart';
 import "./styles/PlaylistAnalysis.css";
 import PlaylistSummary from './PlaylistSummaryCard';
 import TopArtistsAlbums from './PlaylistTopArtistsAlbums'
+import LineChart from './LineChart';
 
 function sortProperties(obj){//sorts artists, albums and genres from most occuring to least
 	var sortable=[];
@@ -249,6 +250,7 @@ export default function PlaylistInfo(props) {
     //else make a api call to the endpoint then call function again while adding to the list of tracks
     if (nextEndpoint === null || playlistTracks.length >= 2200){//dont scan over 22 00 tracks
       setPlaylistTracks(filterPlaylistTracks(playlistTracks))
+      console.table(playlistTracks)
       return
     }
 
@@ -289,8 +291,8 @@ export default function PlaylistInfo(props) {
       <PlaylistSummary playlist={playlist} topArtists={topArtistsInPlaylist} topAlbums={topAlbumsInPlaylist} topGenres={topGenresInPlaylists} averagePopularity={averagePopularity} noData={noData}/>
       <TopArtistsAlbums topArtists={topArtistsInPlaylist} topAlbums={topAlbumsInPlaylist}/>
       <GenreChart topGenres={topGenresInPlaylists}/>
+      <LineChart/>
       <div  style={{height: 20}}></div>
     </div>
   )
 }
-//<iframe src={`https://open.spotify.com/embed/playlist/${playlistID}?utm_source=generator`} width="20%" height="800" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>

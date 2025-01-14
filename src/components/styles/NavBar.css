@@ -22,7 +22,10 @@
     color: var(--whiteColor);
     display: flex; /*  Optional, ensures text aligns in flexbox context */
     align-items: center;
+    height: 50px;
+    padding: 0 10px;
 }
+
 .nav-bar-logo{
     font-size: 1.15rem;
 }
