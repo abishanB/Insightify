@@ -118,17 +118,18 @@ public class ParsePlaylist {
     JsonArray playlistTracks = JsonParser.parseString(tracks).getAsJsonArray();
     // Call the updateProperties method from GetPlaylist class
     playlistTracks = getPlaylist.updateProperties(playlistTracks);
+    playlistTracks = getPlaylist.orderPlaylists(playlistTracks);
     // Print the updated JSON array
 
     LocalDate startDate = LocalDate.parse(playlistTracks.get(0).getAsJsonObject().get("added_at").getAsString());
     LocalDate endDate = LocalDate
         .parse(playlistTracks.get(playlistTracks.size() - 1).getAsJsonObject().get("added_at").getAsString());
-    System.out.println("End Date: " + endDate);
-    List<LocalDate> periods = getPlaylist.createEqualPeriods(startDate, endDate);
 
+    List<LocalDate> periods = getPlaylist.createEqualPeriods(startDate, endDate);
+     
     Map<String, Integer> artistOccurences = countArtists(playlistTracks);
 
-    artistOccurences = sliceTopArtists(artistOccurences, 10);
+    artistOccurences = sliceTopArtists(artistOccurences, 5);
     Set<String> topArtists = artistOccurences.keySet();
     
 
@@ -157,7 +158,7 @@ public class ParsePlaylist {
     Set<String> topArtists = artistOccurences.keySet();
   
     JsonObject artistOccurencesOverTime = countArtistsOverTime(topArtists, playlistTracks, periods);
-    System.out.println(topArtists);
+  
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     try (FileWriter writer = new FileWriter("output.json")) {
       gson.toJson(artistOccurencesOverTime, writer);

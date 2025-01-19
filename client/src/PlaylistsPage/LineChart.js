@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import { CategoryScale } from "chart.js";
 import "./styles/LineChart.css";
-import testData from "./output.json";
+//import testData from "./output.json";
+import { getPlaylistTopArtistsOverTime } from "../apiCalls";
 Chart.register(CategoryScale);
 
 
-function createDataSets() {
+function createDataSets(topArtistsOverTime) {
   const colors = [
     "rgba(75, 192, 192, 1)", // Aqua
     "#FF5733", // Vibrant Red
@@ -22,17 +23,17 @@ function createDataSets() {
     "#9B59B6", // Lavender
     "#2ECC71"  // Emerald Green
 ];
-  let graphLabels = Object.keys(testData[Object.keys(testData)[0]]);
+  let graphLabels = Object.keys(topArtistsOverTime[Object.keys(topArtistsOverTime)[0]]);
 
   let graphDataSets = [];
-  Object.entries(testData).forEach(([key, value]) => {
+  Object.entries(topArtistsOverTime).forEach(([key, value]) => {
     graphDataSets.push({
       label: key,
       data: Object.values(value), // Y-axis data
       borderColor: colors[0], // Line color
       backgroundColor: "rgba(75, 192, 192, 0.2)", // Fill under the line
       borderWidth: 2,
-      tension: 0.3, // Smooth curves
+      tension: 0, // straight curves
     });
     colors.shift();
   });
@@ -44,7 +45,17 @@ function createDataSets() {
   return data;
 }
 
-export default function LineChart() {
+export default function LineChart({playlistTracks, token}) {
+  const [topArtistsOverTime, setTopArtistsOverTime]= useState(null)
+  console.log(playlistTracks)
+  useEffect(() => {
+    const promise = getPlaylistTopArtistsOverTime(token, JSON.stringify(playlistTracks));
+    promise.then(function(response) {
+      setTopArtistsOverTime(response)
+    })
+  // eslint-disable-next-line
+  }, []);
+
   const options = {
     responsive: true,
     plugins: {
@@ -61,16 +72,25 @@ export default function LineChart() {
     },
     scales: {
       x: {
+        grid: {
+          color: 'rgba(132, 132, 132, 0.3)', // X-axis gridline color
+        },
         ticks: {
           color: "#F2F4F7", // Change X-axis font color
+          maxRotation: 45,
+          minRotation: 45,
         },
         title: {
           display: true,
         },
       },
       y: {
+        grid: {
+          color: 'rgba(132, 132, 132, 0.3)', // X-axis gridline color
+        },
         ticks: {
           color: "#F2F4F7", // Change Y-axis font color
+          min: 0
         },
         title: {
           display: true,
@@ -79,13 +99,15 @@ export default function LineChart() {
       },
     },
   };
+
+  if (topArtistsOverTime === null) {return <div>Loading...</div>}
   return (
     <div id="line-chart-card" className="playlist-card">
       <div className="card-title">
         <span>Playlist Evolution</span>
       </div>
 
-      <Line data={createDataSets()} options={options} />
+      <Line data={createDataSets(topArtistsOverTime)} options={options} />
     </div>
   );
 }

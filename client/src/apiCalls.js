@@ -92,6 +92,17 @@ export async function getEndpointResult(access_token, endpoint, endpointType=nul
   return checkResponse(await response)
 }
 
+export async function getPlaylistTopArtistsOverTime(access_token, playlistTracksJSON){//gets top artists from playlist
+  const response = await fetch(`http://localhost:8080/api/playlist`, {
+    method:'POST',
+    headers: {
+      'Authorization': 'Bearer ' + access_token,
+    }, 
+    body: playlistTracksJSON
+  })
+
+  return checkResponse(await response)
+}
 //originally in Wrapper.js, if client credentials is needed
 /*onGetToken = () => {//clientCredentials
     var that = this;

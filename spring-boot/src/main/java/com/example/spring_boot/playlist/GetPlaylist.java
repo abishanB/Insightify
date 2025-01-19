@@ -79,12 +79,12 @@ public class GetPlaylist {
     for (JsonElement element : elementList) {
         sortedJsonArray.add(element);
     }
-
+    
     return sortedJsonArray;
   }
   
   public List<LocalDate> createEqualPeriods(LocalDate startDate, LocalDate endDate) {
-    int numOfPeriods = 10;
+    int numOfPeriods = 14;
     // Calculate the total number of days between the two dates
     long totalDays = ChronoUnit.DAYS.between(startDate, endDate);
 

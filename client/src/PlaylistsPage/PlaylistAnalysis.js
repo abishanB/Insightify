@@ -250,7 +250,6 @@ export default function PlaylistInfo(props) {
     //else make a api call to the endpoint then call function again while adding to the list of tracks
     if (nextEndpoint === null || playlistTracks.length >= 2200){//dont scan over 22 00 tracks
       setPlaylistTracks(filterPlaylistTracks(playlistTracks))
-      console.table(playlistTracks)
       return
     }
 
@@ -291,7 +290,7 @@ export default function PlaylistInfo(props) {
       <PlaylistSummary playlist={playlist} topArtists={topArtistsInPlaylist} topAlbums={topAlbumsInPlaylist} topGenres={topGenresInPlaylists} averagePopularity={averagePopularity} noData={noData}/>
       <TopArtistsAlbums topArtists={topArtistsInPlaylist} topAlbums={topAlbumsInPlaylist}/>
       <GenreChart topGenres={topGenresInPlaylists}/>
-      <LineChart/>
+      <LineChart playlistTracks={playlistTracks} token={props.token}/>
       <div  style={{height: 20}}></div>
     </div>
   )
