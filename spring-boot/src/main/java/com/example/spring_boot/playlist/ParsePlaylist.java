@@ -129,7 +129,7 @@ public class ParsePlaylist {
      
     Map<String, Integer> artistOccurences = countArtists(playlistTracks);
 
-    artistOccurences = sliceTopArtists(artistOccurences, 5);
+    artistOccurences = sliceTopArtists(artistOccurences, 10);
     Set<String> topArtists = artistOccurences.keySet();
     
 

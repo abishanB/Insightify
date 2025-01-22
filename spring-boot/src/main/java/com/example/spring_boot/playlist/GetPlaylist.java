@@ -84,7 +84,7 @@ public class GetPlaylist {
   }
   
   public List<LocalDate> createEqualPeriods(LocalDate startDate, LocalDate endDate) {
-    int numOfPeriods = 14;
+    int numOfPeriods = 20;
     // Calculate the total number of days between the two dates
     long totalDays = ChronoUnit.DAYS.between(startDate, endDate);
 

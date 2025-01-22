@@ -1,4 +1,25 @@
-#line-chart-card{
-    height: fit-content;
-    padding: 6px;
+#line-chart-card {
+  height: fit-content;
+  padding: 6px;
+}
+
+.deselect-all-btn {
+  width: fit-content;
+  height: fit-content;
+  margin-left: var(--sideMargin);
+  margin-bottom: 10px;
+  padding: 6px 8px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0);
+  font-family: var(--page-font-family);
+  font-size: 14px;
+  color: var(--page-text-color);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.deselect-all-btn:hover {
+  color: var(--whiteColor);
+}
+.deselect-all-btn:active {
+  background-color: #1f2633;
 }
