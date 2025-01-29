@@ -1,0 +1,99 @@
+[
+    {
+     
+        "added_at": "2022-07-30T02:03:34Z",
+        "added_by": {
+            "external_urls": {
+                "spotify": "https://open.spotify.com/user/destructopotato"
+            },
+            "href": "https://api.spotify.com/v1/users/destructopotato",
+            "id": "destructopotato",
+            "type": "user",
+            "uri": "spotify:user:destructopotato"
+        },
+        "is_local": false,
+        "primary_color": null,
+        "track": {
+            "preview_url": "https://p.scdn.co/mp3-preview/89f708c823dc7d3827d2f063b9075b51ec47f446?cid=9d10477046f3462db2028606fde3e774",
+            "available_markets": [],
+            "explicit": true,
+            "type": "track",
+            "episode": false,
+            "track": true,
+            "album": {
+                "available_markets": [],
+                "type": "album",
+                "album_type": "album",
+                "href": "https://api.spotify.com/v1/albums/4EZoN6mRXNcGxHXZC2doJH",
+                "id": "4EZoN6mRXNcGxHXZC2doJH",
+                "images": [
+                    {
+                        "url": "https://i.scdn.co/image/ab67616d0000b2730a4fd8aa50652821b1a2a054",
+                        "width": 640,
+                        "height": 640
+                    },
+                    {
+                        "url": "https://i.scdn.co/image/ab67616d00001e020a4fd8aa50652821b1a2a054",
+                        "width": 300,
+                        "height": 300
+                    },
+                    {
+                        "url": "https://i.scdn.co/image/ab67616d000048510a4fd8aa50652821b1a2a054",
+                        "width": 64,
+                        "height": 64
+                    }
+                ],
+                "name": "PARTYNEXTDOOR",
+                "release_date": "2013-07-01",
+                "release_date_precision": "day",
+                "uri": "spotify:album:4EZoN6mRXNcGxHXZC2doJH",
+                "artists": [
+                    {
+                        "external_urls": {
+                            "spotify": "https://open.spotify.com/artist/2HPaUgqeutzr3jx5a9WyDV"
+                        },
+                        "href": "https://api.spotify.com/v1/artists/2HPaUgqeutzr3jx5a9WyDV",
+                        "id": "2HPaUgqeutzr3jx5a9WyDV",
+                        "name": "PARTYNEXTDOOR",
+                        "type": "artist",
+                        "uri": "spotify:artist:2HPaUgqeutzr3jx5a9WyDV"
+                    }
+                ],
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/album/4EZoN6mRXNcGxHXZC2doJH"
+                },
+                "total_tracks": 10
+            },
+            "artists": [
+                {
+                    "external_urls": {
+                        "spotify": "https://open.spotify.com/artist/2HPaUgqeutzr3jx5a9WyDV"
+                    },
+                    "href": "https://api.spotify.com/v1/artists/2HPaUgqeutzr3jx5a9WyDV",
+                    "id": "2HPaUgqeutzr3jx5a9WyDV",
+                    "name": "PARTYNEXTDOOR",
+                    "type": "artist",
+                    "uri": "spotify:artist:2HPaUgqeutzr3jx5a9WyDV"
+                }
+            ],
+            "disc_number": 1,
+            "track_number": 6,
+            "duration_ms": 99213,
+            "external_ids": {
+                "isrc": "USWB11302160"
+            },
+            "external_urls": {
+                "spotify": "https://open.spotify.com/track/79MSEdtXuudhGhC5AtG07g"
+            },
+            "href": "https://api.spotify.com/v1/tracks/79MSEdtXuudhGhC5AtG07g",
+            "id": "79MSEdtXuudhGhC5AtG07g",
+            "name": "Break from Toronto",
+            "popularity": 1,
+            "uri": "spotify:track:79MSEdtXuudhGhC5AtG07g",
+            "is_local": false
+        },
+        "video_thumbnail": {
+            "url": null
+        }
+    }
+]

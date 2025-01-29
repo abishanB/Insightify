@@ -1,0 +1,94 @@
+.artist-list{ 
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--gap-size);
+    width: calc((var(--artist-Listing-width) * 2 + var(--gap-size)));
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+    --gap-size: 20px;
+    --artist-Listing-width: 420px
+}
+
+.artist-cover{
+    min-width:max(calc(5vw + 6px), 34px); 
+    /* space between cover and artist name */
+}
+
+.artist-cover img{ 
+    min-height: 36px;
+    min-width: 36px;
+    height: 5vw;
+    width: 5vw;
+    margin-left: auto;
+    margin-right: auto;
+    float: left;
+    border-radius: 50%;
+}
+
+.artist-rank{
+    min-width: 55px;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.artist-name {
+    font-size: 1.7rem;
+    width: 100%;
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap; /* Keeps the text on a single line */
+    text-overflow: ellipsis; /* Adds ellipsis if text overflows */
+}
+
+.artist-table-listing{
+    justify-content: center;
+    align-items: center;
+    max-width: var(--artist-Listing-width);
+    width:var(--artist-Listing-width);
+    overflow: hidden;
+    white-space: nowrap; /* Keeps the text on a single line */
+    text-overflow: ellipsis; /* Adds ellipsis if text overflows */
+    min-width: 250px;
+    /* outline: 2px solid bluex; */
+}
+
+@media (max-width: 900px) { /* Adjust for smaller screens */
+    .artist-list {
+        column-gap: 0; /* Remove coloumn gaps for small screens */
+        row-gap: 4px;
+        width: min(100vw,600px);
+    }
+    .artist-table-listing{
+        width: 400px;
+        min-width: 50%;
+        max-width:50%;
+    }
+    .artist-name{
+        font-size: 1.3rem;
+    }
+    .artist-rank{
+        min-width: 40px;
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 450px) { /* Adjust for smaller screens */
+    .artist-table-listing{
+        width: 100%;
+        min-width: none;
+        max-width: none;
+    }
+    .artist-name{
+        font-size: 1.6rem;
+    }
+    .artist-cover img{ 
+        min-width: 64px;
+        min-height: 64px
+    }
+    .artist-cover{
+        min-width: 70px;
+    }
+}

@@ -1,0 +1,68 @@
+*:before, 
+*:after,
+*,
+::after,
+::before {box-sizing: border-box;}
+
+p {padding: 0 1em;}
+p span {color: var(--page-text-color-hover);}
+
+tab-container {
+	max-width: fit-content;
+	margin-inline: auto;
+	display: var(--tab-display);
+	justify-content: center;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: auto 1fr;
+	border: solid rgba(255,255,255,0.03);
+	border-radius: .5em;
+	font-size: 1rem;
+}
+/*
+TAB CONTROLS
+Hide radios */
+input {display: none; justify-content: center;}
+input:checked + label {
+	justify-content: center;
+	color: var(--page-text-color-hover);
+	background-color: rgba(255,255,255,0.0);
+	transition: all 250ms;
+    display: block;
+}
+label {
+	font-family: Calibri, "Gill Sans", "Gill Sans MT", "Trebuchet MS", sans-serif;
+	justify-content: center;
+	cursor: pointer;
+	transition: color 250ms;
+	padding: 1em;
+	border-right: solid 2px var(--page-background-color);
+	background-color: var(--tab-background-color);
+	text-align: center;
+	transition: all 250ms;
+}
+label:last-of-type {border: none; justify-content: center;}
+label:hover {
+	justify-content: center;
+	color: var(--page-text-color-hover); 
+	background-color: rgba(255,255,255,0.05);
+}
+
+tab-content {
+	display: var(--tab-display);
+	grid-column: 1 / -1;
+}
+/*
+Why doesn't this work!? 
+input ~ tab-content {display: none;}
+input:checked ~ tab-content {display: var(--tab-display);}*/
+
+input#tabToggle01:checked ~ tab-content:not(:nth-of-type(1)),
+input#tabToggle02:checked ~ tab-content:not(:nth-of-type(2)),
+input#tabToggle03:checked ~ tab-content:not(:nth-of-type(3)) {display: none;}
+
+
+@media (max-width: 600px) { 
+	tab-container{
+		font-size: 0.85rem;
+	}
+}

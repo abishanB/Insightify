@@ -1,0 +1,81 @@
+/* styling for playlist page and all cards/sections */
+.card-container{
+  --sideMargin: 30px;
+  --whiteColor: #F2F4F7;
+  --grayColor: #b3b7bd;
+  --blueColor: #279AF1;
+  --greenColor: #23CE6B;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 22px;
+  width: 80vw;
+  max-width: 1100px;
+  display: block;
+}
+
+.card-title{
+  margin: 18px 0
+}
+
+.card-title span{
+  position: relative;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  margin-left: var(--sideMargin);
+  color: var(--whiteColor);
+  font-size: 2rem;  
+  font-weight: bold;
+}
+
+.playlist-card {
+  overflow:hidden;
+  background-color: #2F374C;
+  border-radius: 20px;
+  
+}
+.playlist-card:not(:first-child){  /* spacing between card */
+  margin-top: 50px;
+}
+
+
+@media (max-width: 1300px) { /* Adjust for smaller screens */
+  .card-container{
+    min-width: 90vw
+  }
+}
+
+@media (max-width: 1000px) { /* Adjust for smaller screens */
+  .card-container{
+    --sideMargin: 20px;
+    min-width: 95vw
+  }
+  .card-title span{
+    font-size: 1.7rem;
+  }
+}
+
+@media (max-width: 750px){
+  .card-title {
+    margin: 8px 0;
+  }
+  .card-title span{
+    font-size: 1.4rem;
+  }
+  .card-container{
+    margin-top: 15px;
+  }
+  .playlist-card:not(:first-child){  /* spacing between card */
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 500px){
+  .card-title span{
+    font-size: 1rem;
+  }
+  .card-title{
+    margin: 2px 0;
+  }
+}

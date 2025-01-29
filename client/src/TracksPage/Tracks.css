@@ -1,0 +1,67 @@
+.track-table-container{ 
+    margin-top: 10px;
+    width: 100%;
+    text-align: left;
+}
+.track-table{
+    table-layout:fixed;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.track-name, .track-artist-name, .track-album {/* text overflow on everything */
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1.3rem;
+}
+.track-rank{
+    text-align: center;
+    font-size: 1.25rem;
+}
+.track-cover{
+    /* space between cover and name */
+    min-width: 54px;
+}
+.track-cover img{
+    margin-left: auto; 
+    margin-right: auto;
+    height: 48px;
+    width: 48px;
+} 
+
+@media (max-width: 1000px) { /* Adjust for smaller screens */
+    .track-rank{
+        font-size: 0.9rem;
+    }
+    .track-name, .track-artist-name, .track-album {
+        font-size: 1rem;
+    }
+    .track-cover{
+        max-width: 36px;
+        height: 36px;
+        width: 36px;
+    }
+}
+
+@media (max-width: 525px) { /* Adjust for smaller screens */
+    .track-rank{
+        font-size: 0.9rem;
+    }
+    .track-name, .track-artist-name, .track-album {
+        font-size: 0.775rem;
+    }
+    .track-cover{
+        min-width: 30px;
+    }
+    .track-cover img{
+        max-width: 28px;
+        height: 28px;
+        width: 28px;
+    }
+    .track-table{
+        max-width: 100%;
+        min-width: 100%;
+    }
+}

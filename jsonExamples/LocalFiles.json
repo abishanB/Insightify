@@ -1,0 +1,699 @@
+
+[
+    {
+        "added_at": "2024-03-29T04:10:30Z",
+        "added_by": {
+            "external_urls": {
+                "spotify": "https://open.spotify.com/user/destructopotato"
+            },
+            "href": "https://api.spotify.com/v1/users/destructopotato",
+            "id": "destructopotato",
+            "type": "user",
+            "uri": "spotify:user:destructopotato"
+        },
+        "is_local": true,
+        "primary_color": null,
+        "track": {
+            "album": {
+                "album_type": null,
+                "available_markets": [],
+                "external_urls": {},
+                "href": null,
+                "id": null,
+                "images": [],
+                "name": "Days Before Rodeo",
+                "release_date": null,
+                "release_date_precision": null,
+                "type": "album",
+                "uri": null,
+                "artists": []
+            },
+            "artists": [
+                {
+                    "external_urls": {},
+                    "href": null,
+                    "id": null,
+                    "name": "Travis Scott",
+                    "type": "artist",
+                    "uri": null
+                }
+            ],
+            "available_markets": [],
+            "explicit": false,
+            "preview_url": null,
+            "type": "track",
+            "disc_number": 0,
+            "external_ids": {},
+            "external_urls": {},
+            "href": null,
+            "id": null,
+            "duration_ms": 260000,
+            "name": "Zombies",
+            "uri": "spotify:local:Travis+Scott:Days+Before+Rodeo:Zombies:260",
+            "popularity": 0,
+            "track_number": 0,
+            "is_local": true
+        },
+        "video_thumbnail": {
+            "url": null
+        }
+    },
+    {
+        "added_at": "2024-03-29T04:10:30Z",
+        "added_by": {
+            "external_urls": {
+                "spotify": "https://open.spotify.com/user/destructopotato"
+            },
+            "href": "https://api.spotify.com/v1/users/destructopotato",
+            "id": "destructopotato",
+            "type": "user",
+            "uri": "spotify:user:destructopotato"
+        },
+        "is_local": true,
+        "primary_color": null,
+        "track": {
+            "album": {
+                "album_type": null,
+                "available_markets": [],
+                "external_urls": {},
+                "href": null,
+                "id": null,
+                "images": [],
+                "name": "Days Before Rodeo",
+                "release_date": null,
+                "release_date_precision": null,
+                "type": "album",
+                "uri": null,
+                "artists": []
+            },
+            "artists": [
+                {
+                    "external_urls": {},
+                    "href": null,
+                    "id": null,
+                    "name": "Travis Scott",
+                    "type": "artist",
+                    "uri": null
+                }
+            ],
+            "available_markets": [],
+            "explicit": false,
+            "preview_url": null,
+            "type": "track",
+            "disc_number": 0,
+            "external_ids": {},
+            "external_urls": {},
+            "href": null,
+            "id": null,
+            "duration_ms": 273000,
+            "name": "Mamacita (feat. Rich Homie Quan & Young Thug)",
+            "uri": "spotify:local:Travis+Scott:Days+Before+Rodeo:Mamacita+%28feat.+Rich+Homie+Quan+%26+Young+Thug%29:273",
+            "popularity": 0,
+            "track_number": 0,
+            "is_local": true
+        },
+        "video_thumbnail": {
+            "url": null
+        }
+    },
+    {
+        "added_at": "2024-03-29T04:10:30Z",
+        "added_by": {
+            "external_urls": {
+                "spotify": "https://open.spotify.com/user/destructopotato"
+            },
+            "href": "https://api.spotify.com/v1/users/destructopotato",
+            "id": "destructopotato",
+            "type": "user",
+            "uri": "spotify:user:destructopotato"
+        },
+        "is_local": true,
+        "primary_color": null,
+        "track": {
+            "album": {
+                "album_type": null,
+                "available_markets": [],
+                "external_urls": {},
+                "href": null,
+                "id": null,
+                "images": [],
+                "name": "Days Before Rodeo",
+                "release_date": null,
+                "release_date_precision": null,
+                "type": "album",
+                "uri": null,
+                "artists": []
+            },
+            "artists": [
+                {
+                    "external_urls": {},
+                    "href": null,
+                    "id": null,
+                    "name": "Travis Scott",
+                    "type": "artist",
+                    "uri": null
+                }
+            ],
+            "available_markets": [],
+            "explicit": false,
+            "preview_url": null,
+            "type": "track",
+            "disc_number": 0,
+            "external_ids": {},
+            "external_urls": {},
+            "href": null,
+            "id": null,
+            "duration_ms": 202000,
+            "name": "Days Before Rodeo The Prayer",
+            "uri": "spotify:local:Travis+Scott:Days+Before+Rodeo:Days+Before+Rodeo+The+Prayer:202",
+            "popularity": 0,
+            "track_number": 0,
+            "is_local": true
+        },
+        "video_thumbnail": {
+            "url": null
+        }
+    },
+    {
+        "added_at": "2024-03-29T04:10:30Z",
+        "added_by": {
+            "external_urls": {
+                "spotify": "https://open.spotify.com/user/destructopotato"
+            },
+            "href": "https://api.spotify.com/v1/users/destructopotato",
+            "id": "destructopotato",
+            "type": "user",
+            "uri": "spotify:user:destructopotato"
+        },
+        "is_local": true,
+        "primary_color": null,
+        "track": {
+            "album": {
+                "album_type": null,
+                "available_markets": [],
+                "external_urls": {},
+                "href": null,
+                "id": null,
+                "images": [],
+                "name": "Days Before Rodeo",
+                "release_date": null,
+                "release_date_precision": null,
+                "type": "album",
+                "uri": null,
+                "artists": []
+            },
+            "artists": [
+                {
+                    "external_urls": {},
+                    "href": null,
+                    "id": null,
+                    "name": "Travis Scott",
+                    "type": "artist",
+                    "uri": null
+                }
+            ],
+            "available_markets": [],
+            "explicit": false,
+            "preview_url": null,
+            "type": "track",
+            "disc_number": 0,
+            "external_ids": {},
+            "external_urls": {},
+            "href": null,
+            "id": null,
+            "duration_ms": 298000,
+            "name": "Quintana Pt. 2",
+            "uri": "spotify:local:Travis+Scott:Days+Before+Rodeo:Quintana+Pt.+2:298",
+            "popularity": 0,
+            "track_number": 0,
+            "is_local": true
+        },
+        "video_thumbnail": {
+            "url": null
+        }
+    },
+    {
+        "added_at": "2024-03-29T04:10:30Z",
+        "added_by": {
+            "external_urls": {
+                "spotify": "https://open.spotify.com/user/destructopotato"
+            },
+            "href": "https://api.spotify.com/v1/users/destructopotato",
+            "id": "destructopotato",
+            "type": "user",
+            "uri": "spotify:user:destructopotato"
+        },
+        "is_local": true,
+        "primary_color": null,
+        "track": {
+            "album": {
+                "album_type": null,
+                "available_markets": [],
+                "external_urls": {},
+                "href": null,
+                "id": null,
+                "images": [],
+                "name": "Days Before Rodeo",
+                "release_date": null,
+                "release_date_precision": null,
+                "type": "album",
+                "uri": null,
+                "artists": []
+            },
+            "artists": [
+                {
+                    "external_urls": {},
+                    "href": null,
+                    "id": null,
+                    "name": "Travis Scott",
+                    "type": "artist",
+                    "uri": null
+                }
+            ],
+            "available_markets": [],
+            "explicit": false,
+            "preview_url": null,
+            "type": "track",
+            "disc_number": 0,
+            "external_ids": {},
+            "external_urls": {},
+            "href": null,
+            "id": null,
+            "duration_ms": 318000,
+            "name": "Skyfall (feat. Young Thug)",
+            "uri": "spotify:local:Travis+Scott:Days+Before+Rodeo:Skyfall+%28feat.+Young+Thug%29:318",
+            "popularity": 0,
+            "track_number": 0,
+            "is_local": true
+        },
+        "video_thumbnail": {
+            "url": null
+        }
+    },
+    {
+        "added_at": "2024-03-29T04:10:30Z",
+        "added_by": {
+            "external_urls": {
+                "spotify": "https://open.spotify.com/user/destructopotato"
+            },
+            "href": "https://api.spotify.com/v1/users/destructopotato",
+            "id": "destructopotato",
+            "type": "user",
+            "uri": "spotify:user:destructopotato"
+        },
+        "is_local": true,
+        "primary_color": null,
+        "track": {
+            "album": {
+                "album_type": null,
+                "available_markets": [],
+                "external_urls": {},
+                "href": null,
+                "id": null,
+                "images": [],
+                "name": "Days Before Rodeo",
+                "release_date": null,
+                "release_date_precision": null,
+                "type": "album",
+                "uri": null,
+                "artists": []
+            },
+            "artists": [
+                {
+                    "external_urls": {},
+                    "href": null,
+                    "id": null,
+                    "name": "Travis Scott",
+                    "type": "artist",
+                    "uri": null
+                }
+            ],
+            "available_markets": [],
+            "explicit": false,
+            "preview_url": null,
+            "type": "track",
+            "disc_number": 0,
+            "external_ids": {},
+            "external_urls": {},
+            "href": null,
+            "id": null,
+            "duration_ms": 209000,
+            "name": "Drugs You Should Try It",
+            "uri": "spotify:local:Travis+Scott:Days+Before+Rodeo:Drugs+You+Should+Try+It:209",
+            "popularity": 0,
+            "track_number": 0,
+            "is_local": true
+        },
+        "video_thumbnail": {
+            "url": null
+        }
+    },
+    {
+        "added_at": "2024-03-29T04:10:30Z",
+        "added_by": {
+            "external_urls": {
+                "spotify": "https://open.spotify.com/user/destructopotato"
+            },
+            "href": "https://api.spotify.com/v1/users/destructopotato",
+            "id": "destructopotato",
+            "type": "user",
+            "uri": "spotify:user:destructopotato"
+        },
+        "is_local": true,
+        "primary_color": null,
+        "track": {
+            "album": {
+                "album_type": null,
+                "available_markets": [],
+                "external_urls": {},
+                "href": null,
+                "id": null,
+                "images": [],
+                "name": "Days Before Rodeo",
+                "release_date": null,
+                "release_date_precision": null,
+                "type": "album",
+                "uri": null,
+                "artists": []
+            },
+            "artists": [
+                {
+                    "external_urls": {},
+                    "href": null,
+                    "id": null,
+                    "name": "Travis Scott",
+                    "type": "artist",
+                    "uri": null
+                }
+            ],
+            "available_markets": [],
+            "explicit": false,
+            "preview_url": null,
+            "type": "track",
+            "disc_number": 0,
+            "external_ids": {},
+            "external_urls": {},
+            "href": null,
+            "id": null,
+            "duration_ms": 286000,
+            "name": "Don't Play (feat. Big Sean & The 1975)",
+            "uri": "spotify:local:Travis+Scott:Days+Before+Rodeo:Don%27t+Play+%28feat.+Big+Sean+%26+The+1975%29:286",
+            "popularity": 0,
+            "track_number": 0,
+            "is_local": true
+        },
+        "video_thumbnail": {
+            "url": null
+        }
+    },
+    {
+        "added_at": "2024-03-29T04:10:30Z",
+        "added_by": {
+            "external_urls": {
+                "spotify": "https://open.spotify.com/user/destructopotato"
+            },
+            "href": "https://api.spotify.com/v1/users/destructopotato",
+            "id": "destructopotato",
+            "type": "user",
+            "uri": "spotify:user:destructopotato"
+        },
+        "is_local": true,
+        "primary_color": null,
+        "track": {
+            "album": {
+                "album_type": null,
+                "available_markets": [],
+                "external_urls": {},
+                "href": null,
+                "id": null,
+                "images": [],
+                "name": "Days Before Rodeo",
+                "release_date": null,
+                "release_date_precision": null,
+                "type": "album",
+                "uri": null,
+                "artists": []
+            },
+            "artists": [
+                {
+                    "external_urls": {},
+                    "href": null,
+                    "id": null,
+                    "name": "Travis Scott",
+                    "type": "artist",
+                    "uri": null
+                }
+            ],
+            "available_markets": [],
+            "explicit": false,
+            "preview_url": null,
+            "type": "track",
+            "disc_number": 0,
+            "external_ids": {},
+            "external_urls": {},
+            "href": null,
+            "id": null,
+            "duration_ms": 274000,
+            "name": "Sloppy Toppy (feat. Migos & Peewee Longway)",
+            "uri": "spotify:local:Travis+Scott:Days+Before+Rodeo:Sloppy+Toppy+%28feat.+Migos+%26+Peewee+Longway%29:274",
+            "popularity": 0,
+            "track_number": 0,
+            "is_local": true
+        },
+        "video_thumbnail": {
+            "url": null
+        }
+    },
+    {
+        "added_at": "2024-03-29T04:10:30Z",
+        "added_by": {
+            "external_urls": {
+                "spotify": "https://open.spotify.com/user/destructopotato"
+            },
+            "href": "https://api.spotify.com/v1/users/destructopotato",
+            "id": "destructopotato",
+            "type": "user",
+            "uri": "spotify:user:destructopotato"
+        },
+        "is_local": true,
+        "primary_color": null,
+        "track": {
+            "album": {
+                "album_type": null,
+                "available_markets": [],
+                "external_urls": {},
+                "href": null,
+                "id": null,
+                "images": [],
+                "name": "Days Before Rodeo",
+                "release_date": null,
+                "release_date_precision": null,
+                "type": "album",
+                "uri": null,
+                "artists": []
+            },
+            "artists": [
+                {
+                    "external_urls": {},
+                    "href": null,
+                    "id": null,
+                    "name": "Travis Scott",
+                    "type": "artist",
+                    "uri": null
+                }
+            ],
+            "available_markets": [],
+            "explicit": false,
+            "preview_url": null,
+            "type": "track",
+            "disc_number": 0,
+            "external_ids": {},
+            "external_urls": {},
+            "href": null,
+            "id": null,
+            "duration_ms": 247000,
+            "name": "Basement Freestyle",
+            "uri": "spotify:local:Travis+Scott:Days+Before+Rodeo:Basement+Freestyle:247",
+            "popularity": 0,
+            "track_number": 0,
+            "is_local": true
+        },
+        "video_thumbnail": {
+            "url": null
+        }
+    },
+    {
+        "added_at": "2024-03-29T04:10:30Z",
+        "added_by": {
+            "external_urls": {
+                "spotify": "https://open.spotify.com/user/destructopotato"
+            },
+            "href": "https://api.spotify.com/v1/users/destructopotato",
+            "id": "destructopotato",
+            "type": "user",
+            "uri": "spotify:user:destructopotato"
+        },
+        "is_local": true,
+        "primary_color": null,
+        "track": {
+            "album": {
+                "album_type": null,
+                "available_markets": [],
+                "external_urls": {},
+                "href": null,
+                "id": null,
+                "images": [],
+                "name": "Days Before Rodeo",
+                "release_date": null,
+                "release_date_precision": null,
+                "type": "album",
+                "uri": null,
+                "artists": []
+            },
+            "artists": [
+                {
+                    "external_urls": {},
+                    "href": null,
+                    "id": null,
+                    "name": "Travis Scott",
+                    "type": "artist",
+                    "uri": null
+                }
+            ],
+            "available_markets": [],
+            "explicit": false,
+            "preview_url": null,
+            "type": "track",
+            "disc_number": 0,
+            "external_ids": {},
+            "external_urls": {},
+            "href": null,
+            "id": null,
+            "duration_ms": 270000,
+            "name": "Backyard",
+            "uri": "spotify:local:Travis+Scott:Days+Before+Rodeo:Backyard:270",
+            "popularity": 0,
+            "track_number": 0,
+            "is_local": true
+        },
+        "video_thumbnail": {
+            "url": null
+        }
+    },
+    {
+        "added_at": "2024-03-29T04:10:30Z",
+        "added_by": {
+            "external_urls": {
+                "spotify": "https://open.spotify.com/user/destructopotato"
+            },
+            "href": "https://api.spotify.com/v1/users/destructopotato",
+            "id": "destructopotato",
+            "type": "user",
+            "uri": "spotify:user:destructopotato"
+        },
+        "is_local": true,
+        "primary_color": null,
+        "track": {
+            "album": {
+                "album_type": null,
+                "available_markets": [],
+                "external_urls": {},
+                "href": null,
+                "id": null,
+                "images": [],
+                "name": "Days Before Rodeo",
+                "release_date": null,
+                "release_date_precision": null,
+                "type": "album",
+                "uri": null,
+                "artists": []
+            },
+            "artists": [
+                {
+                    "external_urls": {},
+                    "href": null,
+                    "id": null,
+                    "name": "Travis Scott",
+                    "type": "artist",
+                    "uri": null
+                }
+            ],
+            "available_markets": [],
+            "explicit": false,
+            "preview_url": null,
+            "type": "track",
+            "disc_number": 0,
+            "external_ids": {},
+            "external_urls": {},
+            "href": null,
+            "id": null,
+            "duration_ms": 228000,
+            "name": "Grey",
+            "uri": "spotify:local:Travis+Scott:Days+Before+Rodeo:Grey:228",
+            "popularity": 0,
+            "track_number": 0,
+            "is_local": true
+        },
+        "video_thumbnail": {
+            "url": null
+        }
+    },
+    {
+        "added_at": "2024-03-29T04:10:30Z",
+        "added_by": {
+            "external_urls": {
+                "spotify": "https://open.spotify.com/user/destructopotato"
+            },
+            "href": "https://api.spotify.com/v1/users/destructopotato",
+            "id": "destructopotato",
+            "type": "user",
+            "uri": "spotify:user:destructopotato"
+        },
+        "is_local": true,
+        "primary_color": null,
+        "track": {
+            "album": {
+                "album_type": null,
+                "available_markets": [],
+                "external_urls": {},
+                "href": null,
+                "id": null,
+                "images": [],
+                "name": "Days Before Rodeo",
+                "release_date": null,
+                "release_date_precision": null,
+                "type": "album",
+                "uri": null,
+                "artists": []
+            },
+            "artists": [
+                {
+                    "external_urls": {},
+                    "href": null,
+                    "id": null,
+                    "name": "Travis Scott",
+                    "type": "artist",
+                    "uri": null
+                }
+            ],
+            "available_markets": [],
+            "explicit": false,
+            "preview_url": null,
+            "type": "track",
+            "disc_number": 0,
+            "external_ids": {},
+            "external_urls": {},
+            "href": null,
+            "id": null,
+            "duration_ms": 133000,
+            "name": "BACC (Bonus)",
+            "uri": "spotify:local:Travis+Scott:Days+Before+Rodeo:BACC+%28Bonus%29:133",
+            "popularity": 0,
+            "track_number": 0,
+            "is_local": true
+        },
+        "video_thumbnail": {
+            "url": null
+        }
+    }
+]
