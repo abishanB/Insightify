@@ -57,11 +57,10 @@ public class PlaylistService {
 
         filteredPlaylistTracks.add(trackObj);
     }
-    System.out.println("filted: " + filteredPlaylistTracks.size());
     return filteredPlaylistTracks;
 }
 
-  public static String getPlaylistEndpointResult(String accessToken, URI endpoint) throws Exception {
+  public static String getPlaylistEndpointResult(URI endpoint, String accessToken) throws Exception {
     //gets playlist and playlist tracks
     // Create an HttpClient instance
     HttpClient client = HttpClient.newHttpClient();
@@ -84,14 +83,14 @@ public class PlaylistService {
     // If next endpoint doesn't exist, return
     // Otherwise, make an API call to the endpoint then call the function again
     // while adding to the list of tracks
-    if (nextEndpoint == null || playlistTracks.size() >= 2200) { // Don't scan over 2200 tracks
+    if (nextEndpoint == null || playlistTracks.size() >= 2500) { // Don't scan over 2200 tracks
       System.out.println(playlistTracks.size());
       return filterPlaylistTracks(playlistTracks);
     }
-    // Make an API request to get the next batch of tracks
-    String tracksJsonStr = getPlaylistEndpointResult(token, playlistTracksEndpointBuilder(nextEndpoint));
+    // Make an API request to get the next set of tracks
+    String tracksJsonStr = getPlaylistEndpointResult(playlistTracksEndpointBuilder(nextEndpoint), token);
     JsonObject tracksObj = JsonParser.parseString(tracksJsonStr).getAsJsonObject();
-   
+    
     for (JsonElement element : tracksObj.get("items").getAsJsonArray()) {
       playlistTracks.add(element);
     }
@@ -103,14 +102,14 @@ public class PlaylistService {
     } else {
       next = nextEndpointElement.getAsString(); 
     }
-      // Recursive call with the new list of tracks and the next endpoint
+    //Recursive call with the new list of tracks and the next endpoint
     return getPlaylistTracksResult(playlistTracks, next, token);
   }
 
   public String getPlaylist(String access_token, String playlistID) {
     try {
       String endpoint = String.format("https://api.spotify.com/v1/playlists/%s", playlistID);
-      return getPlaylistEndpointResult(access_token, playlistEndpointBuilder(endpoint)); // Calling the method
+      return getPlaylistEndpointResult(playlistEndpointBuilder(endpoint), access_token); // Calling the method
     } catch (Exception e) {
       // Handle the exception (log it, return a default value, etc.)
       e.printStackTrace();
@@ -120,6 +119,11 @@ public class PlaylistService {
 
   public String getPlaylistTracks(String access_token, String playlistID) {
     try {
+      if (playlistID.equals("liked_songs")){
+        String likedSongsEndpoint = "https://api.spotify.com/v1/me/tracks?limit=50";
+        return getPlaylistTracksResult(new JsonArray(), likedSongsEndpoint, access_token).toString(); // Calling the method
+      }
+      
       String endpoint = String.format("https://api.spotify.com/v1/playlists/%s/tracks?limit=100", playlistID);
       return getPlaylistTracksResult(new JsonArray(), endpoint, access_token).toString(); // Calling the method
     } catch (Exception e) {
