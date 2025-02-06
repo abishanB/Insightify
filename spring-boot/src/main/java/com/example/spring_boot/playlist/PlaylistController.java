@@ -24,12 +24,14 @@ public class PlaylistController {
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public String getUserPlaylist(@RequestParam String access_token, @RequestParam String playlistID) {
+        System.out.println("getUserPlaylist Endpoint Hit");
         return playlistService.getPlaylist(access_token, playlistID);
     }
     
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("tracks")
     public String getPlaylistTracks(@RequestParam String access_token, @RequestParam String playlistID) {
+        System.out.println("getPlaylistTracks endpoint hit");
         return playlistService.getPlaylistTracks(access_token, playlistID);
     }
     

@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -20,9 +21,10 @@ import com.google.gson.JsonParser;
 @Service
 public class PlaylistService {
   public static URI playlistEndpointBuilder(String endpoint) throws Exception{
+    //external_urls.spotify
     //followers.total,id,images.url,name,owner(external_urls,display_name,id)
     //tracks(total,next)
-    final String fieldsParam = "followers.total,id,images.url,name,owner(external_urls,display_name,id)";
+    final String fieldsParam = "followers.total,id,images.url,name,owner(external_urls,display_name,id),tracks(total,next),external_urls.spotify";
     // Create an HttpRequest with headers 
     String encodedFieldsParam = URLEncoder.encode(fieldsParam, StandardCharsets.UTF_8);
     String fullEndpoint = endpoint + "?fields=" + encodedFieldsParam;
@@ -33,10 +35,10 @@ public class PlaylistService {
   public static URI playlistTracksEndpointBuilder(String endpoint) throws Exception{
     //next
     //items(added_at,is_local)
-    //items.track.album(external_urls,images.url)
+    //items.track.album(external_urls,images.url,name)
     //items.track.artists(external_urls,href,name,id)
     //items.track(external_urls,popularity)
-    final String fieldsParam = "next,items(added_at,is_local),items.track.album(external_urls,images.url),items.track.artists(external_urls,href,name,id),items.track(external_urls,popularity,type)";
+    final String fieldsParam = "next,items(added_at,is_local),items.track.album(external_urls,images.url,name),items.track.artists(external_urls,href,name,id),items.track(external_urls,popularity,type)";
     // Create an HttpRequest with headers 
     String encodedFieldsParam =URLEncoder.encode(fieldsParam, StandardCharsets.UTF_8);
     String fullEndpoint= endpoint + "&fields=" + encodedFieldsParam;
@@ -63,6 +65,7 @@ public class PlaylistService {
   public static String getPlaylistEndpointResult(URI endpoint, String accessToken) throws Exception {
     //gets playlist and playlist tracks
     // Create an HttpClient instance
+   
     HttpClient client = HttpClient.newHttpClient();
     HttpRequest request = HttpRequest.newBuilder()
         .uri(endpoint)
@@ -87,6 +90,7 @@ public class PlaylistService {
       System.out.println(playlistTracks.size());
       return filterPlaylistTracks(playlistTracks);
     }
+    System.out.println("Fetching playlist tracks");
     // Make an API request to get the next set of tracks
     String tracksJsonStr = getPlaylistEndpointResult(playlistTracksEndpointBuilder(nextEndpoint), token);
     JsonObject tracksObj = JsonParser.parseString(tracksJsonStr).getAsJsonObject();
@@ -102,12 +106,38 @@ public class PlaylistService {
     } else {
       next = nextEndpointElement.getAsString(); 
     }
-    //Recursive call with the new list of tracks and the next endpoint
+    //Recursive call with the new list of tracks and the next endpoint 
     return getPlaylistTracksResult(playlistTracks, next, token);
   }
 
   public String getPlaylist(String access_token, String playlistID) {
     try {
+      if (playlistID.equals("liked_songs")){
+        String likedSongsEndpoint = "https://api.spotify.com/v1/me/tracks?limit=1";
+        JsonObject likedSongsPlaylist = JsonParser.parseString(getPlaylistEndpointResult(new URI(likedSongsEndpoint), access_token)).getAsJsonObject();
+        JsonObject ownerProperty = new JsonObject();
+        JsonObject externalURLSProperty = new JsonObject();
+        JsonObject followersProperty = new JsonObject();
+        JsonObject tracksProperty = new JsonObject();
+        JsonArray likedSongImagesArr = new JsonArray();
+        JsonObject likedSongImage = new JsonObject();
+
+        likedSongImage.addProperty("url", "https://misc.scdn.co/liked-songs/liked-songs-300.jpg");
+        likedSongImagesArr.add(likedSongImage);
+        externalURLSProperty.addProperty("spotify", "https://open.spotify.com/collection/tracks");
+        ownerProperty.add("external_urls", externalURLSProperty);
+        ownerProperty.addProperty("display_name", "");
+        followersProperty.addProperty("total", "N/A");
+        tracksProperty.addProperty("total", likedSongsPlaylist.get("total").getAsString());
+
+        likedSongsPlaylist.addProperty("name", "Liked Songs");
+        likedSongsPlaylist.add("owner",ownerProperty );
+        likedSongsPlaylist.add("external_urls", externalURLSProperty);
+        likedSongsPlaylist.add("images", likedSongImagesArr);
+        likedSongsPlaylist.add("followers", followersProperty);
+        likedSongsPlaylist.add("tracks", tracksProperty);
+        return likedSongsPlaylist.toString(); // Calling the method
+      }
       String endpoint = String.format("https://api.spotify.com/v1/playlists/%s", playlistID);
       return getPlaylistEndpointResult(playlistEndpointBuilder(endpoint), access_token); // Calling the method
     } catch (Exception e) {

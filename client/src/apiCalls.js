@@ -92,6 +92,32 @@ export async function getEndpointResult(access_token, endpoint, endpointType=nul
   return checkResponse(await response)
 }
 
+export async function getPlaylist(token, playlistID) {
+  const params = new URLSearchParams({
+    access_token: token,
+    playlistID: playlistID,
+  });
+  
+  const response = await fetch(`http://localhost:8080/api/playlist?${params.toString()}`, {
+    method:'GET',
+  });
+  
+  return checkResponse(await response)
+}
+
+export async function getPlaylistTracks(token, playlistID) {
+  const params = new URLSearchParams({
+    access_token: token,
+    playlistID: playlistID,
+  });
+  
+  const response = await fetch(`http://localhost:8080/api/playlist/tracks?${params.toString()}`, {
+    method:'GET',
+  });
+  
+  return checkResponse(await response)
+}
+
 export async function getPlaylistTopArtistsOverTime(access_token, playlistTracksJSON){//gets top artists from playlist
   const response = await fetch(`http://localhost:8080/api/playlist/top_artists`, {
     method:'POST',

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getEndpointResult } from '../apiCalls';
+import { getEndpointResult, getPlaylist, getPlaylistTracks } from '../apiCalls';
 import LoadingIcon from '../components/LoadingIcon';
 import GenreChart from './GenreChart';
 import "./styles/PlaylistAnalysis.css";
@@ -22,16 +22,6 @@ function sortProperties(obj){//sorts artists, albums and genres from most occuri
 	return sortable; // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
 }
 
-function filterPlaylistTracks(playlistTracks){
-  let filteredPlaylistTracks = []
-  for (let trackObj of Object.values(playlistTracks)) {
-    if (trackObj.track===null){continue;}//dont include tracks that cant be found
-    if (trackObj.track.type!=="track"){continue;}//dont include podcasts etc
-    if (trackObj.is_local){continue}//skip local songs
-    filteredPlaylistTracks.push(trackObj)
-  }
-  return filteredPlaylistTracks
-}
 
 function calculateAveragePopularity(playlistTracks){
   let totalPopularity = 0
@@ -103,29 +93,6 @@ function getPlaylistAlbums(playlistTracks){//collect how many times a album appe
   return sortProperties(playlistAlbums)
 }
 
-function likedSongsToPlaylist(likedSongsObj){//convert likedSongs object to playlist Object by adding corresponding properties
-  Object.defineProperty(likedSongsObj, "name",{
-    value : "Liked Songs"
-  })
-  Object.defineProperty(likedSongsObj, "owner",{
-    value : { "external_urls": {
-      "spotify": "https://open.spotify.com/collection/tracks"
-    }
-  }})
-  Object.defineProperty(likedSongsObj, "external_urls",{
-    value : {"spotify": "https://open.spotify.com/collection/tracks"}
-  })
-  Object.defineProperty(likedSongsObj, "images",{
-    value :[{url: 'https://misc.scdn.co/liked-songs/liked-songs-300.png'}]
-  })
-  Object.defineProperty(likedSongsObj, "tracks",{
-    value : {"total": likedSongsObj.total}
-  })
-  Object.defineProperty(likedSongsObj, "followers",{
-    value : {"total": "N/A"}
-  })
-  return likedSongsObj
-}
 
 export default function PlaylistInfo(props) {
   const [playlist, setPlaylist]= useState([])
@@ -159,11 +126,8 @@ export default function PlaylistInfo(props) {
       setReadyToRender(true)
       return
     }
-    if (playlistID === "liked_songs"){
-      onGetPlaylistTracks(playlist.items, playlist.next)
-    } else {
-      onGetPlaylistTracks(playlist.tracks.items, playlist.tracks.next)
-    }
+    
+    onGetPlaylistTracks()
     // eslint-disable-next-line
   }, [playlist]);
 
@@ -243,38 +207,27 @@ export default function PlaylistInfo(props) {
     })
   } 
 
-  function onGetPlaylistTracks(playlistTracks, nextEndpoint){
-    //Only 100 songs can be retrived at once
-    //recursivly calls each endpoint to get sets of 100 songs
-    //inital playlist endpoint returns 100 tracks and a next endpoint for the next 100
-    //if next endpoint doesnt exist set state and return func
-    //else make a api call to the endpoint then call function again while adding to the list of tracks
-    if (nextEndpoint === null || playlistTracks.length >= 2200){//dont scan over 22 00 tracks
-      setPlaylistTracks(filterPlaylistTracks(playlistTracks))
-      return
-    }
-
-    const promise = getEndpointResult(props.token, nextEndpoint, "Fetching tracks")
+  function onGetPlaylistTracks(){
+    const promise = getPlaylistTracks(props.token, playlistID)
     promise.then(function(tracksObject) {
       //setPlaylistTracks(playlistTracks.concat(tracksObject.items))
-      onGetPlaylistTracks(playlistTracks.concat(tracksObject.items), tracksObject.next)
+      setPlaylistTracks(tracksObject)
+      console.log(tracksObject)
     })
   }
 
   function onGetPlaylist (playlistID){//get playlist object and update state
     var promise;
-    if (playlistID === "liked_songs"){
-      promise = getEndpointResult(props.token, `https://api.spotify.com/v1/me/tracks?limit=50`, "Fetching Liked Songs")//users liked songs endpoint
-    } else {
-      promise = getEndpointResult(props.token, `https://api.spotify.com/v1/playlists/${playlistID}`, "Fetching Playlist")
-    }
+    promise = getPlaylist(props.token, playlistID)//users liked songs endpoint
+   
     promise.then(function(playlistObj) {
       if (playlistObj === false){
         setError(true)
         return
       }
+      console.log(playlistObj)
       //add properties to handle liked songs as a playlist
-      if (playlistID === "liked_songs"){ playlistObj = likedSongsToPlaylist(playlistObj) }
+
       setPlaylist(playlistObj)
     })
   }
