@@ -9,7 +9,7 @@ function calculateGenreComposition(data){
   const THRESHOLD_PERCENTAGE = 0.75;//exclude genres that dont take up at least this percentage
   const MAX_OTHER_PERCENTAGE = 15;
   const totalGenreOccurrences = data.reduce((sum, [_, details]) => sum + details.totalOccurences, 0);//total occureneces of each genre
-
+  console.log(data)
   // Calculate percentages
   const processedData = data.map(([genre, details]) => {
     const percentage = (details.totalOccurences / totalGenreOccurrences) * 100;

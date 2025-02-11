@@ -118,6 +118,19 @@ export async function getPlaylistTracks(token, playlistID) {
   return checkResponse(await response)
 }
 
+export async function getArtists(token, playlistIDsJSON) {
+  const params = new URLSearchParams({
+    access_token: token,
+  });
+  
+  const response = await fetch(`http://localhost:8080/api/playlist/artists?${params.toString()}`, {
+    method:'POST',
+    body: playlistIDsJSON
+  });
+  
+  return checkResponse(await response)
+}
+
 export async function getPlaylistTopArtistsOverTime(access_token, playlistTracksJSON){//gets top artists from playlist
   const response = await fetch(`http://localhost:8080/api/playlist/top_artists`, {
     method:'POST',
