@@ -1,16 +1,21 @@
 import React from 'react'
 import { playlistCoverURL } from './DisplayPlaylists'
+import LoadingIcon from "../components/LoadingIcon";
 import "./styles/PlaylistSummary.css"
 import spotifyIcon from "../Spotify_Primary_Logo_RGB_White.png"
 
-
 export default function PlaylistSummary(props) {
   const playlist = props.playlist
-  const topArtists = props.topArtists
-  const topAlbums = props.topAlbums
-  const topGenres = props.topGenres 
-  const averagePopularity = props.averagePopularity
+  // Use default values if props are null or undefined
+  const totalArtists = props.topArtists?.length ?? "...";
+  const topArtists = props.topArtists ?? [[["..."]]];
+  const topAlbums = props.topAlbums ?? [[["..."]]];
+  const topGenres = props.topGenres ?? [[["..."]]];
+  const averagePopularity = props.averagePopularity ?? "...";
+
   const noData = props.noData
+
+  if (playlist === null) {return <LoadingIcon />}
   return (
     <div id="summary-card" className="playlist-card">
       <div className='card-title'>
@@ -31,7 +36,7 @@ export default function PlaylistSummary(props) {
         
         <div className='details'>
           <span>Tracks: <span>{playlist.tracks.total}</span></span>
-          <span>Artists: <span>{topArtists.length}</span></span>
+          <span>Artists: <span>{totalArtists}</span></span>
           <span>Followers: <span>{playlist.followers.total}</span></span>
           {noData
           ? <>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import LoadingIcon from "../components/LoadingIcon";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import { CategoryScale } from "chart.js";
@@ -14,13 +15,63 @@ const colors = [
   "#2ECC71", // Emerald Green
   "#3357FF", // Vibrant Blue
   "#FFC300", // Bright Yellow
-  "#C70039",  // Deep Crimson
+  "#C70039", // Deep Crimson
   "#fffac8", // Beige
   "#3498DB", // Soft Blue
 ];
 
+//line chart options
+const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: "top",
+      labels: {
+        boxWidth: 24,
+        color: "#b3b7bd",
+        font: {
+          size: 12,
+        },
+      },
+    },
+  },
+
+  scales: {
+    x: {
+      grid: {
+        color: "rgba(132, 132, 132, 0.3)", // X-axis gridline color
+      },
+      ticks: {
+        color: "#F2F4F7", // Change X-axis font color
+        maxRotation: 45,
+        minRotation: 45,
+      },
+      title: {
+        display: true,
+      },
+    },
+    y: {
+      grid: {
+        color: "rgba(132, 132, 132, 0.3)", // X-axis gridline color
+      },
+      ticks: {
+        color: "#F2F4F7", // Change Y-axis font color
+        stepSize: 1, // Set interval to 1
+      },
+      suggestedMin: 5, // Ensures the axis includes at least 0
+
+      title: {
+        display: true,
+        color: "#F2F4F7", // Change Y-axis title color
+      },
+    },
+  },
+};
+
 function createDataSets(topArtistsOverTime) {
-  let graphLabels = Object.keys(topArtistsOverTime[Object.keys(topArtistsOverTime)[0]]);
+  let graphLabels = Object.keys(
+    topArtistsOverTime[Object.keys(topArtistsOverTime)[0]]
+  );
   let graphDataSets = [];
 
   //dont show all the lines initally cause itll be cluttered
@@ -29,7 +80,9 @@ function createDataSets(topArtistsOverTime) {
     var hideLineInitally;
     if (Object.keys(topArtistsOverTime).indexOf(key) >= initalLinesShowing) {
       hideLineInitally = true;
-    } else { hideLineInitally = false; }
+    } else {
+      hideLineInitally = false;
+    }
 
     graphDataSets.push({
       label: key, //artist name
@@ -50,14 +103,15 @@ function createDataSets(topArtistsOverTime) {
   return data;
 }
 
-export default function LineChart({playlistTracks, token}) {
+export default function LineChart({ playlistTracks, token }) {
   const chartRef = useRef(null);
   const [chartDatasets, setChartDatasets] = useState(null);
+
   const handleHideAllLines = () => {
     const chart = chartRef.current; // Access the chart instance
     if (chart) {
       // Update datasets to hide all
-      const updatedDatasets = chart.data.datasets.map(dataset => ({
+      const updatedDatasets = chart.data.datasets.map((dataset) => ({
         ...dataset,
         hidden: true,
       }));
@@ -72,67 +126,30 @@ export default function LineChart({playlistTracks, token}) {
   };
 
   useEffect(() => {
-    const promise = getPlaylistTopArtistsOverTime(token, JSON.stringify(playlistTracks));
-    promise.then(function(response) {
+    //function is called on load and every thime playlistTracks is updated
+    if (playlistTracks === null) {
+      return;
+    } //wait for tracks to be fetched from parent function
+
+    const promise = getPlaylistTopArtistsOverTime(
+      token,
+      JSON.stringify(playlistTracks)
+    );
+    promise.then(function (response) {
       setChartDatasets(createDataSets(response));
-    })
-  // eslint-disable-next-line
-  }, []);
+    });
+    // eslint-disable-next-line
+  }, [playlistTracks]);
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-        labels: {
-          boxWidth: 24,
-          color: "#b3b7bd",
-          font: {
-            size: 12,
-          },
-        },
-      },
-    },
-    
-    scales: {
-      x: {
-        grid: {
-          color: 'rgba(132, 132, 132, 0.3)', // X-axis gridline color
-        },
-        ticks: {
-          color: "#F2F4F7", // Change X-axis font color
-          maxRotation: 45,
-          minRotation: 45,
-        },
-        title: {
-          display: true,
-        },
-      },
-      y: {
-        grid: {
-          color: 'rgba(132, 132, 132, 0.3)', // X-axis gridline color
-        },
-        ticks: {
-          color: "#F2F4F7", // Change Y-axis font color
-          stepSize: 1, // Set interval to 1
-        },
-        suggestedMin: 5, // Ensures the axis includes at least 0
- 
-        title: {
-          display: true,
-          color: "#F2F4F7", // Change Y-axis title color
-        },
-      },
-    },
-  };
-
-  if (chartDatasets === null) {return <div>Loading...</div>}
+  if (chartDatasets === null || playlistTracks === null) {
+    return <LoadingIcon />
+  }
   return (
     <div id="line-chart-card" className="playlist-card">
       <div className="card-title">
         <span>Playlist Evolution</span>
       </div>
-      
+
       <button className="deselect-all-btn" onClick={handleHideAllLines}>
         Deselect All
       </button>

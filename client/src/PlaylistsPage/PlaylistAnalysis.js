@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  getPlaylist,
-  getPlaylistTracks,
-  getArtists,
-} from "../apiCalls";
-import LoadingIcon from "../components/LoadingIcon";
+import { getPlaylist, getPlaylistTracks, getArtists } from "../apiCalls";
 import GenreChart from "./GenreChart";
 import "./styles/PlaylistAnalysis.css";
 import PlaylistSummary from "./PlaylistSummaryCard";
@@ -14,15 +9,15 @@ import LineChart from "./LineChart";
 
 function sortProperties(obj) {
   //sorts artists, albums and genres from most occuring to least
-  var sortable = [];
+  var sortedArr = [];
 
   for (var key in obj)
-    if (obj.hasOwnProperty(key)) sortable.push([key, obj[key]]);
+    if (obj.hasOwnProperty(key)) sortedArr.push([key, obj[key]]);
 
-  sortable.sort(function (a, b) {
+  sortedArr.sort(function (a, b) {
     return b[1].totalOccurences - a[1].totalOccurences;
   });
-  return sortable; // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
+  return sortedArr; // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
 }
 
 function calculateAveragePopularity(playlistTracks) {
@@ -66,6 +61,7 @@ function getPlaylistArtists(playlistTracks) {
           writable: true,
           enumerable: true,
         });
+
         Object.defineProperty(playlistArtists, artist.name, {
           value: artistPropertiesObj,
           writable: true,
@@ -96,44 +92,34 @@ function getPlaylistAlbums(playlistTracks) {
       playlistAlbums[trackObj.track.album.name].totalOccurences += 1;
     } else {
       playlistAlbums[trackObj.track.album.name] = {};
-      Object.defineProperty(
-        playlistAlbums[trackObj.track.album.name],
-        "totalOccurences",
-        {
-          value: 1,
-          writable: true,
-        }
-      );
+      Object.defineProperty( playlistAlbums[trackObj.track.album.name], "totalOccurences",{
+        value: 1,
+        writable: true,
+      });
       Object.defineProperty(playlistAlbums[trackObj.track.album.name], "href", {
         value: trackObj.track.album.external_urls.spotify,
         writable: true,
       });
-      Object.defineProperty(
-        playlistAlbums[trackObj.track.album.name],
-        "imageURL",
-        {
-          value: trackObj.track.album.images[0].url,
-          writable: true,
-        }
-      );
+      Object.defineProperty(playlistAlbums[trackObj.track.album.name], "imageURL",{
+        value: trackObj.track.album.images[0].url,
+        writable: true
+      });
     }
   }
 
   return sortProperties(playlistAlbums);
 }
 
-export default function PlaylistInfo(props) {
-  const [playlist, setPlaylist] = useState([]);
-  const [playlistTracks, setPlaylistTracks] = useState([]);
-  const [topArtistsInPlaylist, setTopArtistsInPlaylist] = useState([]); //{index: [artist, {id , href, imageURL, totalOccurences}]}
-  const [topGenresInPlaylists, setTopGenresInPlaylists] = useState([]);
-  const [topAlbumsInPlaylist, setTopAlbumsInPlaylist] = useState([]);
-  const [averagePopularity, setAveragePopularity] = useState();
+export default function PlaylistAnalysis(props) {
+  const [playlist, setPlaylist] = useState(null);
+  const [playlistTracks, setPlaylistTracks] = useState(null);
+  const [topArtistsInPlaylist, setTopArtistsInPlaylist] = useState(null); //{index: [artist, {id , href, imageURL, totalOccurences}]}
+  const [topGenresInPlaylists, setTopGenresInPlaylists] = useState(null);
+  const [topAlbumsInPlaylist, setTopAlbumsInPlaylist] = useState(null);
+  const [averagePopularity, setAveragePopularity] = useState(null);
   const [noData, setNoData] = useState(false);
 
   const [error, setError] = useState(false);
-
-  const [readyToRender, setReadyToRender] = useState(false);
 
   const { playlistID } = useParams(); //gets playlistID passed from router and in URL
 
@@ -142,8 +128,7 @@ export default function PlaylistInfo(props) {
   }
 
   useEffect(() => {
-    //on page load
-    if (playlist.length !== 0) {
+    if (playlist != null) {
       return;
     }
     onGetPlaylist(playlistID);
@@ -153,7 +138,7 @@ export default function PlaylistInfo(props) {
 
   useEffect(() => {
     //runs when playlist is recieved
-    if (playlist.length === 0) {
+    if (playlist === null) {
       return;
     }
     if (
@@ -162,7 +147,6 @@ export default function PlaylistInfo(props) {
     ) {
       //if playlist is empty or only contains local songs
       setNoData(true);
-      setReadyToRender(true);
       return;
     }
 
@@ -172,14 +156,13 @@ export default function PlaylistInfo(props) {
 
   useEffect(() => {
     //runs when all playlist tracks have been recieved
-    if (playlistTracks.length === 0) {
+    if (playlistTracks === null) {
       return;
     }
     let getPlaylistArtistsResult = getPlaylistArtists(playlistTracks);
 
     if (getPlaylistArtistsResult === "No Data") {
       setNoData(true);
-      setReadyToRender(true);
       return;
     }
 
@@ -190,18 +173,9 @@ export default function PlaylistInfo(props) {
     // eslint-disable-next-line
   }, [playlistTracks]);
 
-  useEffect(() => {
-    //when playlist artists and ids are recieved to get genres
-    if (topGenresInPlaylists.length === 0) {
-      return;
-    }
-    setReadyToRender(true);
-  }, [topGenresInPlaylists]);
-
   function getGenresEndpoint(playlistArtists) {
     const capitalizeFirstLetter = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : str;
     
-
     let ids = [];
     for (let key in playlistArtists) {
       ids.push(playlistArtists[key].id);
@@ -210,15 +184,17 @@ export default function PlaylistInfo(props) {
     let playlistGenres = {};
 
     const promise = getArtists(props.token, JSON.stringify(ids));
-    promise.then(function (artistsObj) {
+    promise.then(function (artistsObj) {//artistsObj contains object of artist names mapped to genres and imageURLs
       Object.entries(playlistArtists).forEach(([artistName, artistProperties]) => {
-        if (artistName.trim()==""){
-          return;
-        }
+        //iterate through playlistArtists and add nesscary data by indexing artistsObj
+        if (artistName.trim() === ""){return}//avoid random errors
+        
+        //add artist image
         artistProperties.imageURL = artistsObj[artistName].imageURL
       
         let genres = artistsObj[artistName].genres;
         
+        //iterate through artist genres and add increment genre occurences based on artist occurences
         for (let genre of genres) {
           let genreName = capitalizeFirstLetter(genre)
           if (genreName in playlistGenres) {
@@ -228,13 +204,13 @@ export default function PlaylistInfo(props) {
           }
         }
       });
+
+      //update state
       setTopGenresInPlaylists(sortProperties(playlistGenres))
       setTopArtistsInPlaylist(sortProperties(playlistArtists))
     });
   
   }
-
- 
 
   function onGetPlaylistTracks() {
     const promise = getPlaylistTracks(props.token, playlistID);
@@ -261,9 +237,6 @@ export default function PlaylistInfo(props) {
     });
   }
 
-  if (!readyToRender) {
-    return <LoadingIcon />;
-  }
   if (noData) {
     return (
       <div className="card-container">
@@ -289,11 +262,12 @@ export default function PlaylistInfo(props) {
         averagePopularity={averagePopularity}
         noData={noData}
       />
+      <LineChart playlistTracks={playlistTracks} token={props.token} />
       <TopArtistsAlbums
         topArtists={topArtistsInPlaylist}
         topAlbums={topAlbumsInPlaylist}
       />
-      <LineChart playlistTracks={playlistTracks} token={props.token} />
+      
       <GenreChart topGenres={topGenresInPlaylists} />
       <div style={{ height: 20 }}></div>
     </div>

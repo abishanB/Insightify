@@ -4,7 +4,7 @@ import { Routes, Route} from 'react-router-dom';
 import {getTokenWithRefreshToken, getTokenWithAuthCode} from './apiCalls.js'
 import Home from './HomePage/Home.js'
 import TopItems from "./components/TopItems.js";
-import PlaylistInfo from "./PlaylistsPage/PlaylistAnalysis.js";
+import PlaylistAnalysis from "./PlaylistsPage/PlaylistAnalysis.js";
 import DisplayPlaylists from "./PlaylistsPage/DisplayPlaylists.js";
 import NavigationBar from "./components/NavigationBar.js";
 import { ErrorBoundary } from './ErrorBoundary';
@@ -89,7 +89,7 @@ export default class App extends Component{
   onGetRefreshToken = (refresh_token) => {//call api function to get refresh token and update state
     var that = this;
     var currentURL = window.location.href
-    if (currentURL.slice(-1) == '/'){
+    if (currentURL.slice(-1) === '/'){
       //when url is localhost:3000/ the '/' must be dropped so the api accepts the redirectURI
       currentURL = currentURL.slice(0, -1)
     }
@@ -110,7 +110,7 @@ export default class App extends Component{
   getTokenAuthFlow= (code) => {//get auth code authorization flow
     var that = this;
     var currentURL = window.location.href.split("?")[0]//splits ?code= 
-    if (currentURL.slice(-1) == '/'){
+    if (currentURL.slice(-1) === '/'){
       //when url is localhost:3000/ the '/' must be dropped so the api accepts the redirectURI
       currentURL = currentURL.slice(0, -1)
     }
@@ -146,7 +146,7 @@ export default class App extends Component{
         <Route path='tracks' element={<TopItems token={this.state.token} key="tracks" type="tracks" storedTopItems={this.state.top_tracks} updateTopItemsFunc={this.updateTopTracks}/>} />
         <Route path='artists' element={<TopItems token={this.state.token} key="artists" type="artists" storedTopItems={this.state.top_artists} updateTopItemsFunc={this.updateTopArtists}/>}/>
         <Route path='playlists' element={<DisplayPlaylists token={this.state.token} storedUserPlaylists={this.state.userPlaylists} updateUserPlaylistsFunc={this.updateUserPlaylists}/>}/>
-        <Route exact path="/playlists/:playlistID" element={<PlaylistInfo token={this.state.token}/>} />
+        <Route exact path="/playlists/:playlistID" element={<PlaylistAnalysis token={this.state.token}/>} />
       </Routes>
     </div>
       )
