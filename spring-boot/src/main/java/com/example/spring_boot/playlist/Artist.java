@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 @Table
 public class Artist {
     @Id
-    @Column(length = 20, nullable = false)
+    @Column(length = 22, nullable = false)
     private String id;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL") 

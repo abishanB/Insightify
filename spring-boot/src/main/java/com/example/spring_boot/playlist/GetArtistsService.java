@@ -13,15 +13,24 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GetArtists {
+public class GetArtistsService {
+  @Autowired
+  private ArtistRepository artistRepository;
+
   private static final HttpClient client = HttpClient.newHttpClient();
   private static final String SPOTIFY_API_ARTISTS_URL = "https://api.spotify.com/v1/artists?ids=";
   private static final Gson gson = new GsonBuilder().serializeNulls().create();
 
-  public static List<String[]> splitArrayIntoChunks(String[] array, int chunkSize) {
+  private void saveArtistsToDatabase(List<Artist> artists){
+    artistRepository.saveAll(artists);//save to database
+  }
+
+  private static List<String[]> splitArrayIntoChunks(String[] array, int chunkSize) {
     List<String[]> chunks = new ArrayList<>();
 
     for (int i = 0; i < array.length; i += chunkSize) {
@@ -60,11 +69,14 @@ public class GetArtists {
     return artistsArray.toString();
   }
 
-  private String createArtistsObject(String artistsArrResult) {
+  private String createArtistsObject(JsonArray artistsArrResult) {
     // creates an object containing all artists and nessecary properties from the
     // result from spotify api
-    JsonObject artistsObject = new JsonObject();
-    for (JsonElement element : JsonParser.parseString(artistsArrResult).getAsJsonArray()) {
+
+    JsonObject artistsObject = new JsonObject();//returning to api
+    List<Artist> artistsObjArr = new ArrayList<>();//saving to database
+
+    for (JsonElement element : artistsArrResult) {
       JsonObject artistAPIResult = element.getAsJsonObject();
 
       String artistID = artistAPIResult.get("id").getAsString();
@@ -82,7 +94,10 @@ public class GetArtists {
 
       Artist artist = new Artist(artistID, artistName, href, image_url, genres);
       artistsObject.add(artistName, gson.toJsonTree(artist));
+      artistsObjArr.add(artist);
     }
+
+    saveArtistsToDatabase(artistsObjArr);
     return artistsObject.toString();
   }
 
@@ -99,12 +114,10 @@ public class GetArtists {
   }
 
   public String onGetGenres(String access_token, String artistIdsStr) {
-
     String[] artistIDs = gson.fromJson(artistIdsStr, String[].class);
 
     String artistDataStr = getArtists(access_token, artistIDs);
 
-    return createArtistsObject(artistDataStr);
-    //return artistDataStr;
+    return createArtistsObject(JsonParser.parseString(artistDataStr).getAsJsonArray());
   }
 }

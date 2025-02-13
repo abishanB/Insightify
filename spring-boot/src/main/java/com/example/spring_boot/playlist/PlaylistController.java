@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(path = "api/playlist")
 public class PlaylistController {
     private final PlaylistService playlistService;
-    private final GetArtists getArtists;
+    private final GetArtistsService getArtistsService;
     
     @Autowired
-    public PlaylistController (PlaylistService playlistService, GetArtists getArtists) {
+    public PlaylistController (PlaylistService playlistService, GetArtistsService getArtistsService) {
         this.playlistService = playlistService;
-        this.getArtists = getArtists;
+        this.getArtistsService = getArtistsService;
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -46,7 +46,7 @@ public class PlaylistController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("artists")
     public String getPlaylistArtists(@RequestParam String access_token, @RequestBody String artistIDs) {
-        return getArtists.onGetGenres(access_token, artistIDs);
+        return getArtistsService.onGetGenres(access_token, artistIDs);
     }
 
 

@@ -1,1 +1,1 @@
-SELECT * FROM artists;
+SELECT pg_size_pretty(pg_relation_size('artists')) AS table_size;
