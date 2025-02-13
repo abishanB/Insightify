@@ -1,4 +1,4 @@
-package com.example.spring_boot.playlist;
+package com.example.spring_boot.artist;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GetArtistsService {
+public class ArtistService {
   @Autowired
   private ArtistRepository artistRepository;
 

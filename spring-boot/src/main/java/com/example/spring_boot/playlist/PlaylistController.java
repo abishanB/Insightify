@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(path = "api/playlist")
 public class PlaylistController {
     private final PlaylistService playlistService;
-    private final GetArtistsService getArtistsService;
     
     @Autowired
-    public PlaylistController (PlaylistService playlistService, GetArtistsService getArtistsService) {
+    public PlaylistController (PlaylistService playlistService) {
         this.playlistService = playlistService;
-        this.getArtistsService = getArtistsService;
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -42,13 +41,4 @@ public class PlaylistController {
     public  Map<String, Map<String, Double>> getPlaylistTopArtists(@RequestBody String playlistTracks) {
         return playlistService.getTopArtistsOverTime(playlistTracks);
     }
-
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("artists")
-    public String getPlaylistArtists(@RequestParam String access_token, @RequestBody String artistIDs) {
-        return getArtistsService.onGetGenres(access_token, artistIDs);
-    }
-
-
-
 }

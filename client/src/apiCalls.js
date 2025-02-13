@@ -123,7 +123,7 @@ export async function getArtists(token, playlistIDsJSON) {
     access_token: token,
   });
   
-  const response = await fetch(`http://localhost:8080/api/playlist/artists?${params.toString()}`, {
+  const response = await fetch(`http://localhost:8080/api/artists?${params.toString()}`, {
     method:'POST',
     body: playlistIDsJSON
   });

@@ -1,4 +1,4 @@
-package com.example.spring_boot.playlist;
+package com.example.spring_boot.artist;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
