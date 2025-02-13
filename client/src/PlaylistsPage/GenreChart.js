@@ -13,7 +13,7 @@ function calculateGenreComposition(data) {
     (sum, [_, details]) => sum + details.totalOccurences,
     0
   ); //total occureneces of each genre
-  console.log(data);
+
   // Calculate percentages
   const processedData = data.map(([genre, details]) => {
     const percentage = (details.totalOccurences / totalGenreOccurrences) * 100;

@@ -12,7 +12,7 @@ export default function PlaylistSummary(props) {
   const topAlbums = props.topAlbums ?? [[["..."]]];
   const topGenres = props.topGenres ?? [[["..."]]];
   const averagePopularity = props.averagePopularity ?? "...";
-
+ 
   const noData = props.noData
 
   if (playlist === null) {return <LoadingIcon />}

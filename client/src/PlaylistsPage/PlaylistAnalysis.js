@@ -189,9 +189,9 @@ export default function PlaylistAnalysis(props) {
         //iterate through playlistArtists and add nesscary data by indexing artistsObj
         if (artistName.trim() === ""){return}//avoid random errors
         
-        //add artist image
-        artistProperties.imageURL = artistsObj[artistName].imageURL
-      
+        //add artist image, set to blank image if undefined
+        artistProperties.imageURL = artistsObj[artistName]?.image_url ?? "https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999"
+        
         let genres = artistsObj[artistName].genres;
         
         //iterate through artist genres and add increment genre occurences based on artist occurences

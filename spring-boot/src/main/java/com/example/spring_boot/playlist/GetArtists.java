@@ -4,10 +4,11 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class GetArtists {
   private static final HttpClient client = HttpClient.newHttpClient();
   private static final String SPOTIFY_API_ARTISTS_URL = "https://api.spotify.com/v1/artists?ids=";
+  private static final Gson gson = new GsonBuilder().serializeNulls().create();
 
   public static List<String[]> splitArrayIntoChunks(String[] array, int chunkSize) {
     List<String[]> chunks = new ArrayList<>();
@@ -65,21 +67,21 @@ public class GetArtists {
     for (JsonElement element : JsonParser.parseString(artistsArrResult).getAsJsonArray()) {
       JsonObject artistAPIResult = element.getAsJsonObject();
 
-      JsonObject artistProperties = new JsonObject();
-      artistProperties.addProperty("name", artistAPIResult.get("name").toString());
-      artistProperties.addProperty("id", artistAPIResult.get("id").getAsString());
-      artistProperties.addProperty("href", artistAPIResult.get("href").getAsString());
-      artistProperties.add("genres", artistAPIResult.get("genres").getAsJsonArray());
-      
-      if (artistAPIResult.get("images").getAsJsonArray().size() ==0 || artistAPIResult.get("images").getAsJsonArray().isJsonNull()) {
-        // sets blank image if image not available
-        artistProperties.addProperty("imageURL",
-            "https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999");
+      String artistID = artistAPIResult.get("id").getAsString();
+      String artistName =  artistAPIResult.get("name").getAsString();
+      String href = artistAPIResult.get("href").getAsString();
+      String[] genres = gson.fromJson(artistAPIResult.get("genres"), String[].class);
+      String image_url;
+ 
+      if (artistAPIResult.get("images").getAsJsonArray().size() == 0 || artistAPIResult.get("images").getAsJsonArray().isJsonNull()) {
+        //image not available
+        image_url = null;
       } else {
-        artistProperties.addProperty("imageURL",
-            artistAPIResult.get("images").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString());
+       image_url = artistAPIResult.get("images").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString();
       }
-      artistsObject.add(artistAPIResult.get("name").getAsString(), artistProperties);
+
+      Artist artist = new Artist(artistID, artistName, href, image_url, genres);
+      artistsObject.add(artistName, gson.toJsonTree(artist));
     }
     return artistsObject.toString();
   }
@@ -97,7 +99,6 @@ public class GetArtists {
   }
 
   public String onGetGenres(String access_token, String artistIdsStr) {
-    Gson gson = new Gson();
 
     String[] artistIDs = gson.fromJson(artistIdsStr, String[].class);
 

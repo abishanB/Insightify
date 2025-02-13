@@ -1,5 +1,26 @@
 {
     "editor.minimap.enabled": false,
-    "emmet.triggerExpansionOnTab": true
+    "emmet.triggerExpansionOnTab": true,
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "test",
+            "username": "abishan",
+            "database": "test"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Insightify",
+            "username": "abishan",
+            "database": "insightify"
+        }
+    ]
 
 }

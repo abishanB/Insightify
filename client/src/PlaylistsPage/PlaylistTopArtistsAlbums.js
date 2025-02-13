@@ -80,7 +80,7 @@ function renderAlbums(albums) {
 
 export default function TopArtistsAlbums({topArtists, topAlbums}) {
   if (topArtists === null || topAlbums === null) {return <LoadingIcon />}
-
+  
   const numOfTopItems = 20; //max amount of top artists and albums to display
   const slicedTopArtists = Object.fromEntries(
     Object.entries(topArtists).slice(0, numOfTopItems)
