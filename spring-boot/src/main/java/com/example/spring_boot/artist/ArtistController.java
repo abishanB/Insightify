@@ -21,7 +21,7 @@ public class ArtistController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping()
     public String getPlaylistArtists(@RequestParam String access_token, @RequestBody String artistIDs) {
-        return artistService.onGetGenres(access_token, artistIDs);
+        return artistService.getArtists(access_token, artistIDs);
     }
 }
 

@@ -6,6 +6,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,33 +28,46 @@ public class ArtistService {
   private static final String SPOTIFY_API_ARTISTS_URL = "https://api.spotify.com/v1/artists?ids=";
   private static final Gson gson = new GsonBuilder().serializeNulls().create();
 
-  private void saveArtistsToDatabase(List<Artist> artists){
-    artistRepository.saveAll(artists);//save to database
+  private void saveArtistsToDatabase(List<Artist> artists) {
+    artistRepository.saveAll(artists);// save to database
   }
 
-  private static List<String[]> splitArrayIntoChunks(String[] array, int chunkSize) {
-    List<String[]> chunks = new ArrayList<>();
+  private String getEndpointResult(String accessToken, String url) throws Exception {
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(url))
+        .header("Authorization", "Bearer " + accessToken)
+        .GET()
+        .build();
 
-    for (int i = 0; i < array.length; i += chunkSize) {
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    return response.body().toString();
+  }
+
+  private List<List<String>> splitListIntoChunks(List<String> list, int chunkSize) {
+    List<List<String>> chunks = new ArrayList<>();
+
+    for (int i = 0; i < list.size(); i += chunkSize) {
       // Calculate the end index for the current chunk
-      int end = Math.min(array.length, i + chunkSize);
+      int end = Math.min(list.size(), i + chunkSize);
 
-      // Create a new array for the current chunk
-      String[] chunk = new String[end - i];
+      // Create a new sublist for the current chunk
+      List<String> chunk = list.subList(i, end);
 
-      // Copy elements from the original array to the chunk
-      System.arraycopy(array, i, chunk, 0, chunk.length);
-      chunks.add(chunk);
+      // Add the chunk to the list of chunks
+      chunks.add(new ArrayList<>(chunk)); // Create a new ArrayList to avoid mutability issues
     }
+
     return chunks;
   }
 
-  private static String getArtists(String access_token, String[] artistIDsArr) {
+  private String fetchArtistsFromAPI(String access_token, List<String> artistIDsList) {
+    //max amount of aritsts per call to spotify is 50
+    //get all artists from spotify
     int chunkSize = 50;
-    List<String[]> chunks = splitArrayIntoChunks(artistIDsArr, chunkSize);
+    List<List<String>> chunks = splitListIntoChunks(artistIDsList, chunkSize);
 
     JsonArray artistsArray = new JsonArray();
-    for (String[] ids : chunks) {
+    for (List<String> ids : chunks) {
       String url = SPOTIFY_API_ARTISTS_URL + String.join(",", ids);
       try {
         System.out.println("Fetching artists ");
@@ -69,55 +84,73 @@ public class ArtistService {
     return artistsArray.toString();
   }
 
-  private String createArtistsObject(JsonArray artistsArrResult) {
-    // creates an object containing all artists and nessecary properties from the
+  private List<Artist> parseArtistsJSON(JsonArray artistsArrResult) {
+    // creates an array containing all artists objects and nessecary properties from the
     // result from spotify api
 
-    JsonObject artistsObject = new JsonObject();//returning to api
-    List<Artist> artistsObjArr = new ArrayList<>();//saving to database
+    List<Artist> artistsArr = new ArrayList<>();// saving to database
 
     for (JsonElement element : artistsArrResult) {
       JsonObject artistAPIResult = element.getAsJsonObject();
 
       String artistID = artistAPIResult.get("id").getAsString();
-      String artistName =  artistAPIResult.get("name").getAsString();
+      String artistName = artistAPIResult.get("name").getAsString();
       String href = artistAPIResult.get("href").getAsString();
-      String[] genres = gson.fromJson(artistAPIResult.get("genres"), String[].class);
+      List<String> genres = List.of(gson.fromJson(artistAPIResult.get("genres"), String[].class));
       String image_url;
- 
-      if (artistAPIResult.get("images").getAsJsonArray().size() == 0 || artistAPIResult.get("images").getAsJsonArray().isJsonNull()) {
-        //image not available
+
+      if (artistAPIResult.get("images").getAsJsonArray().size() == 0
+          || artistAPIResult.get("images").getAsJsonArray().isJsonNull()) {
+        // image not available
         image_url = null;
       } else {
-       image_url = artistAPIResult.get("images").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString();
+        image_url = artistAPIResult.get("images").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString();
       }
 
       Artist artist = new Artist(artistID, artistName, href, image_url, genres);
-      artistsObject.add(artistName, gson.toJsonTree(artist));
-      artistsObjArr.add(artist);
+      artistsArr.add(artist);
     }
 
-    saveArtistsToDatabase(artistsObjArr);
-    return artistsObject.toString();
+    return artistsArr;
   }
 
-  private static String getEndpointResult(String accessToken, String url) throws Exception {
-    HttpRequest request = HttpRequest.newBuilder()
-        .uri(URI.create(url))
-        .header("Authorization", "Bearer " + accessToken)
-        .GET()
-        .build();
-
-    
-    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    return response.body().toString();
+  private JsonObject createArtistsObject(List<Artist> allArtists){
+    //create object that is returned to api
+    //maps artist name to artist object
+    JsonObject artistsObj = new JsonObject();
+    for (Artist artist : allArtists) {
+      artistsObj.add(artist.getName(), gson.toJsonTree(artist));
+    }
+    return artistsObj;
   }
 
-  public String onGetGenres(String access_token, String artistIdsStr) {
-    String[] artistIDs = gson.fromJson(artistIdsStr, String[].class);
+  public String getArtists(String access_token, String artistIdsStr) {
+    final List<String> ARTIST_IDS = List.of(gson.fromJson(artistIdsStr, String[].class));
+    List<Artist> allArtists = new ArrayList<>();
 
-    String artistDataStr = getArtists(access_token, artistIDs);
+    System.out.println("Total Artists: "+ ARTIST_IDS.size());
 
-    return createArtistsObject(JsonParser.parseString(artistDataStr).getAsJsonArray());
+    List<Artist> artistInDatabase = artistRepository.findAllById(ARTIST_IDS);
+    System.out.println("Existing Artists: "+ artistInDatabase.size());
+
+    //compares lists of artist ids to find which are not stored in database
+    Set<String> foundIds = artistInDatabase.stream()
+        .map(Artist::getId) 
+        .collect(Collectors.toSet());
+    List<String> missingIds = ARTIST_IDS.stream()
+        .filter(id -> !foundIds.contains(id)) // Keep IDs not in the foundIds set
+        .collect(Collectors.toList());
+    System.out.println("Not Found Artists: "+ missingIds.size());
+
+    //fetch missing artists from spotify api
+    String artistDataStr = fetchArtistsFromAPI(access_token, missingIds);
+
+    List<Artist> fetchedArtists = parseArtistsJSON(JsonParser.parseString(artistDataStr).getAsJsonArray());
+    saveArtistsToDatabase(fetchedArtists);
+
+    allArtists.addAll(artistInDatabase);
+    allArtists.addAll(fetchedArtists);
+    //maps artist name to artist object
+    return createArtistsObject(allArtists).toString();
   }
 }

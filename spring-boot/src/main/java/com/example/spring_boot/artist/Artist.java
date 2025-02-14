@@ -1,12 +1,17 @@
 package com.example.spring_boot.artist;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
-@Entity(name = "artists")
-@Table
+import java.util.List;
+
+@Entity
+@Table(name = "artists")
 public class Artist {
     @Id
     @Column(length = 22, nullable = false)
@@ -21,13 +26,15 @@ public class Artist {
     @Column(columnDefinition = "VARCHAR(255)") 
     private String image_url;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL") 
-    private String[] genres;
+    @ElementCollection
+    @CollectionTable(name = "artist_genres", joinColumns = @JoinColumn(name = "artist_id"))
+    @Column(name = "genre", columnDefinition = "VARCHAR(255) NOT NULL")
+    private List<String> genres;
 
      // No-argument constructor (required by JPA)
     public Artist() {}
 
-    public Artist(String id, String name, String href, String image_url, String[] genres) {
+    public Artist(String id, String name, String href, String image_url, List<String> genres) {
         this.id = id;
         this.name = name;
         this.href = href;
@@ -58,10 +65,10 @@ public class Artist {
     public void setImageURL(String imageURL) {
         this.image_url = imageURL;
     }
-    public String[] getGenres() {
+    public List<String> getGenres() {
         return genres;
     }
-    public void setGenres(String[] genres) {
+    public void setGenres(List<String> genres) {
         this.genres = genres;
     }
     
