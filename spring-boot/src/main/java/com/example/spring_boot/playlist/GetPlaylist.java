@@ -5,6 +5,7 @@ import java.util.List;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 import java.util.Comparator;
@@ -16,6 +17,7 @@ import com.google.gson.JsonParser;
 
  
 public class GetPlaylist { 
+  DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
   public JsonArray readJSON(){
       
       String filePath = "playlistTracks.json";  // replace with the actual file path
@@ -32,28 +34,7 @@ public class GetPlaylist {
   }
 
   public JsonArray updateProperties(JsonArray jsonArray){
-    for (JsonElement element : jsonArray) {
-      // Convert each JsonElement to JsonObject
-      JsonObject jsonObject = element.getAsJsonObject();
-      jsonObject.remove("added_by");
-      jsonObject.remove("is_local");
-      jsonObject.remove("primary_color");
-      jsonObject.remove("video_thumbnail");
-      jsonObject.get("track").getAsJsonObject().remove("album");
-      jsonObject.get("track").getAsJsonObject().remove("available_markets");
-      jsonObject.get("track").getAsJsonObject().remove("explicit");
-      jsonObject.get("track").getAsJsonObject().remove("type");
-      jsonObject.get("track").getAsJsonObject().remove("episode");
-      jsonObject.get("track").getAsJsonObject().remove("external_ids");
-      jsonObject.get("track").getAsJsonObject().remove("track_number");
-      jsonObject.get("track").getAsJsonObject().remove("duration_ms");
-      jsonObject.get("track").getAsJsonObject().remove("is_local");
-      jsonObject.get("track").getAsJsonObject().remove("disc_number");
-      jsonObject.get("track").getAsJsonObject().remove("popularity");
-      jsonObject.get("track").getAsJsonObject().remove("uri");
-      jsonObject.addProperty("added_at", jsonObject.get("added_at").getAsString().split("T")[0]);
-
-    }
+    
     return jsonArray;
   }
   
@@ -69,7 +50,7 @@ public class GetPlaylist {
     elementList.sort(Comparator.comparing(e -> {
         JsonObject jsonObject = e.getAsJsonObject();
         String dateString = jsonObject.get("added_at").getAsString();
-        return LocalDate.parse(dateString);  // Parse the date to LocalDate for comparison
+        return LocalDate.parse(dateString, formatter);  // Parse the date to LocalDate for comparison
     }));
 
     // Convert the sorted list back into a JsonArray

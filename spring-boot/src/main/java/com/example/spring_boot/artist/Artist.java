@@ -11,8 +11,6 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 @Entity
 @Table(name = "artists")
 public class Artist {
@@ -23,7 +21,6 @@ public class Artist {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL") 
     private String name;
 
-   
     private int popularity;
 
     @Column(columnDefinition = "VARCHAR(255)") 

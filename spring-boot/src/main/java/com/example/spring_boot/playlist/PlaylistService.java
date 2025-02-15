@@ -9,21 +9,44 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.spring_boot.artist.LocalDateTimeAdapter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+ 
 @Service
 public class PlaylistService {
+  @Autowired
+  private PlaylistRepository playlistRepository;
+  @Autowired
+  private TrackRepository trackRepository;
+  private static final Gson gson = new GsonBuilder()
+    .serializeNulls() // Serializes null fields as well
+    .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()) // Custom serializer for LocalDateTime
+    .excludeFieldsWithoutExposeAnnotation() // Only serialize fields annotated with @Expose
+    .create();
+
+  public Playlist getPlaylistById(String playlistId) {
+    return playlistRepository.findById(playlistId)
+            .orElseThrow(() -> new RuntimeException("Playlist not found"));
+  }
+
   public static URI playlistEndpointBuilder(String endpoint) throws Exception{
     //external_urls.spotify
     //followers.total,id,images.url,name,owner(external_urls,display_name,id)
+    //snapshot_id
     //tracks(total,next)
-    final String fieldsParam = "followers.total,id,images.url,name,owner(external_urls,display_name,id),tracks(total,next),external_urls.spotify";
+    final String fieldsParam = "snapshot_id,followers.total,id,images.url,name,owner(external_urls,display_name,id),tracks(total,next),external_urls.spotify";
     // Create an HttpRequest with headers 
     String encodedFieldsParam = URLEncoder.encode(fieldsParam, StandardCharsets.UTF_8);
     String fullEndpoint = endpoint + "?fields=" + encodedFieldsParam;
@@ -37,7 +60,7 @@ public class PlaylistService {
     //items.track.album(external_urls,images.url,name)
     //items.track.artists(external_urls,href,name,id)
     //items.track(external_urls,popularity)
-    final String fieldsParam = "next,items(added_at,is_local),items.track.album(external_urls,images.url,name),items.track.artists(external_urls,href,name,id),items.track(external_urls,popularity,type)";
+    final String fieldsParam = "next,items(added_at,is_local),items.track.album(external_urls,images.url,name,total_tracks),items.track.artists(external_urls,href,name,id),items.track(external_urls,popularity,type,name)";
     // Create an HttpRequest with headers 
     String encodedFieldsParam =URLEncoder.encode(fieldsParam, StandardCharsets.UTF_8);
     String fullEndpoint= endpoint + "&fields=" + encodedFieldsParam;
@@ -114,31 +137,44 @@ public class PlaylistService {
       if (playlistID.equals("liked_songs")){
         String likedSongsEndpoint = "https://api.spotify.com/v1/me/tracks?limit=1";
         JsonObject likedSongsPlaylist = JsonParser.parseString(getPlaylistEndpointResult(new URI(likedSongsEndpoint), access_token)).getAsJsonObject();
-        JsonObject ownerProperty = new JsonObject();
-        JsonObject externalURLSProperty = new JsonObject();
-        JsonObject followersProperty = new JsonObject();
-        JsonObject tracksProperty = new JsonObject();
-        JsonArray likedSongImagesArr = new JsonArray();
-        JsonObject likedSongImage = new JsonObject();
-
-        likedSongImage.addProperty("url", "https://misc.scdn.co/liked-songs/liked-songs-300.jpg");
-        likedSongImagesArr.add(likedSongImage);
-        externalURLSProperty.addProperty("spotify", "https://open.spotify.com/collection/tracks");
-        ownerProperty.add("external_urls", externalURLSProperty);
-        ownerProperty.addProperty("display_name", "");
-        followersProperty.addProperty("total", "N/A");
-        tracksProperty.addProperty("total", likedSongsPlaylist.get("total").getAsString());
-
-        likedSongsPlaylist.addProperty("name", "Liked Songs");
-        likedSongsPlaylist.add("owner",ownerProperty );
-        likedSongsPlaylist.add("external_urls", externalURLSProperty);
-        likedSongsPlaylist.add("images", likedSongImagesArr);
-        likedSongsPlaylist.add("followers", followersProperty);
-        likedSongsPlaylist.add("tracks", tracksProperty);
-        return likedSongsPlaylist.toString(); // Calling the method
+        
+        String playlistName = "Liked Songs";
+        String playlistHref =  "https://open.spotify.com/collection/tracks";
+        String image_url ="https://misc.scdn.co/liked-songs/liked-songs-300.jpg";
+  
+        String owner_name = "";
+        String owner_url = "https://open.spotify.com/collection/tracks";
+        String snapshot_id = null;
+        int followers = 0;
+        int total_tracks = likedSongsPlaylist.get("total").getAsInt();
+  
+        Playlist playlist = new Playlist(playlistID, playlistName, playlistHref, image_url, owner_name, owner_url, snapshot_id, followers, total_tracks, null);
+        return gson.toJson(playlist);
       }
       String endpoint = String.format("https://api.spotify.com/v1/playlists/%s", playlistID);
-      return getPlaylistEndpointResult(playlistEndpointBuilder(endpoint), access_token); // Calling the method
+
+      String playlistAsStr = getPlaylistEndpointResult(playlistEndpointBuilder(endpoint), access_token);
+      JsonObject playlistResult =  JsonParser.parseString(playlistAsStr).getAsJsonObject(); // Calling the method
+
+      String playlistName = playlistResult.get("name").getAsString();
+      String playlistHref = playlistResult.get("external_urls").getAsJsonObject().get("spotify").getAsString();
+      String image_url;
+
+      try {
+        image_url = playlistResult.get("images").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString();
+      } catch (Exception e)  {
+        image_url = null;
+      }
+
+      String owner_name = playlistResult.get("owner").getAsJsonObject().get("display_name").getAsString();
+      String owner_url = playlistResult.get("owner").getAsJsonObject().get("external_urls").getAsJsonObject().get("spotify").getAsString();
+      String snapshot_id = playlistResult.get("snapshot_id").getAsString();
+      int followers = playlistResult.get("followers").getAsJsonObject().get("total").getAsInt();
+      int total_tracks = playlistResult.get("tracks").getAsJsonObject().get("total").getAsInt();
+
+      Playlist playlist = new Playlist(playlistID, playlistName, playlistHref, image_url, owner_name, owner_url, snapshot_id, followers, total_tracks, null);
+      playlistRepository.save(playlist);
+      return gson.toJson(playlist);
     } catch (Exception e) {
       // Handle the exception (log it, return a default value, etc.)
       e.printStackTrace();
@@ -146,15 +182,91 @@ public class PlaylistService {
     }
   }
 
+  
+
   public String getPlaylistTracks(String access_token, String playlistID) {
     try {
       if (playlistID.equals("liked_songs")){
         String likedSongsEndpoint = "https://api.spotify.com/v1/me/tracks?limit=50";
-        return getPlaylistTracksResult(new JsonArray(), likedSongsEndpoint, access_token).toString(); // Calling the method
+        JsonArray playlistTracks = getPlaylistTracksResult(new JsonArray(), likedSongsEndpoint, access_token); // Calling the method
+
+        List<Track> tracks = new ArrayList<>();
+      for (JsonElement element : playlistTracks){
+        JsonObject track = element.getAsJsonObject();
+
+        String trackName = track.get("track").getAsJsonObject().get("name").getAsString();
+        String trackArtists =  track.get("track").getAsJsonObject().get("artists").getAsJsonArray().toString();//gets jsonArr as str
+
+        //check if album is a single, only allow albums/eps
+        String trackAlbumName;
+        if (track.get("track").getAsJsonObject().get("album").getAsJsonObject().get("total_tracks").getAsInt() == 1){
+          trackAlbumName = null;
+        } else {
+          trackAlbumName =  track.get("track").getAsJsonObject().get("album").getAsJsonObject().get("name").getAsString();
+        }
+      
+        String trackAlbumHref = track.get("track").getAsJsonObject().get("album")
+          .getAsJsonObject().get("external_urls").getAsJsonObject().get("spotify").getAsString();
+        String image_url;
+        try {
+          image_url = track.get("track").getAsJsonObject().get("album").getAsJsonObject()
+            .get("images").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString();
+        } catch (Exception e)  {
+          image_url = null;
+        }
+        String trackHref = track.get("track").getAsJsonObject()
+          .get("external_urls").getAsJsonObject().get("spotify").getAsString();
+        String added_at = track.get("added_at").getAsString();
+
+        int popularity = track.get("track").getAsJsonObject().get("popularity").getAsInt();
+      
+        tracks.add(new Track(trackName, trackArtists, trackAlbumName, trackAlbumHref, image_url, trackHref, added_at,popularity, null));
+
+      }
+      
+      return gson.toJson(tracks); // Calling the method
+
       }
       
       String endpoint = String.format("https://api.spotify.com/v1/playlists/%s/tracks?limit=100", playlistID);
-      return getPlaylistTracksResult(new JsonArray(), endpoint, access_token).toString(); // Calling the method
+
+      JsonArray playlistTracks = getPlaylistTracksResult(new JsonArray(), endpoint, access_token);
+      
+      List<Track> tracks = new ArrayList<>();
+      for (JsonElement element : playlistTracks){
+        JsonObject track = element.getAsJsonObject();
+
+        String trackName = track.get("track").getAsJsonObject().get("name").getAsString();
+        String trackArtists =  track.get("track").getAsJsonObject().get("artists").getAsJsonArray().toString();//gets jsonArr as str
+
+        //check if album is a single, only allow albums/eps
+        String trackAlbumName;
+        if (track.get("track").getAsJsonObject().get("album").getAsJsonObject().get("total_tracks").getAsInt() == 1){
+          trackAlbumName = null;
+        } else {
+          trackAlbumName =  track.get("track").getAsJsonObject().get("album").getAsJsonObject().get("name").getAsString();
+        }
+      
+        String trackAlbumHref = track.get("track").getAsJsonObject().get("album")
+          .getAsJsonObject().get("external_urls").getAsJsonObject().get("spotify").getAsString();
+        String image_url;
+        try {
+          image_url = track.get("track").getAsJsonObject().get("album").getAsJsonObject()
+            .get("images").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString();
+        } catch (Exception e)  {
+          image_url = null;
+        }
+        String trackHref = track.get("track").getAsJsonObject()
+          .get("external_urls").getAsJsonObject().get("spotify").getAsString();
+        String added_at = track.get("added_at").getAsString();
+
+        int popularity = track.get("track").getAsJsonObject().get("popularity").getAsInt();
+        Playlist playlist = getPlaylistById(playlistID);
+        tracks.add(new Track(trackName, trackArtists, trackAlbumName, trackAlbumHref, image_url, trackHref, added_at,popularity, playlist));
+
+      }
+      trackRepository.saveAll(tracks);
+      return gson.toJson(tracks); 
     } catch (Exception e) {
       // Handle the exception (log it, return a default value, etc.)
       e.printStackTrace();

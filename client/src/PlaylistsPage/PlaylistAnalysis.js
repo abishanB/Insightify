@@ -23,7 +23,7 @@ function sortProperties(obj) {
 function calculateAveragePopularity(playlistTracks) {
   let totalPopularity = 0;
   for (let trackObj of Object.values(playlistTracks)) {
-    totalPopularity += trackObj.track.popularity;
+    totalPopularity += trackObj.popularity;
   }
   return Math.round(totalPopularity / playlistTracks.length);
 }
@@ -32,7 +32,8 @@ function getPlaylistArtists(playlistTracks) {
   //collect how many times a artist appears in the playlist and returns it sorted
   let playlistArtists = {};
   for (let trackObj of Object.values(playlistTracks)) {
-    trackObj.track.artists.forEach((artist) => {
+    let artists = JSON.parse(trackObj.artists)
+    artists.forEach((artist) => {
       //iterate each artist credited on a song
       if (artist.name in playlistArtists) {
         //if artist has already appeared in list
@@ -84,24 +85,24 @@ function getPlaylistAlbums(playlistTracks) {
 
   for (let trackObj of Object.values(playlistTracks)) {
     //iterate all tracks
-    if (trackObj.track.album.total_tracks === 1) {
+    if (trackObj.album_name === null) {
       continue;
     } //skip albums with only 1 song(singles)
 
-    if (trackObj.track.album.name in playlistAlbums) {
-      playlistAlbums[trackObj.track.album.name].totalOccurences += 1;
+    if (trackObj.album_name in playlistAlbums) {
+      playlistAlbums[trackObj.album_name].totalOccurences += 1;
     } else {
-      playlistAlbums[trackObj.track.album.name] = {};
-      Object.defineProperty( playlistAlbums[trackObj.track.album.name], "totalOccurences",{
+      playlistAlbums[trackObj.album_name] = {};
+      Object.defineProperty( playlistAlbums[trackObj.album_name], "totalOccurences",{
         value: 1,
         writable: true,
       });
-      Object.defineProperty(playlistAlbums[trackObj.track.album.name], "href", {
-        value: trackObj.track.album.external_urls.spotify,
+      Object.defineProperty(playlistAlbums[trackObj.album_name], "href", {
+        value: trackObj.album_href,
         writable: true,
       });
-      Object.defineProperty(playlistAlbums[trackObj.track.album.name], "imageURL",{
-        value: trackObj.track.album.images[0].url,
+      Object.defineProperty(playlistAlbums[trackObj.album_name], "imageURL",{
+        value: trackObj.image_url,
         writable: true
       });
     }
@@ -141,10 +142,7 @@ export default function PlaylistAnalysis(props) {
     if (playlist === null) {
       return;
     }
-    if (
-      (playlistID !== "liked_songs" && playlist.tracks.total === 0) ||
-      (playlistID === "liked_songs" && playlist.total === 0)
-    ) {
+    if (playlist.total_tracks === 0){
       //if playlist is empty or only contains local songs
       setNoData(true);
       return;
@@ -217,6 +215,7 @@ export default function PlaylistAnalysis(props) {
     promise.then(function (tracksObject) {
       //setPlaylistTracks(playlistTracks.concat(tracksObject.items))
       setPlaylistTracks(tracksObject);
+      console.log(tracksObject)
     });
   }
 
@@ -231,7 +230,7 @@ export default function PlaylistAnalysis(props) {
         return;
       }
 
-      //add properties to handle liked songs as a playlist
+      console.log(playlistObj)
 
       setPlaylist(playlistObj);
     });

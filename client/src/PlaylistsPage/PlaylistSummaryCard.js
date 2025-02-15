@@ -23,21 +23,21 @@ export default function PlaylistSummary(props) {
       </div >
       
       <div className="by-owner">
-        <a href={playlist.owner.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-          {playlist.owner.display_name}
+        <a href={playlist.owner_url} target="_blank" rel="noopener noreferrer">
+          {playlist.owner_name}
           <img src={spotifyIcon} alt="SpotifyIcon"></img>
         </a> 
       </div>
       
       <div className='summary-container'>
-        <a href={playlist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-          <img src={playlistCoverURL(playlist)} className='playlistCover' alt="playlistCover" width="100" height="100"></img>
+        <a href={playlist.href} target="_blank" rel="noopener noreferrer">
+          <img src={playlist.image_url} className='playlistCover' alt="playlistCover" width="100" height="100"></img>
         </a>
         
         <div className='details'>
-          <span>Tracks: <span>{playlist.tracks.total}</span></span>
+          <span>Tracks: <span>{playlist.total_tracks}</span></span>
           <span>Artists: <span>{totalArtists}</span></span>
-          <span>Followers: <span>{playlist.followers.total}</span></span>
+          <span>Followers: <span>{playlist.followers}</span></span>
           {noData
           ? <>
               <span>Top Artist: <span>N/A</span></span>
