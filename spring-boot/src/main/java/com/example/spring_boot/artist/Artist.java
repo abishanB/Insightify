@@ -23,8 +23,8 @@ public class Artist {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL") 
     private String name;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL") 
-    private String href;
+   
+    private int popularity;
 
     @Column(columnDefinition = "VARCHAR(255)") 
     private String image_url;
@@ -39,10 +39,10 @@ public class Artist {
      // No-argument constructor (required by JPA)
     public Artist() {}
 
-    public Artist(String id, String name, String href, String image_url, List<String> genres) {
+    public Artist(String id, String name, int popularity, String image_url, List<String> genres) {
         this.id = id;
         this.name = name;
-        this.href = href;
+        this.popularity = popularity;
         this.image_url = image_url;
         this.genres = genres;
         this.createdAt = LocalDateTime.now();
@@ -59,12 +59,7 @@ public class Artist {
     public void setName(String name) {
         this.name = name;
     }
-    public String getHref() {
-        return href;
-    }
-    public void setHref(String href) {
-        this.href = href;
-    }
+   
     public String getImageURL() {
         return image_url;
     }
@@ -83,7 +78,13 @@ public class Artist {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
+    public int getPopularity() {
+        return popularity;
+    }
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
+    
     
     
 }

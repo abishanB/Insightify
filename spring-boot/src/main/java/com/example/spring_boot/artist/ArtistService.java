@@ -32,7 +32,17 @@ public class ArtistService {
   private static final Gson gson = new GsonBuilder().serializeNulls().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
 
   private void saveArtistsToDatabase(List<Artist> artists) {
-    artistRepository.saveAll(artists);// save to database
+    final int artistPopularityThreshold = 30;//only save artists above this threshold
+    //array of artists to save to database
+    List<Artist> artistsToSaveArr = new ArrayList<>();
+
+    for (Artist artist:artists){
+      if (artist.getPopularity() >= artistPopularityThreshold){
+        artistsToSaveArr.add(artist);
+      }
+    }
+
+    artistRepository.saveAll(artistsToSaveArr);// save to database
   }
 
   public void deleteArtistFromDatabase(){
@@ -97,20 +107,19 @@ public class ArtistService {
   }
 
   private List<Artist> parseArtistsJSON(JsonArray artistsArrResult) {
-    // creates an array containing all artists objects and nessecary properties from the
-    // result from spotify api
-
-    List<Artist> artistsArr = new ArrayList<>();// saving to database
+    // creates an array containing all artists objects and nessecary properties from the result from spotify api
+    //also saves to database
+    List<Artist> artistsArr = new ArrayList<>();//full array of artists
 
     for (JsonElement element : artistsArrResult) {
       JsonObject artistAPIResult = element.getAsJsonObject();
 
       String artistID = artistAPIResult.get("id").getAsString();
       String artistName = artistAPIResult.get("name").getAsString();
-      String href = artistAPIResult.get("href").getAsString();
+      int artistPopularity = Integer.parseInt(artistAPIResult.get("popularity").getAsString());
       List<String> genres = List.of(gson.fromJson(artistAPIResult.get("genres"), String[].class));
-      String image_url;
 
+      String image_url;
       if (artistAPIResult.get("images").getAsJsonArray().size() == 0
           || artistAPIResult.get("images").getAsJsonArray().isJsonNull()) {
         // image not available
@@ -119,7 +128,7 @@ public class ArtistService {
         image_url = artistAPIResult.get("images").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString();
       }
 
-      Artist artist = new Artist(artistID, artistName, href, image_url, genres);
+      Artist artist = new Artist(artistID, artistName, artistPopularity, image_url, genres);
       artistsArr.add(artist);
     }
 

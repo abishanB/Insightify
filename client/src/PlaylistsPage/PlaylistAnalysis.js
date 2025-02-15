@@ -173,9 +173,9 @@ export default function PlaylistAnalysis(props) {
     // eslint-disable-next-line
   }, [playlistTracks]);
 
-  function getGenresEndpoint(playlistArtists) {
+  function getGenresEndpoint(playlistArtists) {//gets artist genre and image
     const capitalizeFirstLetter = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : str;
-    
+    console.log(playlistArtists)
     let ids = [];
     for (let key in playlistArtists) {
       ids.push(playlistArtists[key].id);
