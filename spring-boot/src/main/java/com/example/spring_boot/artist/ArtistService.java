@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -24,12 +25,20 @@ public class ArtistService {
   @Autowired
   private ArtistRepository artistRepository;
 
+  private static final int artistDatabaseThresholdTime = 30;//days
+
   private static final HttpClient client = HttpClient.newHttpClient();
   private static final String SPOTIFY_API_ARTISTS_URL = "https://api.spotify.com/v1/artists?ids=";
-  private static final Gson gson = new GsonBuilder().serializeNulls().create();
+  private static final Gson gson = new GsonBuilder().serializeNulls().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
 
   private void saveArtistsToDatabase(List<Artist> artists) {
     artistRepository.saveAll(artists);// save to database
+  }
+
+  public void deleteArtistFromDatabase(){
+    LocalDateTime threshold = LocalDateTime.now().minusDays(artistDatabaseThresholdTime);
+    int artistsDroped = artistRepository.deleteOldEntries(threshold);
+    System.out.println("Artists Deleted: " + artistsDroped);
   }
 
   private String getEndpointResult(String accessToken, String url) throws Exception {
@@ -65,16 +74,19 @@ public class ArtistService {
     //get all artists from spotify
     int chunkSize = 50;
     List<List<String>> chunks = splitListIntoChunks(artistIDsList, chunkSize);
-
+    
+    int artistChunkCounter = 1;
     JsonArray artistsArray = new JsonArray();
     for (List<String> ids : chunks) {
       String url = SPOTIFY_API_ARTISTS_URL + String.join(",", ids);
       try {
-        System.out.println("Fetching artists ");
+        System.out.println("Fetching artists " + artistChunkCounter +"/"+chunks.size());
+      
         String promise = getEndpointResult(access_token, url);
         for (JsonElement element : JsonParser.parseString(promise).getAsJsonObject().get("artists").getAsJsonArray()) {
           artistsArray.add(element);
         }
+        artistChunkCounter++;
       } catch (Exception e) {
         // Handle the exception (log it, return a default value, etc.)
         e.printStackTrace();
@@ -127,8 +139,6 @@ public class ArtistService {
   public String getArtists(String access_token, String artistIdsStr) {
     final List<String> ARTIST_IDS = List.of(gson.fromJson(artistIdsStr, String[].class));
     List<Artist> allArtists = new ArrayList<>();
-
-    System.out.println("Total Artists: "+ ARTIST_IDS.size());
 
     List<Artist> artistInDatabase = artistRepository.findAllById(ARTIST_IDS);
     System.out.println("Existing Artists: "+ artistInDatabase.size());

@@ -8,7 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "artists")
@@ -31,6 +34,8 @@ public class Artist {
     @Column(name = "genre", columnDefinition = "VARCHAR(255) NOT NULL")
     private List<String> genres;
 
+    private LocalDateTime createdAt;
+
      // No-argument constructor (required by JPA)
     public Artist() {}
 
@@ -40,6 +45,7 @@ public class Artist {
         this.href = href;
         this.image_url = image_url;
         this.genres = genres;
+        this.createdAt = LocalDateTime.now();
     }
     public String getId() {
         return id;
@@ -71,5 +77,13 @@ public class Artist {
     public void setGenres(List<String> genres) {
         this.genres = genres;
     }
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    
     
 }

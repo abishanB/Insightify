@@ -38,7 +38,8 @@ public class PlaylistController {
     
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("top_artists")
-    public  Map<String, Map<String, Double>> getPlaylistTopArtists(@RequestBody String playlistTracks) {
+    public  Map<String, Map<String, Double>> getPlaylistTopArtists(@RequestBody String playlistTracks) {//gets top playlist artists over time
+        System.out.println("getPlaylistTopAritstOverTime endpoint hit");
         return playlistService.getTopArtistsOverTime(playlistTracks);
     }
 }
