@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @RequestMapping(path = "api/playlist")
 public class PlaylistController {
-    private final PlaylistService playlistService;
-    
     @Autowired
-    public PlaylistController (PlaylistService playlistService) {
+    private final PlaylistService playlistService;
+    @Autowired
+    private final PlaylistTracksService playistTracksService;
+    
+    
+    public PlaylistController (PlaylistService playlistService, PlaylistTracksService playistTracksService) {
         this.playlistService = playlistService;
+        this.playistTracksService = playistTracksService;
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -33,12 +37,12 @@ public class PlaylistController {
     @GetMapping("tracks")
     public String getPlaylistTracks(@RequestParam String access_token, @RequestParam String playlistID) {
         System.out.println("getPlaylistTracks endpoint hit");
-        return playlistService.getPlaylistTracks(access_token, playlistID);
+        return playistTracksService.getPlaylistTracks(access_token, playlistID);
     }
     
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("top_artists")
-    public  Map<String, Map<String, Double>> getPlaylistTopArtists(@RequestBody String playlistTracks) {//gets top playlist artists over time
+    public  Map<String, Map<String, Double>> getPlaylistTopArtists(@RequestBody String playlistTracks) {
         System.out.println("getPlaylistTopAritstOverTime endpoint hit");
         return playlistService.getTopArtistsOverTime(playlistTracks);
     }

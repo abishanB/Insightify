@@ -1,2 +1,2 @@
 SELECT * FROM playlists;
-SELECT * FROM track
+SELECT * FROM track;
