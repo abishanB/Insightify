@@ -22,12 +22,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class PlaylistTracksService {
   @Autowired
   private PlaylistRepository playlistRepository;
-  @Autowired
-  private TrackRepository trackRepository;
 
   private final HttpClient client = HttpClient.newHttpClient();
 
@@ -36,6 +36,7 @@ public class PlaylistTracksService {
       .excludeFieldsWithoutExposeAnnotation() // Only serialize fields annotated with @Expose
       .create();
 
+  @Transactional
   private Playlist getPlaylistById(String playlistId) {
     return playlistRepository.findById(playlistId)
         .orElseThrow(() -> new RuntimeException("Playlist not found"));
@@ -74,7 +75,7 @@ public class PlaylistTracksService {
     return filteredPlaylistTracks;
   }
 
-  private String getPlaylistEndpointResult(URI endpoint, String accessToken) throws Exception {//makes api call
+  private String getPlaylistEndpointResult(URI endpoint, String accessToken) throws Exception {// makes api call
 
     HttpRequest request = HttpRequest.newBuilder()
         .uri(endpoint)
@@ -119,7 +120,7 @@ public class PlaylistTracksService {
     return getPlaylistTracksResult(playlistTracks, next, token);
   }
 
-  private List<Track> createTrackObjects(JsonArray playlistTracksJSON, Playlist playlist){
+  private List<Track> createTrackObjects(JsonArray playlistTracksJSON, Playlist playlist) {
     List<Track> tracks = new ArrayList<>();
     for (JsonElement element : playlistTracksJSON) {
       JsonObject track = element.getAsJsonObject();
@@ -152,7 +153,7 @@ public class PlaylistTracksService {
       String added_at = track.get("added_at").getAsString();
 
       int popularity = track.get("track").getAsJsonObject().get("popularity").getAsInt();
-      
+
       tracks.add(new Track(trackName, trackArtists, trackAlbumName, trackAlbumHref, image_url, trackHref, added_at,
           popularity, playlist));
     }
@@ -160,13 +161,19 @@ public class PlaylistTracksService {
   }
 
   public String getPlaylistTracks(String access_token, String playlistID) {// function that controller calss
+    Playlist playlist = getPlaylistById(playlistID);
+
+    if (playlist.getTracks().size() != 0) {// tracks are already stored no need to fetch again
+      return gson.toJson(playlist.getTracks());
+    }
+    // System.out.println(playlist.getTracks().size());
+
     JsonArray playlistTracks;
     try {
       if (playlistID.equals("liked_songs")) {
         String likedSongsEndpoint = "https://api.spotify.com/v1/me/tracks?limit=50";
         playlistTracks = getPlaylistTracksResult(new JsonArray(), likedSongsEndpoint, access_token);
-      } 
-      else {
+      } else {
         String standardPlaylistEndpoint = String.format("https://api.spotify.com/v1/playlists/%s/tracks?limit=100",
             playlistID);
         playlistTracks = getPlaylistTracksResult(new JsonArray(), standardPlaylistEndpoint, access_token);
@@ -177,15 +184,15 @@ public class PlaylistTracksService {
     }
 
     List<Track> tracks;
-    if (playlistID.equals("liked_songs")){
+    if (playlistID.equals("liked_songs")) {
       tracks = createTrackObjects(playlistTracks, null);
       return gson.toJson(tracks);
     }
-    Playlist playlist = getPlaylistById(playlistID);
+
     tracks = createTrackObjects(playlistTracks, playlist);
-    trackRepository.saveAll(tracks);
+    playlist.setTracks(tracks);
+  
+    playlistRepository.save(playlist);
     return gson.toJson(tracks);
-
   }
-
 }

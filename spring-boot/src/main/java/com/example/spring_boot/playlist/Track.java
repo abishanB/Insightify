@@ -8,9 +8,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 
 @Entity
+@Table(name="tracks")
 public class Track {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +44,7 @@ public class Track {
   @Expose
   private int popularity;
   @ManyToOne
-  @JoinColumn(name = "playlist_id") // Foreign key in Track table
+  @JoinColumn(name = "playlist_id", referencedColumnName = "id") // Foreign key in Track table
   @Expose(serialize = false)
   private Playlist playlist;
 

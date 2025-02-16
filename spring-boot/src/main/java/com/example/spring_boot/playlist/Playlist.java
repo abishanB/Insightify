@@ -2,11 +2,13 @@ package com.example.spring_boot.playlist;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
@@ -14,7 +16,7 @@ import com.google.gson.annotations.Expose;
 @Table(name = "playlists")
 public class Playlist {
   @Id
-  @Column(length = 50, nullable = false)
+  @Column(length = 22, nullable = false)
   @Expose
   private String id;
   @Column(columnDefinition = "VARCHAR(255) NOT NULL")
@@ -40,9 +42,9 @@ public class Playlist {
   @Expose
   private int total_tracks;
 
-  @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
   @Expose(serialize = false)
-  private List<Track> tracks;  // Array of Track objects
+  private List<Track> tracks = new ArrayList<>();  // Array of Track objects
   
 
   
@@ -114,7 +116,8 @@ public class Playlist {
     return tracks;
   }
   public void setTracks(List<Track> tracks) {
-    this.tracks = tracks;
+    this.tracks.clear();  // Clear existing tracks to prevent duplicates
+    this.tracks.addAll(tracks);
   }
   public String getSnapshot_id() {
     return snapshot_id;

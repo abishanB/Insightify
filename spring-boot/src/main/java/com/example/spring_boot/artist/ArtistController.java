@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @RequestMapping(path = "api/artists")
 public class ArtistController {
+  @Autowired
   private final ArtistService artistService;
 
-  @Autowired
+
   public ArtistController(ArtistService artistService) {
     this.artistService = artistService;
   }

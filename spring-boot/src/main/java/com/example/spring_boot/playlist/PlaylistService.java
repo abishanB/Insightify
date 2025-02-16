@@ -1,5 +1,6 @@
 package com.example.spring_boot.playlist;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import java.net.URI;
@@ -26,6 +27,8 @@ public class PlaylistService {
   @Autowired
   private PlaylistRepository playlistRepository;
 
+  @Autowired
+  private TrackRepository trackRepository;
   private final HttpClient client = HttpClient.newHttpClient();
 
   private final Gson gson = new GsonBuilder()
@@ -111,8 +114,17 @@ public class PlaylistService {
     int total_tracks = playlistResult.get("tracks").getAsJsonObject().get("total").getAsInt();
 
     Playlist playlist = new Playlist(playlistID, playlistName, playlistHref, image_url, owner_name, owner_url,
-        snapshot_id, followers, total_tracks, null);
+        snapshot_id, followers, total_tracks, new ArrayList<>());
     return playlist;
+  }
+
+  public boolean isPlaylistUpToDate(String lastSnapshot, String currentSnapshot){
+    //diferent snapshot indicates a change to the playlist
+    //null snapshot means playlist not in database
+    if (lastSnapshot == null) {
+      return false;
+    }
+    return lastSnapshot.equals(currentSnapshot);
   }
 
   public String getPlaylist(String access_token, String playlistID) {
@@ -120,7 +132,6 @@ public class PlaylistService {
       return createLikedSongsResponse(access_token, playlistID);
     }
     
-    // for standard playlists
     String endpoint = String.format("https://api.spotify.com/v1/playlists/%s", playlistID);
     String playlistAsStr;
     try {
@@ -132,9 +143,19 @@ public class PlaylistService {
     }
 
     Playlist playlist = createPlaylistResponse(playlistAsStr, playlistID);
+    if (isPlaylistUpToDate(playlistRepository.findSnapshotById(playlistID), playlist.getSnapshot_id())){
+      //set tracks to the one in already stored in database
+      System.out.println("------\nSAME SNAPSHOT\n------");
+      playlist.setTracks(playlistRepository.getTracksById(playlistID));
+    } else{
+      //if not up to date dont set tracks and tracks will be empty
+      //tracks will be fetched again in TracksService
+      System.out.println("------\nNEW SNAPSHOT\n------");
+      trackRepository.deleteAllTracksByPlaylistId(playlistID);//ensure all tracks are deleted from table
+    }
+ 
     playlistRepository.save(playlist);
     return gson.toJson(playlist);
-
   }
 
   public Map<String, Map<String, Double>> getTopArtistsOverTime(String playlistTracks) {
@@ -142,5 +163,4 @@ public class PlaylistService {
     Map<String, Map<String, Double>> artists = parseData.parseTopArtistsOverTime(playlistTracks);
     return artists;
   }
-
 }
