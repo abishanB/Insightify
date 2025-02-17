@@ -1,9 +1,9 @@
 package com.example.spring_boot.playlist;
 
-import java.util.Map;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.spring_boot.playlist.PlaylistEvolution.EvolutionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,11 +19,13 @@ public class PlaylistController {
     private final PlaylistService playlistService;
     @Autowired
     private final PlaylistTracksService playistTracksService;
+    @Autowired
+    private final EvolutionService evolutionService;
     
-    
-    public PlaylistController (PlaylistService playlistService, PlaylistTracksService playistTracksService) {
+    public PlaylistController (PlaylistService playlistService, PlaylistTracksService playistTracksService, EvolutionService evolutionService) {
         this.playlistService = playlistService;
         this.playistTracksService = playistTracksService;
+        this.evolutionService = evolutionService;
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -37,13 +39,16 @@ public class PlaylistController {
     @GetMapping("tracks")
     public String getPlaylistTracks(@RequestParam String access_token, @RequestParam String playlistID) {
         System.out.println("getPlaylistTracks endpoint hit");
+        if (playlistID == "liked_songs"){
+            return playistTracksService.getLikedSongs(access_token);
+        }
         return playistTracksService.getPlaylistTracks(access_token, playlistID);
     }
     
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("top_artists")
-    public  Map<String, Map<String, Double>> getPlaylistTopArtists(@RequestBody String playlistTracks) {
+    public String getPlaylistEvolution(@RequestBody String playlistTracks) {
         System.out.println("getPlaylistTopAritstOverTime endpoint hit");
-        return playlistService.getTopArtistsOverTime(playlistTracks);
+        return evolutionService.getPlaylistEvolution(playlistTracks);
     }
 }

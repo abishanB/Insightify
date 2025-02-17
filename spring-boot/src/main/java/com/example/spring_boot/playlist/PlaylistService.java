@@ -1,10 +1,8 @@
 package com.example.spring_boot.playlist;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import java.net.URI;
-
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -16,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.spring_boot.artist.LocalDateTimeAdapter;
-import com.example.spring_boot.playlist.PlaylistEvolution.ParsePlaylist;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -158,9 +155,5 @@ public class PlaylistService {
     return gson.toJson(playlist);
   }
 
-  public Map<String, Map<String, Double>> getTopArtistsOverTime(String playlistTracks) {
-    ParsePlaylist parseData = new ParsePlaylist();
-    Map<String, Map<String, Double>> artists = parseData.parseTopArtistsOverTime(playlistTracks);
-    return artists;
-  }
+  
 }

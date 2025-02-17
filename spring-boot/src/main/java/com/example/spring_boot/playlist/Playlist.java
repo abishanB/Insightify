@@ -2,7 +2,6 @@ package com.example.spring_boot.playlist;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -46,8 +45,6 @@ public class Playlist {
   @Expose(serialize = false)
   private List<Track> tracks = new ArrayList<>();  // Array of Track objects
   
-
-  
   public Playlist(String id, String name, String href, String image_url, String owner_name, String owner_url,
       String snapshot_id, int followers, int total_tracks, List<Track> tracks) {
     this.id = id;
@@ -62,7 +59,6 @@ public class Playlist {
     this.tracks = tracks;
   }
   
-
   public Playlist(){}//empty constructor as required by jpa
   public String getId() {
     return id;

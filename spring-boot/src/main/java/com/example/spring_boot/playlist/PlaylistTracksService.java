@@ -160,13 +160,28 @@ public class PlaylistTracksService {
     return tracks;
   }
 
-  public String getPlaylistTracks(String access_token, String playlistID) {// function that controller calss
-    Playlist playlist = getPlaylistById(playlistID);
-
-    if (playlist.getTracks().size() != 0) {// tracks are already stored no need to fetch again
-      return gson.toJson(playlist.getTracks());
+  public String getLikedSongs(String access_token){
+    final String likedSongsEndpoint = "https://api.spotify.com/v1/me/tracks?limit=50";
+    JsonArray playlistTracks;
+    try {
+      playlistTracks = getPlaylistTracksResult(new JsonArray(), likedSongsEndpoint, access_token);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return "Error while fetching liked songs";
     }
-    // System.out.println(playlist.getTracks().size());
+    return gson.toJson(createTrackObjects(playlistTracks, null));
+  }
+
+
+  public String getPlaylistTracks(String access_token, String playlistID) {// function that controller calss
+    Playlist playlist = new Playlist();
+    if (!playlistID.equals("liked_songs")) {
+      playlist = getPlaylistById(playlistID);
+
+      if (playlist.getTracks().size() != 0) {// tracks are already stored no need to fetch again
+        return gson.toJson(playlist.getTracks());
+      }
+    }
 
     JsonArray playlistTracks;
     try {
@@ -191,7 +206,7 @@ public class PlaylistTracksService {
 
     tracks = createTrackObjects(playlistTracks, playlist);
     playlist.setTracks(tracks);
-  
+
     playlistRepository.save(playlist);
     return gson.toJson(tracks);
   }

@@ -10,14 +10,6 @@ export class ErrorBoundary extends React.Component {
     return { hasError: true, errorMsg: error.message};
   }
 
-  componentDidCatch(error, info) {
-    // Example "componentStack":
-    //   in ComponentThatThrows (created by App)
-    //   in ErrorBoundary (created by App)
-    //   in div (created by App)
-    //   in App
-    //logErrorToMyService(error, info.componentStack);
-  }
 
   render() {
     if (this.state.hasError) {

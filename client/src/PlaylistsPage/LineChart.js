@@ -7,18 +7,6 @@ import "./styles/LineChart.css";
 import { getPlaylistTopArtistsOverTime } from "../apiCalls";
 Chart.register(CategoryScale);
 
-const colors = [
-  "rgba(75, 192, 192, 1)", // Aqua
-  "#CD7F32", // Bronze
-  "#8E44AD", // Purple
-  "#FF69B4", // pink
-  "#2ECC71", // Emerald Green
-  "#3357FF", // Vibrant Blue
-  "#FFC300", // Bright Yellow
-  "#C70039", // Deep Crimson
-  "#fffac8", // Beige
-  "#3498DB", // Soft Blue
-];
 
 //line chart options
 const options = {
@@ -69,6 +57,29 @@ const options = {
 };
 
 function createDataSets(topArtistsOverTime) {
+  const colors = [
+    "rgba(75, 192, 192, 1)", // Aqua
+    "#CD7F32", // Bronze
+    "#8E44AD", // Purple
+    "#FF69B4", // pink
+    "#2ECC71", // Emerald Green
+    "#3357FF", // Vibrant Blue
+    "#FFC300", // Bright Yellow
+    "#C70039", // Deep Crimson
+    "#fffac8", // Beige
+    "#3498DB", // Soft Blue
+    "#FF4500", // Orange Red  
+    "#32CD32", // Lime Green  
+    "#FFD700", // Gold  
+    "#1E90FF", // Dodger Blue  
+    "#FF6347", // Tomato  
+    "#FF8C00", // Dark Orange  
+    "#00CED1", // Dark Turquoise  
+    "#DC143C", // Crimson  
+    "#7FFF00", // Chartreuse  
+    "#8B4513", // Saddle Brown  
+  ];
+  
   let graphLabels = Object.keys(
     topArtistsOverTime[Object.keys(topArtistsOverTime)[0]]
   );
