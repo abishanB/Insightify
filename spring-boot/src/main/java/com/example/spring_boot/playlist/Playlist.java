@@ -15,9 +15,9 @@ import com.google.gson.annotations.Expose;
 @Table(name = "playlists")
 public class Playlist {
   @Id
-  @Column(length = 22, nullable = false)
+  @Column(columnDefinition = "VARCHAR(255) NOT NULL")
   @Expose
-  private String id;
+  private String id;//if liked songs, id corresponds to user id
   @Column(columnDefinition = "VARCHAR(255) NOT NULL")
   @Expose
   private String name;
@@ -41,12 +41,15 @@ public class Playlist {
   @Expose
   private int total_tracks;
 
+  @Expose
+  private Boolean isLikedSongs;
+
   @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
   @Expose(serialize = false)
   private List<Track> tracks = new ArrayList<>();  // Array of Track objects
   
   public Playlist(String id, String name, String href, String image_url, String owner_name, String owner_url,
-      String snapshot_id, int followers, int total_tracks, List<Track> tracks) {
+      String snapshot_id, int followers, int total_tracks, Boolean isLikedSongs, List<Track> tracks) {
     this.id = id;
     this.name = name;
     this.href = href;
@@ -56,6 +59,7 @@ public class Playlist {
     this.snapshot_id = snapshot_id;
     this.followers = followers;
     this.total_tracks = total_tracks;
+    this.isLikedSongs = isLikedSongs;
     this.tracks = tracks;
   }
   
@@ -121,4 +125,14 @@ public class Playlist {
   public void setSnapshot_id(String snapshot_id) {
     this.snapshot_id = snapshot_id;
   }
+
+  public Boolean getIsLikedSongs() {
+    return isLikedSongs;
+  }
+
+  public void setIsLikedSongs(Boolean isLikedSongs) {
+    this.isLikedSongs = isLikedSongs;
+  }
+
+  
 }

@@ -211,7 +211,7 @@ export default function PlaylistAnalysis(props) {
   }
 
   function onGetPlaylistTracks() {
-    const promise = getPlaylistTracks(props.token, playlistID);
+    const promise = getPlaylistTracks(props.token, playlist.id);
     promise.then(function (tracksObject) {
       //setPlaylistTracks(playlistTracks.concat(tracksObject.items))
       setPlaylistTracks(tracksObject);

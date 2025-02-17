@@ -1,1 +1,2 @@
-SELECT name, artists from tracks;
+SELECT COUNT(*) FROM tracks;
+SELECT * FROM playlists;

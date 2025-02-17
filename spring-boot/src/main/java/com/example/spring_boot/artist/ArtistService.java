@@ -26,13 +26,14 @@ public class ArtistService {
   private ArtistRepository artistRepository;
 
   private static final int artistDatabaseThresholdTime = 30;//days
-
+  final int artistPopularityThreshold = 30;//only save artists above this threshold
+  
   private static final HttpClient client = HttpClient.newHttpClient();
   private static final String SPOTIFY_API_ARTISTS_URL = "https://api.spotify.com/v1/artists?ids=";
   private static final Gson gson = new GsonBuilder().serializeNulls().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
 
   private void saveArtistsToDatabase(List<Artist> artists) {
-    final int artistPopularityThreshold = 30;//only save artists above this threshold
+   
     //array of artists to save to database
     List<Artist> artistsToSaveArr = new ArrayList<>();
 

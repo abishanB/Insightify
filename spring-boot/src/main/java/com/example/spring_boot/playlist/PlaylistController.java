@@ -18,13 +18,13 @@ public class PlaylistController {
     @Autowired
     private final PlaylistService playlistService;
     @Autowired
-    private final PlaylistTracksService playistTracksService;
+    private final TracksService tracksService;
     @Autowired
     private final EvolutionService evolutionService;
     
-    public PlaylistController (PlaylistService playlistService, PlaylistTracksService playistTracksService, EvolutionService evolutionService) {
+    public PlaylistController (PlaylistService playlistService, TracksService tracksService, EvolutionService evolutionService) {
         this.playlistService = playlistService;
-        this.playistTracksService = playistTracksService;
+        this.tracksService = tracksService;
         this.evolutionService = evolutionService;
     }
 
@@ -32,6 +32,10 @@ public class PlaylistController {
     @GetMapping
     public String getUserPlaylist(@RequestParam String access_token, @RequestParam String playlistID) {
         System.out.println("getUserPlaylist Endpoint Hit");
+
+        if (playlistID.equals("liked_songs")) {
+            return playlistService.getLikedSongs(access_token);
+        }
         return playlistService.getPlaylist(access_token, playlistID);
     }
     
@@ -39,10 +43,7 @@ public class PlaylistController {
     @GetMapping("tracks")
     public String getPlaylistTracks(@RequestParam String access_token, @RequestParam String playlistID) {
         System.out.println("getPlaylistTracks endpoint hit");
-        if (playlistID == "liked_songs"){
-            return playistTracksService.getLikedSongs(access_token);
-        }
-        return playistTracksService.getPlaylistTracks(access_token, playlistID);
+        return tracksService.getPlaylistTracks(access_token, playlistID);
     }
     
     @CrossOrigin(origins = "http://localhost:3000")
