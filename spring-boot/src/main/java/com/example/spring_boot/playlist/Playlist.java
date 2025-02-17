@@ -7,6 +7,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,10 @@ public class Playlist {
   @Expose
   private Boolean isLikedSongs;
 
-  @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
+  @Expose
+  private LocalDateTime createdAt;
+
+  @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
   @Expose(serialize = false)
   private List<Track> tracks = new ArrayList<>();  // Array of Track objects
   
@@ -61,6 +65,7 @@ public class Playlist {
     this.total_tracks = total_tracks;
     this.isLikedSongs = isLikedSongs;
     this.tracks = tracks;
+    this.createdAt = LocalDateTime.now();
   }
   
   public Playlist(){}//empty constructor as required by jpa

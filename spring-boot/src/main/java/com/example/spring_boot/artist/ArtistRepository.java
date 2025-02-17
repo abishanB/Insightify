@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 public interface ArtistRepository extends JpaRepository<Artist, String>{
- @Modifying
+  @Modifying
   @Transactional
   @Query("DELETE FROM Artist a WHERE a.createdAt < :threshold")
   int deleteOldEntries(LocalDateTime threshold);

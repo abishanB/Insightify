@@ -1,2 +1,2 @@
-SELECT COUNT(*) FROM tracks;
-SELECT * FROM playlists;
+SELECT name FROM playlists;
+SELECT playlist_id FROM tracks;

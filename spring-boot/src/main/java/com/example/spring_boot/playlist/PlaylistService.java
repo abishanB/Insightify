@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.spring_boot.artist.LocalDateTimeAdapter;
+import com.example.spring_boot.LocalDateTimeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -27,14 +27,25 @@ public class PlaylistService {
   @Autowired
   private TrackRepository trackRepository;
 
+  private final int playlistDatabaseThresholdTime = 7; //days
   private final HttpClient client = HttpClient.newHttpClient();
-
+  
   private final Gson gson = new GsonBuilder()
       .serializeNulls() // Serializes null fields as well
       .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()) // Custom serializer for LocalDateTime
       .excludeFieldsWithoutExposeAnnotation() // Only serialize fields annotated with @Expose
       .create();
 
+  public void deletePlaylistFromDatabase() {
+    LocalDateTime threshold = LocalDateTime.now().minusDays(playlistDatabaseThresholdTime);
+    //use query to find playlists, then delete using repo
+    //deleting through query causes error as track and playlist are connected
+    List<Playlist> oldPlaylists = playlistRepository.findPlaylistsBeforeDate(threshold);
+    playlistRepository.deleteAll(oldPlaylists);
+    System.out.println("Playlists Deleted: " + oldPlaylists.size());
+  }
+
+  
   private URI playlistEndpointBuilder(String endpoint) throws Exception {
     // external_urls.spotify
     // followers.total,id,images.url,name,owner(external_urls,display_name,id)
@@ -113,7 +124,7 @@ public class PlaylistService {
   }
 
   private boolean isLikedSongsUpToDate(JsonObject likedSongs, String id) {
-    List<Track> likedSongsInDatabase = playlistRepository.getTracksById(id);
+    List<Track> likedSongsInDatabase = trackRepository.findTracksByPlaylistIdOrdered(id);
     if (likedSongs.get("total").getAsInt() != likedSongsInDatabase.size()) {
       return false;
     }
@@ -158,7 +169,7 @@ public class PlaylistService {
   }
 
   public String getPlaylist(String access_token, String playlistID) {
-    final String endpoint = String.format("https://api.spotify.com/v1/playlists/%s", playlistID);
+    String endpoint = String.format("https://api.spotify.com/v1/playlists/%s", playlistID);
     String playlistAsStr;
     try {
       playlistAsStr = fetchEndpointResult(playlistEndpointBuilder(endpoint), access_token);

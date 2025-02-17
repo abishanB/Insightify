@@ -14,7 +14,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.spring_boot.artist.LocalDateTimeAdapter;
+import com.example.spring_boot.LocalDateTimeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -175,7 +175,7 @@ public class TracksService {
         final String likedSongsEndpoint = "https://api.spotify.com/v1/me/tracks?limit=50";
         playlistTracks = getPlaylistTracksResult(new JsonArray(), likedSongsEndpoint, access_token);
       } else {
-        final String standardPlaylistEndpoint = String.format("https://api.spotify.com/v1/playlists/%s/tracks?limit=100",
+        String standardPlaylistEndpoint = String.format("https://api.spotify.com/v1/playlists/%s/tracks?limit=100",
             playlistID);
         playlistTracks = getPlaylistTracksResult(new JsonArray(), standardPlaylistEndpoint, access_token);
       }

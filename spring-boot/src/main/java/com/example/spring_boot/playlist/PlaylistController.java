@@ -7,6 +7,7 @@ import com.example.spring_boot.playlist.PlaylistEvolution.EvolutionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +33,7 @@ public class PlaylistController {
     @GetMapping
     public String getUserPlaylist(@RequestParam String access_token, @RequestParam String playlistID) {
         System.out.println("getUserPlaylist Endpoint Hit");
-
+        playlistService.deletePlaylistFromDatabase();
         if (playlistID.equals("liked_songs")) {
             return playlistService.getLikedSongs(access_token);
         }
@@ -51,5 +52,12 @@ public class PlaylistController {
     public String getPlaylistEvolution(@RequestBody String playlistTracks) {
         System.out.println("getPlaylistTopAritstOverTime endpoint hit");
         return evolutionService.getPlaylistEvolution(playlistTracks);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @DeleteMapping("delete")
+    public String deleteOldEntries(){
+        playlistService.deletePlaylistFromDatabase();
+        return "OK";
     }
 }

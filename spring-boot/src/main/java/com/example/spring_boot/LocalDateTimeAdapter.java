@@ -1,4 +1,4 @@
-package com.example.spring_boot.artist;
+package com.example.spring_boot;
 
 import com.google.gson.*;
 import java.lang.reflect.Type;

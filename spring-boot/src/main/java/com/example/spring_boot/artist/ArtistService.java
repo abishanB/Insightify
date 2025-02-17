@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.example.spring_boot.LocalDateTimeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -25,20 +26,21 @@ public class ArtistService {
   @Autowired
   private ArtistRepository artistRepository;
 
-  private static final int artistDatabaseThresholdTime = 30;//days
-  final int artistPopularityThreshold = 30;//only save artists above this threshold
-  
+  private static final int artistDatabaseThresholdTime = 90;// days
+  final int artistPopularityThreshold = 30;// only save artists above this threshold
+
   private static final HttpClient client = HttpClient.newHttpClient();
   private static final String SPOTIFY_API_ARTISTS_URL = "https://api.spotify.com/v1/artists?ids=";
-  private static final Gson gson = new GsonBuilder().serializeNulls().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
+  private static final Gson gson = new GsonBuilder().serializeNulls()
+      .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
 
   private void saveArtistsToDatabase(List<Artist> artists) {
-   
-    //array of artists to save to database
+
+    // array of artists to save to database
     List<Artist> artistsToSaveArr = new ArrayList<>();
 
-    for (Artist artist:artists){
-      if (artist.getPopularity() >= artistPopularityThreshold){
+    for (Artist artist : artists) {
+      if (artist.getPopularity() >= artistPopularityThreshold) {
         artistsToSaveArr.add(artist);
       }
     }
@@ -46,10 +48,10 @@ public class ArtistService {
     artistRepository.saveAll(artistsToSaveArr);// save to database
   }
 
-  public void deleteArtistFromDatabase(){
+  public void deleteArtistFromDatabase() {
     LocalDateTime threshold = LocalDateTime.now().minusDays(artistDatabaseThresholdTime);
-    int artistsDroped = artistRepository.deleteOldEntries(threshold);
-    System.out.println("Artists Deleted: " + artistsDroped);
+    artistRepository.deleteOldEntries(threshold);
+    //System.out.println("Artists Deleted: " + artistsDroped);
   }
 
   private String getEndpointResult(String accessToken, String url) throws Exception {
@@ -81,18 +83,18 @@ public class ArtistService {
   }
 
   private String fetchArtistsFromAPI(String access_token, List<String> artistIDsList) {
-    //max amount of aritsts per call to spotify is 50
-    //get all artists from spotify
+    // max amount of aritsts per call to spotify is 50
+    // get all artists from spotify
     int chunkSize = 50;
     List<List<String>> chunks = splitListIntoChunks(artistIDsList, chunkSize);
-    
+
     int artistChunkCounter = 1;
     JsonArray artistsArray = new JsonArray();
     for (List<String> ids : chunks) {
       String url = SPOTIFY_API_ARTISTS_URL + String.join(",", ids);
       try {
-        System.out.println("Fetching artists " + artistChunkCounter +"/"+chunks.size());
-      
+        System.out.println("Fetching artists " + artistChunkCounter + "/" + chunks.size());
+
         String promise = getEndpointResult(access_token, url);
         for (JsonElement element : JsonParser.parseString(promise).getAsJsonObject().get("artists").getAsJsonArray()) {
           artistsArray.add(element);
@@ -108,9 +110,10 @@ public class ArtistService {
   }
 
   private List<Artist> parseArtistsJSON(JsonArray artistsArrResult) {
-    // creates an array containing all artists objects and nessecary properties from the result from spotify api
-    //also saves to database
-    List<Artist> artistsArr = new ArrayList<>();//full array of artists
+    // creates an array containing all artists objects and nessecary properties from
+    // the result from spotify api
+    // also saves to database
+    List<Artist> artistsArr = new ArrayList<>();// full array of artists
 
     for (JsonElement element : artistsArrResult) {
       JsonObject artistAPIResult = element.getAsJsonObject();
@@ -136,9 +139,9 @@ public class ArtistService {
     return artistsArr;
   }
 
-  private JsonObject createArtistsObject(List<Artist> allArtists){
-    //create object that is returned to api
-    //maps artist name to artist object
+  private JsonObject createArtistsObject(List<Artist> allArtists) {
+    // create object that is returned to api
+    // maps artist name to artist object
     JsonObject artistsObj = new JsonObject();
     for (Artist artist : allArtists) {
       artistsObj.add(artist.getName(), gson.toJsonTree(artist));
@@ -151,18 +154,18 @@ public class ArtistService {
     List<Artist> allArtists = new ArrayList<>();
 
     List<Artist> artistInDatabase = artistRepository.findAllById(ARTIST_IDS);
-    System.out.println("Existing Artists: "+ artistInDatabase.size());
+    System.out.println("Existing Artists: " + artistInDatabase.size());
 
-    //compares lists of artist ids to find which are not stored in database
+    // compares lists of artist ids to find which are not stored in database
     Set<String> foundIds = artistInDatabase.stream()
-        .map(Artist::getId) 
+        .map(Artist::getId)
         .collect(Collectors.toSet());
     List<String> missingIds = ARTIST_IDS.stream()
         .filter(id -> !foundIds.contains(id)) // Keep IDs not in the foundIds set
         .collect(Collectors.toList());
-    System.out.println("Not Found Artists: "+ missingIds.size());
+    System.out.println("Not Found Artists: " + missingIds.size());
 
-    //fetch missing artists from spotify api
+    // fetch missing artists from spotify api
     String artistDataStr = fetchArtistsFromAPI(access_token, missingIds);
 
     List<Artist> fetchedArtists = parseArtistsJSON(JsonParser.parseString(artistDataStr).getAsJsonArray());
@@ -170,7 +173,7 @@ public class ArtistService {
 
     allArtists.addAll(artistInDatabase);
     allArtists.addAll(fetchedArtists);
-    //maps artist name to artist object
+    // maps artist name to artist object
     return createArtistsObject(allArtists).toString();
   }
 }
