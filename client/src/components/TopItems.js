@@ -15,6 +15,7 @@ export default function TopItems({ type, token, storedTopItems, updateTopItemsFu
   const onTabSwitch = (tabName) => setCurrentTab(tabName);
   
   useEffect(() => {//component Load
+    if (items[currentTab].items === null){return}
     if (items[currentTab].items.length===0){//uf no previous data is passed from parent 
       onGetTopItems()
       return
@@ -28,7 +29,8 @@ export default function TopItems({ type, token, storedTopItems, updateTopItemsFu
       firstUpdate.current = false;
       return;
     }
-    
+
+    if (items[currentTab].items === null){return}
     if (items[currentTab].items.length===0){
       onGetTopItems()
     }
@@ -44,6 +46,13 @@ export default function TopItems({ type, token, storedTopItems, updateTopItemsFu
         return;
       }
       let updatedItems = { ...items };//create copy of items
+      if (moreItemsResult.total === 0 ){
+        updatedItems[currentTab].items = null;
+        setItems(updatedItems);
+        updateTopItemsFunc(updatedItems);//pass updatedItems to parent
+        return;
+      }
+
       updatedItems[currentTab].items = updatedItems[currentTab].items.concat(moreItemsResult.items);//add new items to current 
       updatedItems[currentTab].next = moreItemsResult.next;//set new next endpoint - if no more items .next returns null
       setItems(updatedItems);
@@ -58,14 +67,30 @@ export default function TopItems({ type, token, storedTopItems, updateTopItemsFu
     return (<button className="more-btn" onClick={() => onGetTopItems()}>View More</button>);
   }
 
+  function pageTitle(){
+    return (
+      <div className="page-title">
+        <h1>Your Top {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
+        <img src={spotifyIcon} alt="SpotifyIcon"></img>
+      </div>
+    )
+  }
+ 
   if (error) { throw new Error(`Failed to fetch ${type} - ${currentTab}`); }
+  if (items[currentTab].items === null) {
+    return (
+      <div>
+        {pageTitle()}
+        <TimeRangeSelector tabSwitchHandler={onTabSwitch} />
+        <h2 className='empty-top-items-msg'>Seems You Have Not Listened To Anything</h2>
+      </div>
+    )
+  }
+  
   if (items[currentTab].items.length === 0) {//if api is still loading topItems
     return (
       <div style={{ display: 'grid' }}>
-        <div className="page-title">
-          <h1>Your Top {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
-          <img src={spotifyIcon} alt="SpotifyIcon"></img>
-        </div>
+        {pageTitle()}
         <TimeRangeSelector tabSwitchHandler={()=>{}} />
         <LoadingIcon />
       </div>
@@ -73,11 +98,8 @@ export default function TopItems({ type, token, storedTopItems, updateTopItemsFu
   }
   return (
     <div style={{ display: 'grid' }}>
-      <div className="page-title">
-        <h1>Your Top {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
-        <img src={spotifyIcon} alt="SpotifyIcon"></img>
-      </div>
-    
+      {pageTitle()}
+
       <TimeRangeSelector tabSwitchHandler={onTabSwitch} />
       {type === 'tracks' ? (
         <RenderTracks tracks={items[currentTab].items} />

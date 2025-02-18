@@ -68,6 +68,10 @@ h1{
 .more-btn:active{
 	background-color: #1F2633;
 }
+.empty-top-items-msg {
+	text-align: center;
+}
+
 html,
 body {
 	height: 100%; width: 100%;	

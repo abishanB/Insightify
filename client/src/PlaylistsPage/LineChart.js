@@ -115,6 +115,7 @@ function createDataSets(topArtistsOverTime) {
 }
 
 export default function LineChart({ playlistTracks, token }) {
+
   const chartRef = useRef(null);
   const [chartDatasets, setChartDatasets] = useState(null);
 
@@ -137,8 +138,9 @@ export default function LineChart({ playlistTracks, token }) {
   };
 
   useEffect(() => {
+    console.log(playlistTracks)
     //function is called on load and every thime playlistTracks is updated
-    if (playlistTracks === null) {
+    if (playlistTracks === null || playlistTracks.length === 0) {
       return;
     } //wait for tracks to be fetched from parent function
 

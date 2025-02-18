@@ -3,8 +3,8 @@ const clientID = process.env.REACT_APP_CLIENT_ID
 const clientSecret = process.env.REACT_APP_CLIENT_SECRET
 
 function checkResponse(response){
-  if (!response.ok){
-    return false
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
   }
   return response.json()
 }

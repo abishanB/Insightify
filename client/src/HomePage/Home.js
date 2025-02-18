@@ -17,20 +17,20 @@ function getSpotifyLoginURL(redirect_uri){//return spotify login url with correc
 }
 //`${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRCT_URI2}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
 export default function Home({token , topTracksObj, updateTopTracksFunc, topArtistsObj, updateTopArtistsFunc, isLoggedIn}) {
-  const [topTrackImg, setTopTrackImg] = useState(null)
-  const [topArtistImg, setTopArtistImg] = useState(null)
-  const [error, setError] = useState(false);
+  const [topTrackImg, setTopTrackImg] = useState(spotifyLogo)
+  const [topArtistImg, setTopArtistImg] = useState(spotifyLogo)
 
   var href = window.location.href
-  if (href.includes("localhost")){var URI = "http://localhost:3000"}
-  if (href.includes("10.0.0.7")){var URI = "http://10.0.0.7:3000"}
+  var URI;
+  if (href.includes("localhost")){URI = "http://localhost:3000"}
+  if (href.includes("10.0.0.7")){URI = "http://10.0.0.7:3000"}
   useEffect(() => {//on component load, fetches top items if nessecary
     if (isLoggedIn === false){
-      setTopTrackImg(spotifyLogo)
-      setTopArtistImg(spotifyLogo)
       return
     }
-    
+    //top tracks / artists are empty
+    if (topTracksObj.short_term.items === null || topArtistsObj.short_term.items === null){return}
+
     if (topTracksObj.short_term.items.length===0){//if any tracks havent been loaded 
       getFirstSetTopItems(topTracksObj, "tracks")
     } 
@@ -50,23 +50,29 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
     const promise = getEndpointResult(token, topItems.short_term.next, `fetching more ${type} - short_term`);
     promise.then((moreItemsResult) => {
       if (moreItemsResult === false){
-        setError(true);
         return;
       }
       let updatedItems = { ...topItems };//create copy of items
-      updatedItems.short_term.items = moreItemsResult.items
-      updatedItems.short_term.next = moreItemsResult.next
-
+      if (moreItemsResult.total === 0){//if no top tracks/artists yet
+        updatedItems.short_term.items = null;
+      } else {
+        updatedItems.short_term.items = moreItemsResult.items
+        updatedItems.short_term.next = moreItemsResult.next
+      }
       if (type==='tracks'){
-        setTopTrackImg(updatedItems.short_term.items[0].album.images[0].url)
+        if (moreItemsResult.total === 0){
+          setTopTrackImg(spotifyLogo)
+        } else {setTopTrackImg(updatedItems.short_term.items[0].album.images[0].url)}
         updateTopTracksFunc(updatedItems)
       }
       if (type==="artists"){
-        setTopArtistImg(updatedItems.short_term.items[0].images[0].url)
+        if (moreItemsResult.total === 0){
+          setTopArtistImg(spotifyLogo)
+        } else {setTopArtistImg(updatedItems.short_term.items[0].images[0].url)}
         updateTopArtistsFunc(updatedItems)
       }
       
-    }).catch(() => setError(true));
+    });
   }
 
   if ((topTrackImg==null || topArtistImg==null) && isLoggedIn===true) return <LoadingIcon/>

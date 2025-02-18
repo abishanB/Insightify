@@ -107,6 +107,7 @@ function getPlaylistAlbums(playlistTracks) {
       });
     }
   }
+  
 
   return sortProperties(playlistAlbums);
 }
@@ -120,13 +121,8 @@ export default function PlaylistAnalysis(props) {
   const [averagePopularity, setAveragePopularity] = useState(null);
   const [noData, setNoData] = useState(false);
 
-  const [error, setError] = useState(false);
-
   const { playlistID } = useParams(); //gets playlistID passed from router and in URL
 
-  if (error) {
-    throw new Error("Can't fetch playlist", playlistID);
-  }
 
   useEffect(() => {
     if (playlist != null) {
@@ -165,15 +161,15 @@ export default function PlaylistAnalysis(props) {
     }
 
     //playlistArtists is updated in getGenres so artist image can also be retrieved
-    getGenresEndpoint(getPlaylistArtistsResult);
+    onGetArtists(getPlaylistArtistsResult);
     setTopAlbumsInPlaylist(getPlaylistAlbums(playlistTracks)); //set top albums
     setAveragePopularity(calculateAveragePopularity(playlistTracks)); //set average popularity
     // eslint-disable-next-line
   }, [playlistTracks]);
 
-  function getGenresEndpoint(playlistArtists) {//gets artist genre and image
+  function onGetArtists(playlistArtists) {//gets artist genre and image
     const capitalizeFirstLetter = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : str;
-    console.log(playlistArtists)
+    
     let ids = [];
     for (let key in playlistArtists) {
       ids.push(playlistArtists[key].id);
@@ -213,9 +209,7 @@ export default function PlaylistAnalysis(props) {
   function onGetPlaylistTracks() {
     const promise = getPlaylistTracks(props.token, playlist.id);
     promise.then(function (tracksObject) {
-      //setPlaylistTracks(playlistTracks.concat(tracksObject.items))
       setPlaylistTracks(tracksObject);
-      console.log(tracksObject)
     });
   }
 
@@ -225,13 +219,6 @@ export default function PlaylistAnalysis(props) {
     promise = getPlaylist(props.token, playlistID); //users liked songs endpoint
 
     promise.then(function (playlistObj) {
-      if (playlistObj === false) {
-        setError(true);
-        return;
-      }
-
-      console.log(playlistObj)
-
       setPlaylist(playlistObj);
     });
   }

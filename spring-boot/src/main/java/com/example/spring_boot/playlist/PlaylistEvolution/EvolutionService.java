@@ -156,6 +156,8 @@ public class EvolutionService {
     final int numOfTopArtistsToTrack = 10;
 
     JsonArray playlistTracks = JsonParser.parseString(tracks).getAsJsonArray();
+    if (playlistTracks.size() == 0){return "Empty Playlist";}
+    
     playlistTracks = orderPlaylistsByDate(playlistTracks);
 
     LocalDate startDate = LocalDate.parse(playlistTracks.get(0).getAsJsonObject().get("added_at").getAsString(),

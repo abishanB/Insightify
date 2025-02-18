@@ -1,19 +1,28 @@
 import React from 'react'
-import { playlistCoverURL } from './DisplayPlaylists'
 import LoadingIcon from "../components/LoadingIcon";
 import "./styles/PlaylistSummary.css"
 import spotifyIcon from "../Spotify_Primary_Logo_RGB_White.png"
 
+function checkPlaylistCover(playlistCover){
+  if (playlistCover === null){
+    return "https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999"
+  }
+  return playlistCover
+}
+
 export default function PlaylistSummary(props) {
   const playlist = props.playlist
   // Use default values if props are null or undefined
+  
   const totalArtists = props.topArtists?.length ?? "...";
   const topArtists = props.topArtists ?? [[["..."]]];
-  const topAlbums = props.topAlbums ?? [[["..."]]];
   const topGenres = props.topGenres ?? [[["..."]]];
   const averagePopularity = props.averagePopularity ?? "...";
- 
   const noData = props.noData
+
+  //in case playlist has no albums, only contains singles
+  let topAlbums = props.topAlbums ?? [[["..."]]];
+  if (topAlbums.length === 0){topAlbums = [[["..."]]]}
 
   if (playlist === null) {return <LoadingIcon />}
   return (
@@ -31,7 +40,7 @@ export default function PlaylistSummary(props) {
       
       <div className='summary-container'>
         <a href={playlist.href} target="_blank" rel="noopener noreferrer">
-          <img src={playlist.image_url} className='playlistCover' alt="playlistCover" width="100" height="100"></img>
+          <img src={checkPlaylistCover(playlist.image_url)} className='playlistCover' alt="playlistCover" width="100" height="100"></img>
         </a>
         
         <div className='details'>
