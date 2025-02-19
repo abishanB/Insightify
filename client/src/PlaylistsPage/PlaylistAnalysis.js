@@ -5,7 +5,7 @@ import GenreChart from "./GenreChart";
 import "./styles/PlaylistAnalysis.css";
 import PlaylistSummary from "./PlaylistSummaryCard";
 import TopArtistsAlbums from "./PlaylistTopArtistsAlbums";
-import LineChart from "./LineChart";
+import LineChart from "./EvolutionChart";
 
 function sortProperties(obj) {
   //sorts artists, albums and genres from most occuring to least

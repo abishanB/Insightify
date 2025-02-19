@@ -54,7 +54,7 @@ public class PlaylistController {
         return evolutionService.getPlaylistEvolution(playlistTracks);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:3000")//testing purposes
     @DeleteMapping("delete")
     public String deleteOldEntries(){
         playlistService.deletePlaylistFromDatabase();

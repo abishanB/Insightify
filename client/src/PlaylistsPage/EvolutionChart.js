@@ -117,7 +117,7 @@ function createDataSets(topArtistsOverTime) {
 export default function LineChart({ playlistTracks, token }) {
 
   const chartRef = useRef(null);
-  const [chartDatasets, setChartDatasets] = useState(null);
+  const [chartDatasets, setChartDatasets] = useState({});
 
   const handleHideAllLines = () => {
     const chart = chartRef.current; // Access the chart instance
@@ -138,7 +138,6 @@ export default function LineChart({ playlistTracks, token }) {
   };
 
   useEffect(() => {
-    console.log(playlistTracks)
     //function is called on load and every thime playlistTracks is updated
     if (playlistTracks === null || playlistTracks.length === 0) {
       return;
@@ -149,14 +148,38 @@ export default function LineChart({ playlistTracks, token }) {
       JSON.stringify(playlistTracks)
     );
     promise.then(function (response) {
+      if (Object.keys(response) == 0){//no data
+        setChartDatasets(null)
+        return
+      } 
+      if ((Object.keys(response[Object.keys(response)[0]])).length <= 1){//check if there is at least 2 time ranges to display data
+        setChartDatasets(null)
+        return
+      }
       setChartDatasets(createDataSets(response));
     });
     // eslint-disable-next-line
   }, [playlistTracks]);
 
-  if (chartDatasets === null || playlistTracks === null) {
-    return <LoadingIcon />
+  
+
+  if (chartDatasets === null){
+    return (
+      <div id="line-chart-card" className="playlist-card">
+      <div className="card-title">
+        <span>Playlist Evolution</span>
+      </div>
+
+      <button className="deselect-all-btn" onClick={handleHideAllLines}>
+        Deselect All
+      </button>
+      <h2>No Data</h2>
+    </div>
+    )
   }
+
+  if (Object.keys(chartDatasets).length === 0 || playlistTracks === null) { return <LoadingIcon />}
+
   return (
     <div id="line-chart-card" className="playlist-card">
       <div className="card-title">
