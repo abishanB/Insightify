@@ -4,7 +4,7 @@ import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import { CategoryScale } from "chart.js";
 import "./styles/LineChart.css";
-import { getPlaylistTopArtistsOverTime } from "../apiCalls";
+
 Chart.register(CategoryScale);
 
 
@@ -114,7 +114,7 @@ function createDataSets(topArtistsOverTime) {
   return data;
 }
 
-export default function LineChart({ playlist,playlistTracks }) {
+export default function LineChart({ playlist,playlistTracks, playlistEvolutionDataset}) {
 
   const chartRef = useRef(null);
   const [chartDatasets, setChartDatasets] = useState({});
@@ -139,27 +139,23 @@ export default function LineChart({ playlist,playlistTracks }) {
 
   useEffect(() => {
     //function is called on load and every thime playlistTracks is updated
-    if (playlistTracks === null || playlistTracks.length === 0) {
+    if (playlistEvolutionDataset === null) {
       return;
     } //wait for tracks to be fetched from parent function
     
-    let id = playlist.id;
+    if (Object.keys(playlistEvolutionDataset) === 0){//no data
+      setChartDatasets(null)
+      return
+    } 
+    if ((Object.keys(playlistEvolutionDataset[Object.keys(playlistEvolutionDataset)[0]])).length <= 1){//check if there is at least 2 time ranges to display data
+      setChartDatasets(null)
+      return
+    }
+  
+    setChartDatasets(createDataSets(playlistEvolutionDataset));
 
-    const promise = getPlaylistTopArtistsOverTime(id);
-    promise.then(function (response) {
-      console.log(response)
-      if (Object.keys(response) === 0){//no data
-        setChartDatasets(null)
-        return
-      } 
-      if ((Object.keys(response[Object.keys(response)[0]])).length <= 1){//check if there is at least 2 time ranges to display data
-        setChartDatasets(null)
-        return
-      }
-      setChartDatasets(createDataSets(response));
-    });
     // eslint-disable-next-line
-  }, [playlistTracks]);
+  }, [playlistEvolutionDataset]);
 
   if (chartDatasets === null){
     return (

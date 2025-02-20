@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getPlaylist, getPlaylistTracks, getArtists } from "../apiCalls";
+import { getPlaylist, getPlaylistTracks, getArtists, getPlaylistTopArtistsOverTime } from "../apiCalls";
 import GenreChart from "./GenreChart";
 import "./styles/PlaylistAnalysis.css";
 import PlaylistSummary from "./PlaylistSummaryCard";
@@ -112,30 +112,39 @@ function getPlaylistAlbums(playlistTracks) {
   return sortProperties(playlistAlbums);
 }
 
-export default function PlaylistAnalysis(props) {
+export default function PlaylistAnalysis({token, statePlaylistData, updateStatePlaylistDataFunc}) {
   const [playlist, setPlaylist] = useState(null);
   const [playlistTracks, setPlaylistTracks] = useState(null);
   const [topArtistsInPlaylist, setTopArtistsInPlaylist] = useState(null); //{index: [artist, {id , href, imageURL, totalOccurences}]}
-  const [topGenresInPlaylists, setTopGenresInPlaylists] = useState(null);
+  const [topGenresInPlaylist, setTopGenresInPlaylist] = useState(null);
   const [topAlbumsInPlaylist, setTopAlbumsInPlaylist] = useState(null);
   const [averagePopularity, setAveragePopularity] = useState(null);
+  const [playlistEvolutionDataset, setPlaylistEvolutionDataset] = useState(null);
   const [noData, setNoData] = useState(false);
 
   const { playlistID } = useParams(); //gets playlistID passed from router and in URL
 
 
   useEffect(() => {
-    if (playlist != null) {
-      return;
+    if (playlist != null) {return;}
+
+    if (statePlaylistData.hasOwnProperty(playlistID)){//if playlist is already stored in state
+      setPlaylist(statePlaylistData[playlistID].playlist)
+      setPlaylistTracks(statePlaylistData[playlistID].playlistTracks)
+      setTopArtistsInPlaylist(statePlaylistData[playlistID].topArtists)
+      setTopAlbumsInPlaylist(statePlaylistData[playlistID].topAlbums)
+      setTopGenresInPlaylist(statePlaylistData[playlistID].topGenres)
+      setAveragePopularity(statePlaylistData[playlistID].averagePopularity)
+      setPlaylistEvolutionDataset(statePlaylistData[playlistID].playlistEvolution)
+      return
     }
     onGetPlaylist(playlistID);
-
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     //runs when playlist is recieved
-    if (playlist === null) {
+    if (playlist === null || statePlaylistData.hasOwnProperty(playlistID)) {
       return;
     }
     if (playlist.total_tracks === 0){
@@ -150,7 +159,7 @@ export default function PlaylistAnalysis(props) {
 
   useEffect(() => {
     //runs when all playlist tracks have been recieved
-    if (playlistTracks === null) {
+    if (playlistTracks === null || statePlaylistData.hasOwnProperty(playlistID)) {
       return;
     }
     let getPlaylistArtistsResult = getPlaylistArtists(playlistTracks);
@@ -164,8 +173,38 @@ export default function PlaylistAnalysis(props) {
     onGetArtists(getPlaylistArtistsResult);
     setTopAlbumsInPlaylist(getPlaylistAlbums(playlistTracks)); //set top albums
     setAveragePopularity(calculateAveragePopularity(playlistTracks)); //set average popularity
+    onGetPlaylistEvolution()
     // eslint-disable-next-line
   }, [playlistTracks]);
+
+  useEffect(() => {//pass playlist data up to parent function to store in state
+    if (topGenresInPlaylist === null || topArtistsInPlaylist === null || playlistEvolutionDataset === null || statePlaylistData.hasOwnProperty(playlistID)){
+      return
+    }
+    
+    let playlistDataObj = {
+      playlist: playlist,
+      playlistTracks: playlistTracks,
+      topArtists: topArtistsInPlaylist,
+      topGenres: topGenresInPlaylist,
+      topAlbums: topAlbumsInPlaylist,
+      playlistEvolution: playlistEvolutionDataset,
+      averagePopularity: averagePopularity
+    }
+
+    let updatedStatePlaylistData = {...statePlaylistData}
+    updatedStatePlaylistData[playlistID] = playlistDataObj
+   
+    updateStatePlaylistDataFunc(updatedStatePlaylistData)
+    // eslint-disable-next-line
+  }, [topArtistsInPlaylist, topGenresInPlaylist, playlistEvolutionDataset])//update parent state when evolution is recieved as it is the last endpoint to fetch
+
+  function onGetPlaylistEvolution() {
+    const promise = getPlaylistTopArtistsOverTime(playlist.id);
+    promise.then(function (response) {
+      setPlaylistEvolutionDataset(response)
+    });
+  }
 
   function onGetArtists(playlistArtists) {//gets artist genre and image
     const capitalizeFirstLetter = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : str;
@@ -177,7 +216,7 @@ export default function PlaylistAnalysis(props) {
 
     let playlistGenres = {};
 
-    const promise = getArtists(props.token, JSON.stringify(ids));
+    const promise = getArtists(token, JSON.stringify(ids));
     promise.then(function (artistsObj) {//artistsObj contains object of artist names mapped to genres and imageURLs
       Object.entries(playlistArtists).forEach(([artistName, artistProperties]) => {
         //iterate through playlistArtists and add nesscary data by indexing artistsObj
@@ -200,14 +239,14 @@ export default function PlaylistAnalysis(props) {
       });
 
       //update state
-      setTopGenresInPlaylists(sortProperties(playlistGenres))
+      setTopGenresInPlaylist(sortProperties(playlistGenres))
       setTopArtistsInPlaylist(sortProperties(playlistArtists))
     });
   
   }
 
   function onGetPlaylistTracks() {
-    const promise = getPlaylistTracks(props.token, playlist.id);
+    const promise = getPlaylistTracks(token, playlist.id);
     promise.then(function (tracksObject) {
       setPlaylistTracks(tracksObject);
     });
@@ -216,7 +255,7 @@ export default function PlaylistAnalysis(props) {
   function onGetPlaylist(playlistID) {
     //get playlist object and update state
     var promise;
-    promise = getPlaylist(props.token, playlistID); //users liked songs endpoint
+    promise = getPlaylist(token, playlistID); //users liked songs endpoint
 
     promise.then(function (playlistObj) {
       setPlaylist(playlistObj);
@@ -230,7 +269,7 @@ export default function PlaylistAnalysis(props) {
           playlist={playlist}
           topArtists={topArtistsInPlaylist}
           topAlbums={topAlbumsInPlaylist}
-          topGenres={topGenresInPlaylists}
+          topGenres={topGenresInPlaylist}
           averagePopularity={averagePopularity}
           noData={noData}
         />
@@ -244,13 +283,13 @@ export default function PlaylistAnalysis(props) {
         playlist={playlist}
         topArtists={topArtistsInPlaylist}
         topAlbums={topAlbumsInPlaylist}
-        topGenres={topGenresInPlaylists}
+        topGenres={topGenresInPlaylist}
         averagePopularity={averagePopularity}
         noData={noData}
       />
-      <LineChart playlist={playlist} playlistTracks={playlistTracks} />
+      <LineChart playlist={playlist} playlistTracks={playlistTracks} playlistEvolutionDataset={playlistEvolutionDataset} setPlaylistEvolutionDataset={setPlaylistEvolutionDataset} />
       <TopArtistsAlbums topArtists={topArtistsInPlaylist} topAlbums={topAlbumsInPlaylist}/>
-      <GenreChart topGenres={topGenresInPlaylists} />
+      <GenreChart topGenres={topGenresInPlaylist} />
     </div>
   );
 }

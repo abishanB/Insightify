@@ -31,6 +31,7 @@ export default class App extends Component{
         long_term: {items:[], next: `https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=${topItemsLimit}`},
       },
       userPlaylists: [],
+      playlistData: {},
       isLoggedIn:false
     }
   }
@@ -87,6 +88,7 @@ export default class App extends Component{
   updateTopTracks = (topTracksObj) => {this.setState({top_tracks:topTracksObj})}
   updateTopArtists = (topArtistsObj) => {this.setState({top_artists:topArtistsObj})}
   updateUserPlaylists =(userPlaylistsObj) => {this.setState({userPlaylists:userPlaylistsObj})}
+  updatePlaylistData = (playlistDataObj) => {this.setState({playlistData:playlistDataObj})}
 
   onGetRefreshToken = (refresh_token) => {//call api function to get refresh token and update state
     var that = this;
@@ -150,7 +152,7 @@ export default class App extends Component{
           <Route path='tracks' element={<TopItems token={this.state.token} key="tracks" type="tracks" storedTopItems={this.state.top_tracks} updateTopItemsFunc={this.updateTopTracks}/>} />
           <Route path='artists' element={<TopItems token={this.state.token} key="artists" type="artists" storedTopItems={this.state.top_artists} updateTopItemsFunc={this.updateTopArtists}/>}/>
           <Route path='playlists' element={<DisplayPlaylists token={this.state.token} storedUserPlaylists={this.state.userPlaylists} updateUserPlaylistsFunc={this.updateUserPlaylists}/>}/>
-          <Route exact path="/playlists/:playlistID" element={<PlaylistAnalysis token={this.state.token}/>} />
+          <Route exact path="/playlists/:playlistID" element={<PlaylistAnalysis token={this.state.token} statePlaylistData={this.state.playlistData} updateStatePlaylistDataFunc={this.updatePlaylistData} />} />
           <Route path='privacy' element={<PrivacyPolicy />} />
         </Routes>
       </ErrorBoundary>

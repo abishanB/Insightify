@@ -6,10 +6,7 @@ function renderArtists(aritsts) {
     <div key={artistIndex} className="playlist-top-items-listing">
       <table>
         <colgroup>
-          <col width="32px" /> {/* rank */}
-          <col width="55px" /> {/* image */}
-          <col width="340px" /> {/* name */}
-          <col width="200px" /> {/* # of songs */}
+          <col width="32px"/><col width="55px"/><col width="340px"/><col width="200px"/> 
         </colgroup>
 
         <tbody>
@@ -43,12 +40,7 @@ function renderAlbums(albums) {
     <div key={albumIndex} className="playlist-top-items-listing">
       <table>
         <colgroup>
-          <col width="32px" />
-          {/* rank */}
-          <col width="55px" />
-          {/* image */}
-          <col width="405px" /> {/* name */}
-          <col width="135px" /> {/* # of songs */}
+          <col width="32px" /><col width="55px" /><col width="405px" /><col width="135px" /> 
         </colgroup>
 
         <tbody>
@@ -78,7 +70,7 @@ function renderAlbums(albums) {
 }
 
 export default function TopArtistsAlbums({topArtists, topAlbums}) {
-  if (topArtists === null || topAlbums === null) {return <LoadingIcon />}
+  if (topArtists === null || topAlbums === null) {return <LoadingIcon/>}
   
   const numOfTopItems = 25; //max amount of top artists and albums to display
   const slicedTopArtists = Object.fromEntries(

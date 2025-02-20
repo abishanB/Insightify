@@ -27,7 +27,7 @@ public class ArtistService {
   private ArtistRepository artistRepository;
 
   private final int artistDatabaseThresholdTime = 90;// days
-  private final int artistPopularityThreshold = 30;// only save artists above this threshold
+  private final int artistPopularityThreshold = 0;// only save artists above this threshold, 0-100
 
   private final HttpClient client = HttpClient.newHttpClient();
   private final String SPOTIFY_API_ARTISTS_URL = "https://api.spotify.com/v1/artists?ids=";
