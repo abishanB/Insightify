@@ -249,13 +249,8 @@ export default function PlaylistAnalysis(props) {
         noData={noData}
       />
       <LineChart playlist={playlist} playlistTracks={playlistTracks} />
-      <TopArtistsAlbums
-        topArtists={topArtistsInPlaylist}
-        topAlbums={topAlbumsInPlaylist}
-      />
-      
+      <TopArtistsAlbums topArtists={topArtistsInPlaylist} topAlbums={topAlbumsInPlaylist}/>
       <GenreChart topGenres={topGenresInPlaylists} />
-      <div style={{ height: 20 }}></div>
     </div>
   );
 }

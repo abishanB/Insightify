@@ -107,7 +107,6 @@ export default function TopItems({ type, token, storedTopItems, updateTopItemsFu
         <RenderArtists artists={items[currentTab].items} />
       )}
       {moreItemsAvailableBtn()}
-      <div style={{ height: 20 }}></div>
     </div>
   );
 }

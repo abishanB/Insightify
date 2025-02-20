@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export default function PrivacyPolicy(){
-
   const location = useLocation();
 
   useEffect(() => {

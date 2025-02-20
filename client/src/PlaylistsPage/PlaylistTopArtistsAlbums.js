@@ -18,20 +18,15 @@ function renderArtists(aritsts) {
               {parseInt(artistIndex) + 1}
             </td>
             <td className="playlist-top-items-image">
-              <a
-                href={artist[1].href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src={artist[1].imageURL}
-                  className="playlist-artist-cover"
-                  alt="artistImg"
-                  loading="eager"
-                />
+              <a href={artist[1].href} target="_blank" rel="noopener noreferrer">
+                <img src={artist[1].imageURL} className="playlist-artist-cover" alt="artistImg" loading="eager"/>
               </a>
             </td>
-            <td>{artist[0]}</td>
+            <td>
+              <a href={artist[1].href} target="_blank" rel="noopener noreferrer">
+                {artist[0]} {/* artist name */}
+              </a>
+            </td>
             <td className="item-occurences">
               {artist[1].totalOccurences} Songs
             </td>
@@ -66,7 +61,11 @@ function renderAlbums(albums) {
                 <img src={album[1].imageURL} alt="artistImg" loading="eager" />
               </a>
             </td>
-            <td>{album[0]}</td>
+            <td>
+              <a href={album[1].href} target="_blank" rel="noopener noreferrer">
+                {album[0]} {/* name */}
+              </a>
+              </td>
             <td className="item-occurences">
               {album[1].totalOccurences} Songs
             </td>
@@ -81,7 +80,7 @@ function renderAlbums(albums) {
 export default function TopArtistsAlbums({topArtists, topAlbums}) {
   if (topArtists === null || topAlbums === null) {return <LoadingIcon />}
   
-  const numOfTopItems = 20; //max amount of top artists and albums to display
+  const numOfTopItems = 25; //max amount of top artists and albums to display
   const slicedTopArtists = Object.fromEntries(
     Object.entries(topArtists).slice(0, numOfTopItems)
   );

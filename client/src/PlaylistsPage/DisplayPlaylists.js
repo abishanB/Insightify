@@ -96,7 +96,7 @@ export default function DisplayPlaylists({token, storedUserPlaylists, updateUser
       <div className="playlist-container">
         {renderPlaylists(playlists)}
       </div>
-      <div  style={{height: 20}}></div>
+   
     </React.Fragment>
   )
 }
