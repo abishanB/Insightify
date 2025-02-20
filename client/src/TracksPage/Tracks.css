@@ -9,6 +9,10 @@
     margin-right: auto;
 }
 
+.track {
+    cursor: pointer;
+}
+
 .track-name, .track-artist-name, .track-album {/* text overflow on everything */
     max-width: 0;
     overflow: hidden;

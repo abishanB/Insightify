@@ -7,6 +7,8 @@ import TopItems from "./components/TopItems.js";
 import PlaylistAnalysis from "./PlaylistsPage/PlaylistAnalysis.js";
 import DisplayPlaylists from "./PlaylistsPage/DisplayPlaylists.js";
 import NavigationBar from "./components/NavigationBar.js";
+import Footer from "./Footer/Footer.js"
+import PrivacyPolicy from "./Footer/PrivacyPolicy.js";
 import { ErrorBoundary } from './ErrorBoundary';
 
 export default class App extends Component{
@@ -137,6 +139,7 @@ export default class App extends Component{
       )
     }
     return (
+    <React.Fragment>
     <div className="App">
       <NavigationBar isLoggedIn={this.state.isLoggedIn} onLogout={this.logout}/>
       <ErrorBoundary>
@@ -148,9 +151,13 @@ export default class App extends Component{
           <Route path='artists' element={<TopItems token={this.state.token} key="artists" type="artists" storedTopItems={this.state.top_artists} updateTopItemsFunc={this.updateTopArtists}/>}/>
           <Route path='playlists' element={<DisplayPlaylists token={this.state.token} storedUserPlaylists={this.state.userPlaylists} updateUserPlaylistsFunc={this.updateUserPlaylists}/>}/>
           <Route exact path="/playlists/:playlistID" element={<PlaylistAnalysis token={this.state.token}/>} />
+          <Route path='privacy' element={<PrivacyPolicy />} />
         </Routes>
       </ErrorBoundary>
+      
     </div>
+    <Footer></Footer>
+    </React.Fragment>
       )
     }
 }

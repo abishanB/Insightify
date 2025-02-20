@@ -11,8 +11,9 @@ export default function NavigationBar(props) {
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "code"
   var href = window.location.href
-  if (href.includes("localhost")){var REDIRECT_URI = "http://localhost:3000"}
-  if (href.includes("10.0.0.7")){var REDIRECT_URI = "http://10.0.0.7:3000"}
+  var REDIRECT_URI;
+  if (href.includes("localhost")){REDIRECT_URI = "http://localhost:3000"}
+  if (href.includes("10.0.0.7")){REDIRECT_URI = "http://10.0.0.7:3000"}
   const spotifyLogin = `${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${APP_SCOPE}&show_dialog=true`
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

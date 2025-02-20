@@ -16,6 +16,7 @@
 	--whiteColor: #F2F4F7;
 	--grayColor: #b3b7bd;
 	--blueColor: #279AF1;
+
 }
 
 /* scrollbar styling */
@@ -71,7 +72,9 @@ h1{
 .empty-top-items-msg {
 	text-align: center;
 }
-
+.App{
+	min-height: 100vh;
+}
 html,
 body {
 	height: 100%; width: 100%;	
@@ -80,7 +83,8 @@ body {
 	background-color: var(--page-background-color);
 }
 a {
-    text-decoration: none;
+	text-decoration: none;
+	color: inherit;
 }
 
 @media (max-width: 800px) { 

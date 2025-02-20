@@ -3,12 +3,20 @@
   --image_size: calc(calc(var(--home-card-height)) - calc(1vw));
   --card-margin-top: 3vh;
   --border-radius: 10px;
-  width: 55%;
+  width: 55vw;
   min-width: 500px;
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
   margin-top: var(--card-margin-top);
+}
+
+.page-card-container{
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 body:has(.view-top-items:nth-child(2):hover) .top-item-img:nth-child(1), body:has(.top-item-img:nth-child(1):hover) .view-top-items:nth-child(2), /* top track card */

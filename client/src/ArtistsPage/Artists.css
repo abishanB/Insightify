@@ -43,6 +43,8 @@
     text-overflow: ellipsis; /* Adds ellipsis if text overflows */
 }
 
+
+
 .artist-table-listing{
     justify-content: center;
     align-items: center;

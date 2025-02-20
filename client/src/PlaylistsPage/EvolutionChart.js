@@ -148,7 +148,8 @@ export default function LineChart({ playlistTracks, token }) {
       JSON.stringify(playlistTracks)
     );
     promise.then(function (response) {
-      if (Object.keys(response) == 0){//no data
+      console.log(response)
+      if (Object.keys(response) === 0){//no data
         setChartDatasets(null)
         return
       } 
@@ -161,8 +162,6 @@ export default function LineChart({ playlistTracks, token }) {
     // eslint-disable-next-line
   }, [playlistTracks]);
 
-  
-
   if (chartDatasets === null){
     return (
       <div id="line-chart-card" className="playlist-card">
@@ -173,7 +172,7 @@ export default function LineChart({ playlistTracks, token }) {
       <button className="deselect-all-btn" onClick={handleHideAllLines}>
         Deselect All
       </button>
-      <h2>No Data</h2>
+      <h2>Not Enough Data</h2>
     </div>
     )
   }
