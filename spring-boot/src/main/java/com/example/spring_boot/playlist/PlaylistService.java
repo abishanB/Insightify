@@ -78,7 +78,7 @@ public class PlaylistService {
     String playlistHref = "https://open.spotify.com/collection/tracks";
     String image_url = "https://misc.scdn.co/liked-songs/liked-songs-300.jpg";
     String owner_name = ownerProfile.get("display_name").getAsString();
-    String owner_url = "https://open.spotify.com/collection/tracks";
+    String owner_url = ownerProfile.get("external_urls").getAsJsonObject().get("spotify").getAsString();
     String snapshot_id = null;
     int followers = 0;
     int total_tracks = likedSongsPlaylist.get("total").getAsInt();
@@ -165,7 +165,6 @@ public class PlaylistService {
     }
     playlistRepository.save(likedSongs);
     return gson.toJson(likedSongs);
-
   }
 
   public String getPlaylist(String access_token, String playlistID) {

@@ -114,7 +114,7 @@ function createDataSets(topArtistsOverTime) {
   return data;
 }
 
-export default function LineChart({ playlistTracks, token }) {
+export default function LineChart({ playlist,playlistTracks }) {
 
   const chartRef = useRef(null);
   const [chartDatasets, setChartDatasets] = useState({});
@@ -142,11 +142,10 @@ export default function LineChart({ playlistTracks, token }) {
     if (playlistTracks === null || playlistTracks.length === 0) {
       return;
     } //wait for tracks to be fetched from parent function
+    
+    let id = playlist.id;
 
-    const promise = getPlaylistTopArtistsOverTime(
-      token,
-      JSON.stringify(playlistTracks)
-    );
+    const promise = getPlaylistTopArtistsOverTime(id);
     promise.then(function (response) {
       console.log(response)
       if (Object.keys(response) === 0){//no data

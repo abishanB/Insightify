@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
@@ -48,10 +46,10 @@ public class PlaylistController {
     }
     
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("top_artists")
-    public String getPlaylistEvolution(@RequestBody String playlistTracks) {
+    @GetMapping("evolution")
+    public String getPlaylistEvolution(@RequestParam String playlistID) {
         System.out.println("getPlaylistTopAritstOverTime endpoint hit");
-        return evolutionService.getPlaylistEvolution(playlistTracks);
+        return evolutionService.getPlaylistEvolution(playlistID);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")//testing purposes

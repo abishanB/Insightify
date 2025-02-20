@@ -248,7 +248,7 @@ export default function PlaylistAnalysis(props) {
         averagePopularity={averagePopularity}
         noData={noData}
       />
-      <LineChart playlistTracks={playlistTracks} token={props.token} />
+      <LineChart playlist={playlist} playlistTracks={playlistTracks} />
       <TopArtistsAlbums
         topArtists={topArtistsInPlaylist}
         topAlbums={topAlbumsInPlaylist}

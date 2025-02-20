@@ -131,13 +131,13 @@ export async function getArtists(token, playlistIDsJSON) {
   return checkResponse(await response)
 }
 
-export async function getPlaylistTopArtistsOverTime(access_token, playlistTracksJSON){//gets top artists from playlist
-  const response = await fetch(`http://localhost:8080/api/playlist/top_artists`, {
-    method:'POST',
-    headers: {
-      'Authorization': 'Bearer ' + access_token,
-    }, 
-    body: playlistTracksJSON
+export async function getPlaylistTopArtistsOverTime(playlistID){//gets top artists from playlist
+
+  const params = new URLSearchParams({
+    playlistID: playlistID,
+  });
+  const response = await fetch(`http://localhost:8080/api/playlist/evolution?${params.toString()}`, {
+    method:'GET'
   })
 
   return checkResponse(await response)

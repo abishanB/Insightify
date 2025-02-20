@@ -1,52 +1,41 @@
 package com.example.spring_boot.playlist.PlaylistEvolution;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
+import com.example.spring_boot.LocalDateTimeAdapter;
+import com.example.spring_boot.playlist.Track;
+import com.example.spring_boot.playlist.TrackRepository;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 //track top artists over playlist lifetime by using the added_at field for tracks
 @Service
 public class EvolutionService {
+  @Autowired
+  private TrackRepository trackRepository;
+
   DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
-  Gson gson = new Gson();
-
-  public JsonArray orderPlaylistsByDate(JsonArray jsonArray) {
-    // Convert JsonArray to a List for easier manipulation
-    List<JsonElement> elementList = new ArrayList<>();
-    for (JsonElement element : jsonArray) {
-      elementList.add(element);
-    }
-
-    // Sort the list based on the "added_at" date field
-    elementList.sort(Comparator.comparing(e -> {
-      JsonObject jsonObject = e.getAsJsonObject();
-      String dateString = jsonObject.get("added_at").getAsString();
-      return LocalDate.parse(dateString, formatter); // Parse the date to LocalDate for comparison
-    }));
-
-    // Convert the sorted list back into a JsonArray
-    JsonArray sortedJsonArray = new JsonArray();
-    for (JsonElement element : elementList) {
-      sortedJsonArray.add(element);
-    }
-
-    return sortedJsonArray;
-  }
+  private final Gson gson = new GsonBuilder()
+      .serializeNulls() // Serializes null fields as well
+      .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()) // Custom serializer for LocalDateTime
+      .excludeFieldsWithoutExposeAnnotation() // Only serialize fields annotated with @Expose
+      .create();
 
   public List<LocalDate> createEqualPeriods(LocalDate startDate, LocalDate endDate) {
     int numOfPeriods = 20;
@@ -136,7 +125,7 @@ public class EvolutionService {
     return count;
 }
 
-  public JsonObject countArtistsOverTime(Set<String> topArtists, JsonArray playlistTracks, List<LocalDate> periods) {
+  private JsonObject countArtistsOverTime(Set<String> topArtists, JsonArray playlistTracks, List<LocalDate> periods) {
     //maps artist to another object mapping dates and artist frequency at that date
     JsonObject topArtistsFrequency = new JsonObject();
 
@@ -152,20 +141,22 @@ public class EvolutionService {
     return topArtistsFrequency;
 }
 
-  public String getPlaylistEvolution(String tracks) {
+  public String getPlaylistEvolution(String playlistID) {
     final int numOfTopArtistsToTrack = 10;
-
-    JsonArray playlistTracks = JsonParser.parseString(tracks).getAsJsonArray();
+   
+    //get tracks ordered by last added
+    List<Track> tracks = trackRepository.findTracksByPlaylistIdOrdered(playlistID);
+    Collections.reverse(tracks);//order by first added
+    JsonArray playlistTracks = gson.toJsonTree(tracks).getAsJsonArray();
+    
     if (playlistTracks.size() == 0){return "Empty Playlist";}
     
-    playlistTracks = orderPlaylistsByDate(playlistTracks);
-
     LocalDate startDate = LocalDate.parse(playlistTracks.get(0).getAsJsonObject().get("added_at").getAsString(),
         formatter);
     LocalDate endDate = LocalDate
         .parse(playlistTracks.get(playlistTracks.size() - 1).getAsJsonObject().get("added_at").getAsString(),
             formatter);
-
+   
     List<LocalDate> periods = createEqualPeriods(startDate, endDate);
 
     Map<String, Integer> artistFrequency = countArtists(playlistTracks);
