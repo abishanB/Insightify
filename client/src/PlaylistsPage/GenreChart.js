@@ -47,7 +47,7 @@ function calculateGenreComposition(data) {
       genre.percentage += additionalPercentage;
     });
 
-    // Cap "Other" at the max allowed percentage
+    // Cap Other at the max allowed percentage
     topGenres.push({
       name: "Other",
       occurrences: Math.round(
@@ -56,7 +56,7 @@ function calculateGenreComposition(data) {
       percentage: MAX_OTHER_PERCENTAGE,
     });
   } else {
-    // Add "Other" directly if it doesn't exceed the limit
+    // Add Other directly if it doesn't exceed the limit
     topGenres.push({
       name: "Other",
       occurrences: otherOccurrences,

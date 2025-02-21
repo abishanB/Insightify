@@ -12,16 +12,44 @@ export default function PrivacyPolicy(){
   return (
     <div className="policy-container">
       <h4>Privacy Policy</h4>
-      <h6>Heading 1.</h6>
-      <p>   
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dapibus semper sapien vitae varius. Sed condimentum malesuada leo et elementum. Duis id ipsum odio.
-      </p>
       <p>
-      Quisque porttitor dignissim elementum. Curabitur sit amet dolor vel lectus gravida fringilla. Phasellus euismod blandit sapien, sed pharetra leo. Nunc efficitur eu sem et porttitor. Aliquam erat volutpat. Pellentesque ac fermentum mi. Sed ultricies nibh libero, in sollicitudin massa porta ac. Proin augue orci, volutpat convallis ultrices sed, porta vel felis.
+      This Privacy Policy describes how Insightify collects, uses and/or maintains certain information. By using Insightify, you agree to the terms set forth in this Privacy Policy.
       </p>
 
-      <h6>Heading 2.</h6>
-      <p> Quisque porttitor dignissim elementum. Curabitur sit amet dolor vel lectus gravida fringilla. Phasellus euismod blandit sapien, sed pharetra leo. Nunc efficitur eu sem et porttitor. Aliquam erat volutpat. Pellentesque ac fermentum mi. Sed ultricies nibh libero, in sollicitudin massa porta ac. Proin augue orci, volutpat convallis ultrices sed, porta vel felis.</p>
+      <h6>Data Collection </h6>
+      <p>   
+        We gather your information directly through the Spotify Web API. To provide our service, we access your top tracks, top artists, your user profile, and your saved playlists. 
+        <br></br><br></br>
+        Insightify does not use cookies, tracking technologies, or any third-party analytics tools to collect user data.
+        <br></br><br></br>
+        If you wish to revoke access to your Spotify account, please follow the process outlined here,&nbsp;
+        <a href="https://support.spotify.com/au/article/spotify-on-other-apps/" target="_blank" rel="noopener noreferrer">
+          https://support.spotify.com/
+        </a>
+      </p>
+
+      <h6>Data Storage</h6>
+      <p>
+        We may temporarily store your user ID and playlist information to optimize processing.
+        <br></br><br></br>
+        This data is stored in a database accessible only to Insightify and is automatically deleted after 7 days.
+      </p>
+
+      <h6>Data Sharing</h6>
+      <p>
+      We do not share, sell, or rent your personal data to any third parties.
+      <br></br><br></br>
+      We do not share your data for any marketing purposes or with any external organizations.
+      </p>
+
+      <h6>Contact</h6>
+      <p>
+      If you have any questions about this Privacy Policy you can contact us at&nbsp;
+      <a href="mailto:insightifyhq@gmail.com" target="_blank" rel="noopener noreferrer">
+        insightifyhq@gmail.com
+      </a>
+      </p>
+
     </div>
   )
 }

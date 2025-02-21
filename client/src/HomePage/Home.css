@@ -155,7 +155,14 @@ background-color: #262d3f;
   align-items: center;
 }
 
-@media (max-width: 750px) { 
+@media (max-width: 1100px) { 
+  .home-cards{
+    --home-card-height: 18vw;
+    min-width: 70vw;
+  }
+}
+
+@media (max-width: 850px) { 
   .home-cards{
     --home-card-height: 22vw;
     min-width: 80vw;
@@ -173,6 +180,10 @@ background-color: #262d3f;
 }
 
 @media (max-width: 500px) { 
+  .home-cards{
+    width: 85vw;
+    --home-card-height: 25vw;
+  }
   .top-item-img:nth-child(1) img{
     /* top track*/
     border-radius: 2px;

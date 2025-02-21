@@ -114,7 +114,7 @@ function createDataSets(topArtistsOverTime) {
   return data;
 }
 
-export default function LineChart({ playlist,playlistTracks, playlistEvolutionDataset}) {
+export default function LineChart({playlistEvolutionDataset}) {
 
   const chartRef = useRef(null);
   const [chartDatasets, setChartDatasets] = useState({});
@@ -157,7 +157,7 @@ export default function LineChart({ playlist,playlistTracks, playlistEvolutionDa
     // eslint-disable-next-line
   }, [playlistEvolutionDataset]);
 
-  if (chartDatasets === null){
+  if (chartDatasets === null){//null indicates there is not enough data to create a line chart
     return (
       <div id="line-chart-card" className="playlist-card">
       <div className="card-title">
@@ -172,7 +172,7 @@ export default function LineChart({ playlist,playlistTracks, playlistEvolutionDa
     )
   }
 
-  if (Object.keys(chartDatasets).length === 0 || playlistTracks === null) { return <LoadingIcon />}
+  if (Object.keys(chartDatasets).length === 0) { return <LoadingIcon />}
 
   return (
     <div id="line-chart-card" className="playlist-card">

@@ -144,9 +144,7 @@ export default function PlaylistAnalysis({token, statePlaylistData, updateStateP
 
   useEffect(() => {
     //runs when playlist is recieved
-    if (playlist === null || statePlaylistData.hasOwnProperty(playlistID)) {
-      return;
-    }
+    if (playlist === null || statePlaylistData.hasOwnProperty(playlistID)) {return}
     if (playlist.total_tracks === 0){
       //if playlist is empty or only contains local songs
       setNoData(true);
@@ -192,10 +190,10 @@ export default function PlaylistAnalysis({token, statePlaylistData, updateStateP
       averagePopularity: averagePopularity
     }
 
-    let updatedStatePlaylistData = {...statePlaylistData}
-    updatedStatePlaylistData[playlistID] = playlistDataObj
-   
+    let updatedStatePlaylistData = {...statePlaylistData}//copy all playlists already in state
+    updatedStatePlaylistData[playlistID] = playlistDataObj//add new playlist
     updateStatePlaylistDataFunc(updatedStatePlaylistData)
+
     // eslint-disable-next-line
   }, [topArtistsInPlaylist, topGenresInPlaylist, playlistEvolutionDataset])//update parent state when evolution is recieved as it is the last endpoint to fetch
 
@@ -287,7 +285,7 @@ export default function PlaylistAnalysis({token, statePlaylistData, updateStateP
         averagePopularity={averagePopularity}
         noData={noData}
       />
-      <LineChart playlist={playlist} playlistTracks={playlistTracks} playlistEvolutionDataset={playlistEvolutionDataset} setPlaylistEvolutionDataset={setPlaylistEvolutionDataset} />
+      <LineChart playlistEvolutionDataset={playlistEvolutionDataset} />
       <TopArtistsAlbums topArtists={topArtistsInPlaylist} topAlbums={topAlbumsInPlaylist}/>
       <GenreChart topGenres={topGenresInPlaylist} />
     </div>

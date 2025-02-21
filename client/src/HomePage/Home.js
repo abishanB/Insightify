@@ -4,7 +4,6 @@ import { getEndpointResult } from '../apiCalls';
 import LoadingIcon from '../components/LoadingIcon';
 import { Link } from 'react-router-dom';
 import spotifyLogo from "../Spotify_Primary_Logo_RGB_White.png"
-import Footer from "../Footer/Footer.js"
 
 //Links to tracks, artists, and playlists page
 //Displays top track's artist image and top artist image

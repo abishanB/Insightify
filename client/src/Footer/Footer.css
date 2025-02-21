@@ -4,10 +4,9 @@ footer {
   justify-content: space-between;
   margin-top: 32px;
   border-top: 0.5px solid rgba(120, 120, 120,0.8);
-  font-size: 12.5px;
+  font-size: 0.75rem;
   padding: 6px 0 30px 40px;
   height: fit-content;
-  
 }
 footer a:hover {
   color: lightblue;
@@ -30,15 +29,54 @@ footer p{
 
 .policy-container h4{
   margin: 20px 0;
-  font-size: 28px;
+  font-size: 2rem;
 }
 
 .policy-container h6{
   margin: 16px 0;
-  font-size: 20px;
+  font-size: 1.4rem;
 }
 
 .policy-container p{
   padding: 0;
   margin: 6px 0;
+}
+.policy-container a{
+  cursor: pointer;
+  text-decoration: underline;
+}
+.policy-container a:hover{
+  color: #469edd;
+}
+
+@media (max-width: 900px) { 
+  footer {
+    font-size: 0.6rem;
+  }
+  .policy-container h4{
+    font-size: 1.8rem;
+  };
+  .policy-container h6 {
+    font-size: 1.2rem;
+  }
+}
+
+
+@media (max-width: 650px) { 
+  footer {
+    font-size: 0.55rem;
+    padding: 4px 0 10px 8px;
+  }
+  .footer-right{
+    padding-right: 8px;
+  }
+  .policy-container h4{
+    font-size: 1.5rem;
+  };
+  .policy-container h6 {
+    font-size: 1rem;
+  }
+  .policy-container p {
+    font-size: 0.8rem;
+  }
 }
