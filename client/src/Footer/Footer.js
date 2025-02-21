@@ -6,7 +6,7 @@ export default function NavigationBar() {
   return (
     <footer>
       <div>
-        <p>© 2025 - Insightify</p>
+        <p>© 2025 Insightify</p>
         <p>All images are copyrighted by their respective copyright owners.</p>
         <p>
           We are not related to Spotify AB or any of it's partners in any way.

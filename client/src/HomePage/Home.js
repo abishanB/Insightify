@@ -16,15 +16,16 @@ function getSpotifyLoginURL(redirect_uri){//return spotify login url with correc
 }
 //`${AUTH_ENDPOINT}?client_id=${clientID}&redirect_uri=${REDIRCT_URI2}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
 export default function Home({token , topTracksObj, updateTopTracksFunc, topArtistsObj, updateTopArtistsFunc, isLoggedIn}) {
-  const [topTrackImg, setTopTrackImg] = useState(spotifyLogo)
-  const [topArtistImg, setTopArtistImg] = useState(spotifyLogo)
-
+  const [topTrackImg, setTopTrackImg] = useState(null)
+  const [topArtistImg, setTopArtistImg] = useState(null)
   var href = window.location.href
   var URI;
   if (href.includes("localhost")){URI = "http://localhost:3000"}
   if (href.includes("10.0.0.7")){URI = "http://10.0.0.7:3000"}
   useEffect(() => {//on component load, fetches top items if nessecary
     if (isLoggedIn === false){
+      setTopArtistImg(spotifyLogo)
+      setTopTrackImg(spotifyLogo)
       return
     }
     //top tracks / artists are empty
@@ -74,7 +75,7 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
     });
   }
 
-  if ((topTrackImg==null || topArtistImg==null) && isLoggedIn===true) return <LoadingIcon/>
+  if (topTrackImg==null || topArtistImg==null) return <LoadingIcon/>
   return (
     <React.Fragment>
     {!isLoggedIn 

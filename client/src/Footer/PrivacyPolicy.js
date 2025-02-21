@@ -30,7 +30,7 @@ export default function PrivacyPolicy(){
 
       <h6>Data Storage</h6>
       <p>
-        We may temporarily store your user ID and playlist information to optimize processing.
+        We may temporarily store your user ID and playlist information to efficent processing.
         <br></br><br></br>
         This data is stored in a database accessible only to Insightify and is automatically deleted after 7 days.
       </p>
