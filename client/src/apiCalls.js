@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 const clientID = process.env.REACT_APP_CLIENT_ID
 const clientSecret = process.env.REACT_APP_CLIENT_SECRET
+const SERVER_URL = process.env.REACT_APP_SERVER_URL
 
 function checkResponse(response){
   if (!response.ok) {
@@ -97,8 +98,8 @@ export async function getPlaylist(token, playlistID) {
     access_token: token,
     playlistID: playlistID,
   });
-  
-  const response = await fetch(`http://localhost:8080/api/playlist?${params.toString()}`, {
+  console.log(`${SERVER_URL}/api/playlist?${params.toString()}`)
+  const response = await fetch(`${SERVER_URL}/api/playlist?${params.toString()}`, {
     method:'GET',
   });
   
@@ -111,7 +112,7 @@ export async function getPlaylistTracks(token, playlistID) {
     playlistID: playlistID,
   });
   
-  const response = await fetch(`http://localhost:8080/api/playlist/tracks?${params.toString()}`, {
+  const response = await fetch(`${SERVER_URL}/api/playlist/tracks?${params.toString()}`, {
     method:'GET',
   });
   
@@ -123,7 +124,7 @@ export async function getArtists(token, playlistIDsJSON) {
     access_token: token,
   });
   
-  const response = await fetch(`http://localhost:8080/api/artists?${params.toString()}`, {
+  const response = await fetch(`${SERVER_URL}/api/artists?${params.toString()}`, {
     method:'POST',
     body: playlistIDsJSON
   });
@@ -136,7 +137,7 @@ export async function getPlaylistTopArtistsOverTime(playlistID){//gets top artis
   const params = new URLSearchParams({
     playlistID: playlistID,
   });
-  const response = await fetch(`http://localhost:8080/api/playlist/evolution?${params.toString()}`, {
+  const response = await fetch(`${SERVER_URL}/api/playlist/evolution?${params.toString()}`, {
     method:'GET'
   })
 
