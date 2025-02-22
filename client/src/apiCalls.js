@@ -98,7 +98,6 @@ export async function getPlaylist(token, playlistID) {
     access_token: token,
     playlistID: playlistID,
   });
-  console.log(`${SERVER_URL}/api/playlist?${params.toString()}`)
   const response = await fetch(`${SERVER_URL}/api/playlist?${params.toString()}`, {
     method:'GET',
   });

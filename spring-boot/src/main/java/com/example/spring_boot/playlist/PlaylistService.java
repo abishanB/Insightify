@@ -181,12 +181,12 @@ public class PlaylistService {
     Playlist playlist = createPlaylistResponse(playlistAsStr, playlistID);
     if (isPlaylistUpToDate(playlistRepository.findSnapshotById(playlistID), playlist.getSnapshot_id())) {
       // set tracks to the one in already stored in database
-      System.out.println("------\nSAME SNAPSHOT\n------");
+      System.out.println("-------------\nSAME SNAPSHOT\n-------------");
       playlist.setTracks(playlistRepository.getTracksById(playlistID));
     } else {
       // if not up to date dont set tracks and tracks will be empty
       // tracks will be fetched again in TracksService
-      System.out.println("------\nNEW SNAPSHOT\n------");
+      System.out.println("-------------\nNEW SNAPSHOT\n-------------");
       trackRepository.deleteAllTracksByPlaylistId(playlistID);// ensure all tracks are deleted from table
     }
 

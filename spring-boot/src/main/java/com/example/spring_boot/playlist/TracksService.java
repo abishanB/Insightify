@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 
 import com.example.spring_boot.LocalDateTimeAdapter;
 import com.google.gson.Gson;
@@ -161,14 +162,19 @@ public class TracksService {
     return tracks;
   }
 
-  public String getPlaylistTracks(String access_token, String playlistID) {// function that controller calss
+  public String getPlaylistTracks(String access_token, String playlistID) {
+    StopWatch stopWatch = new StopWatch();
     Playlist playlist = new Playlist();
+    stopWatch.start("Fetch Playlist From Database");
     playlist = getPlaylistById(playlistID);
-  
+    stopWatch.stop();
+
+    // Your function logic here
     if (playlist.getTracks().size() != 0) {// tracks are already stored no need to fetch again
+      System.out.println(stopWatch.prettyPrint());
       return gson.toJson(playlist.getTracks());
     }
-
+    stopWatch.start("Fetch Tracks From Spotify");
     JsonArray playlistTracks;
     try {
       if (playlist.getIsLikedSongs()) {
@@ -186,8 +192,13 @@ public class TracksService {
 
     List<Track> tracks = createTrackObjects(playlistTracks, playlist);
     playlist.setTracks(tracks);
+    stopWatch.stop();
 
+    stopWatch.start("Save tracks to database");
     playlistRepository.save(playlist);
+    stopWatch.stop();
+
+    System.out.println(stopWatch.prettyPrint());
     return gson.toJson(tracks);
   }
 }

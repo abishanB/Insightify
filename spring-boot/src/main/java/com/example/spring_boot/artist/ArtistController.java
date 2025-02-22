@@ -3,6 +3,7 @@ package com.example.spring_boot.artist;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +24,15 @@ public class ArtistController {
   @CrossOrigin(origins = "http://localhost:3000")
   @PostMapping()
   public String getPlaylistArtists(@RequestParam String access_token, @RequestBody String artistIDs) {
+    StopWatch stopWatch = new StopWatch();
+    stopWatch.start("Delete Old Artists");
     artistService.deleteArtistFromDatabase();//delete old artists every api call
-    return artistService.getArtists(access_token, artistIDs);
+    stopWatch.stop();
+    stopWatch.start("Get Artists");
+    String artists = artistService.getArtists(access_token, artistIDs);
+    stopWatch.stop();
+    System.out.println(stopWatch.prettyPrint());
+    return artists;
   }
 
   @DeleteMapping("delete")
