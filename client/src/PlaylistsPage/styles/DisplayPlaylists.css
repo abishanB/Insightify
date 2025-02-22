@@ -14,14 +14,14 @@
     width: var(--playlistImgSize);
     color:var(--page-text-color);
     text-align: center;
-    transition: 150ms ease-in-out;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: transform 0.35s ease; /* Smooth transition for scaling */
 }
 
 .playlist-item:hover{
-    background-color: beige;
+    transform: scale(1.06);
 }
 
 .playlist-cover {

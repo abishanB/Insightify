@@ -3,7 +3,7 @@ import LoadingIcon from "../components/LoadingIcon";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import { CategoryScale } from "chart.js";
-import "./styles/LineChart.css";
+import "./styles/EvolutionChart.css";
 
 Chart.register(CategoryScale);
 

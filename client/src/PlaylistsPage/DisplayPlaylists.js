@@ -18,7 +18,7 @@ function removeSpotifyPlaylists(playlistsObj){//removes spotify dj & spotify pla
   return playlistsObj
 }
 
-export function playlistCoverURL(playlist){//check if playlist cover is given and render cover
+function playlistCoverURL(playlist){//check if playlist cover is given and render cover
   const noCoverURL='https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999'
   if (playlist.images===null){//if playlist cover is not provided
     return noCoverURL

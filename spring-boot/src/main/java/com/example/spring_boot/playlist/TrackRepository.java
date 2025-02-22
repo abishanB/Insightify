@@ -17,7 +17,4 @@ public interface TrackRepository extends JpaRepository<Track, Long> {
   //return all tracks from playlist in order starting with last added
   @Query("SELECT t FROM Track t WHERE t.playlist.id = :playlistId ORDER BY t.added_at DESC")
   List<Track> findTracksByPlaylistIdOrdered(@Param("playlistId") String playlistId);
-
-
-
 }
