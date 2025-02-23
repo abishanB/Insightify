@@ -91,7 +91,8 @@ public class EvolutionService {
     return sortedMap;
   }
 
-  private Map<String, Integer> sliceArtistFrequency(Map<String, Integer> artistOccurences, int n) {//get only n top aritsts
+  private Map<String, Integer> sliceArtistFrequency(Map<String, Integer> artistOccurences, int n) {// get only n top
+                                                                                                   // aritsts
     // Convert the map entries to a list
     List<Map.Entry<String, Integer>> entryList = new ArrayList<>(artistOccurences.entrySet());
 
@@ -110,58 +111,60 @@ public class EvolutionService {
     int count = 0;
 
     for (JsonElement element : playlistTracks) {
-        JsonObject track = element.getAsJsonObject();
-        LocalDate addedAt = LocalDate.parse(track.get("added_at").getAsString(), formatter);
-       
-        if (!addedAt.isAfter(period)) {//using !isAfter includes today as opposed to isBefore
-            JsonArray artists = gson.fromJson(track.get("artists").getAsString(), JsonArray.class);
-            for (JsonElement artistElement : artists) {//iterate all artists on a track
-                String artistName = artistElement.getAsJsonObject().get("name").getAsString();
-                if (artistName.equals(artist)) {
-                    count++;
-                }
-            }
+      JsonObject track = element.getAsJsonObject();
+      LocalDate addedAt = LocalDate.parse(track.get("added_at").getAsString(), formatter);
+
+      if (!addedAt.isAfter(period)) {// using !isAfter includes today as opposed to isBefore
+        JsonArray artists = gson.fromJson(track.get("artists").getAsString(), JsonArray.class);
+        for (JsonElement artistElement : artists) {// iterate all artists on a track
+          String artistName = artistElement.getAsJsonObject().get("name").getAsString();
+          if (artistName.equals(artist)) {
+            count++;
+          }
         }
+      }
     }
     return count;
-}
+  }
 
   private JsonObject countArtistsOverTime(Set<String> topArtists, JsonArray playlistTracks, List<LocalDate> periods) {
-    //maps artist to another object mapping dates and artist frequency at that date
+    // maps artist to another object mapping dates and artist frequency at that date
     JsonObject topArtistsFrequency = new JsonObject();
 
     for (String artist : topArtists) {
-        JsonObject artistFrequencyOverTime = new JsonObject();
-        for (LocalDate period : periods) {
-            int count = countArtistFrequencyForTimePeriod(artist, playlistTracks, period);
-            artistFrequencyOverTime.addProperty(period.toString(), count);
-        }
-        topArtistsFrequency.add(artist, artistFrequencyOverTime);
+      JsonObject artistFrequencyOverTime = new JsonObject();
+      for (LocalDate period : periods) {
+        int count = countArtistFrequencyForTimePeriod(artist, playlistTracks, period);
+        artistFrequencyOverTime.addProperty(period.toString(), count);
+      }
+      topArtistsFrequency.add(artist, artistFrequencyOverTime);
     }
 
     return topArtistsFrequency;
-}
+  }
 
   public String getPlaylistEvolution(String playlistID) {
     final int numOfTopArtistsToTrack = 10;
-   
-    //get tracks ordered by last added
+
+    // get tracks ordered by last added
     StopWatch stopWatch = new StopWatch();
     stopWatch.start("Fetch Tracks for Evolution");
     List<Track> tracks = trackRepository.findTracksByPlaylistIdOrdered(playlistID);
     stopWatch.stop();
-    
-    Collections.reverse(tracks);//order by first added
+
+    Collections.reverse(tracks);// order by first added
     JsonArray playlistTracks = gson.toJsonTree(tracks).getAsJsonArray();
-    
-    if (playlistTracks.size() == 0){return "Empty Playlist";}
-    
+
+    if (playlistTracks.size() == 0) {
+      return "Empty Playlist";
+    }
+
     LocalDate startDate = LocalDate.parse(playlistTracks.get(0).getAsJsonObject().get("added_at").getAsString(),
         formatter);
     LocalDate endDate = LocalDate
         .parse(playlistTracks.get(playlistTracks.size() - 1).getAsJsonObject().get("added_at").getAsString(),
             formatter);
-    
+
     stopWatch.start("Create equal periods");
     List<LocalDate> periods = createEqualPeriods(startDate, endDate);
     stopWatch.stop();
