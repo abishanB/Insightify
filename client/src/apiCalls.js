@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 const clientID = process.env.REACT_APP_CLIENT_ID
 const clientSecret = process.env.REACT_APP_CLIENT_SECRET
 const SERVER_URL = process.env.REACT_APP_SERVER_URL
-
+const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI
 function checkResponse(response){
   if (!response.ok) {
     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -23,12 +23,12 @@ export async function getToken(){//client credentials flow
     return checkResponse(await response)
   }
   
-export async function getTokenWithRefreshToken(refreshToken, redirect_uri='http://localhost:3000'){//gets access token using previos refresh token
+export async function getTokenWithRefreshToken(refreshToken){//gets access token using previos refresh token
     console.log("fetching token with refresh token")
     var details = {
         grant_type: 'refresh_token',
         refresh_token: refreshToken,
-        redirect_uri: redirect_uri,
+        redirect_uri: REDIRECT_URI,
     };
   
     var formBody = [];

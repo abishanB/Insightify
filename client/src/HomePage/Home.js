@@ -4,7 +4,7 @@ import { getEndpointResult } from '../apiCalls';
 import LoadingIcon from '../components/LoadingIcon';
 import { Link } from 'react-router-dom';
 import spotifyLogo from "../Spotify_Primary_Logo_RGB_White.png"
-
+const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI
 //Links to tracks, artists, and playlists page
 //Displays top track's artist image and top artist image
 function getSpotifyLoginURL(redirect_uri){//return spotify login url with correct redirectURI
@@ -18,10 +18,8 @@ function getSpotifyLoginURL(redirect_uri){//return spotify login url with correc
 export default function Home({token , topTracksObj, updateTopTracksFunc, topArtistsObj, updateTopArtistsFunc, isLoggedIn}) {
   const [topTrackImg, setTopTrackImg] = useState(null)
   const [topArtistImg, setTopArtistImg] = useState(null)
-  var href = window.location.href
-  var URI;
-  if (href.includes("localhost")){URI = "http://localhost:3000"}
-  if (href.includes("10.0.0.7")){URI = "http://10.0.0.7:3000"}
+  var URI = REDIRECT_URI;
+
   useEffect(() => {//on component load, fetches top items if nessecary
     if (isLoggedIn === false){
       setTopArtistImg(spotifyLogo)
