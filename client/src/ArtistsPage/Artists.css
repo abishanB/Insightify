@@ -1,15 +1,14 @@
 .artist-list{ 
+    --gap-size: 20px;
+    --artist-listing-width: 420px;
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     column-gap: var(--gap-size);
-    width: calc((var(--artist-Listing-width) * 2 + var(--gap-size)));
+    width: calc(var(--artist-listing-width) * 2 + var(--gap-size));
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-
-    --gap-size: 20px;
-    --artist-Listing-width: 420px
 }
 
 .artist-cover{
@@ -43,18 +42,14 @@
     text-overflow: ellipsis; /* Adds ellipsis if text overflows */
 }
 
-
-
 .artist-table-listing{
-    justify-content: center;
     align-items: center;
-    max-width: var(--artist-Listing-width);
-    width:var(--artist-Listing-width);
+    max-width: var(--artist-listing-width);
+    width:var(--artist-listing-width);
     overflow: hidden;
     white-space: nowrap; /* Keeps the text on a single line */
     text-overflow: ellipsis; /* Adds ellipsis if text overflows */
-    min-width: 250px;
-    /* outline: 2px solid bluex; */
+    min-width: 250px; /* outline: 2px solid bluex; */
 }
 
 @media (max-width: 900px) { /* Adjust for smaller screens */

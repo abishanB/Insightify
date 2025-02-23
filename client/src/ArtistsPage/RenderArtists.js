@@ -24,8 +24,6 @@ function artistListingHTML(artist, artistRank){
             <a href={artist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
             {artist.name}
             </a>
-
-            
             </td>
           </tr>
         </tbody>
