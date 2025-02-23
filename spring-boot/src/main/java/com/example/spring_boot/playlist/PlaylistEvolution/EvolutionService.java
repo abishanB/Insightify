@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -145,7 +146,11 @@ public class EvolutionService {
     final int numOfTopArtistsToTrack = 10;
    
     //get tracks ordered by last added
+    StopWatch stopWatch = new StopWatch();
+    stopWatch.start("Fetch Tracks for Evolution");
     List<Track> tracks = trackRepository.findTracksByPlaylistIdOrdered(playlistID);
+    stopWatch.stop();
+    
     Collections.reverse(tracks);//order by first added
     JsonArray playlistTracks = gson.toJsonTree(tracks).getAsJsonArray();
     
@@ -156,14 +161,22 @@ public class EvolutionService {
     LocalDate endDate = LocalDate
         .parse(playlistTracks.get(playlistTracks.size() - 1).getAsJsonObject().get("added_at").getAsString(),
             formatter);
-   
+    
+    stopWatch.start("Create equal periods");
     List<LocalDate> periods = createEqualPeriods(startDate, endDate);
+    stopWatch.stop();
 
+    stopWatch.start("Count Artists");
     Map<String, Integer> artistFrequency = countArtists(playlistTracks);
     artistFrequency = sliceArtistFrequency(artistFrequency, numOfTopArtistsToTrack);
     Set<String> topArtists = artistFrequency.keySet();
+    stopWatch.stop();
 
+    stopWatch.start("Count artists over time");
     JsonObject playlistAritstEvolution = countArtistsOverTime(topArtists, playlistTracks, periods);
+    stopWatch.stop();
+    System.out.println(stopWatch.prettyPrint());
+
     return playlistAritstEvolution.toString();
   }
 }
