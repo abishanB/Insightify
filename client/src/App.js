@@ -133,11 +133,14 @@ export default class App extends Component{
   render() {
     if (this.state.token ===""){//wait for token before rendering to avoid any issues - \
       return(
-        <div className="App">
-          <NavigationBar isLoggedIn={this.state.isLoggedIn} onLogout={this.logout}/>
-          <Home token={null} topTracksObj={null} updateTopTracksFunc={null}
-                                  topArtistsObj={null} updateTopArtistsFunc={null} isLoggedIn={this.state.isLoggedIn}/>
-        </div>
+        <React.Fragment>
+          <div className="App">
+            <NavigationBar isLoggedIn={this.state.isLoggedIn} onLogout={this.logout}/>
+            <Home token={null} topTracksObj={null} updateTopTracksFunc={null}
+                                    topArtistsObj={null} updateTopArtistsFunc={null} isLoggedIn={this.state.isLoggedIn}/>
+          </div>
+          <Footer></Footer>
+        </React.Fragment>
       )
     }
     return (

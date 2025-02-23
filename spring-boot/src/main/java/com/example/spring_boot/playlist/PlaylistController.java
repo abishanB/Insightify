@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@CrossOrigin(origins = {"http://localhost:3000", "https://insightify-0nxq.onrender.com/"})
 @RestController
 @RequestMapping(path = "api/playlist")
 public class PlaylistController {
@@ -27,7 +28,6 @@ public class PlaylistController {
         this.evolutionService = evolutionService;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public String getUserPlaylist(@RequestParam String access_token, @RequestParam String playlistID) {
         System.out.println("getUserPlaylist Endpoint Hit");
@@ -47,7 +47,6 @@ public class PlaylistController {
         return playlist;
     }
     
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("tracks")
     public String getPlaylistTracks(@RequestParam String access_token, @RequestParam String playlistID) {
         
@@ -55,7 +54,6 @@ public class PlaylistController {
         return tracksService.getPlaylistTracks(access_token, playlistID);
     }
     
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("evolution")
     public String getPlaylistEvolution(@RequestParam String playlistID) {
         System.out.println("getPlaylistTopAritstOverTime endpoint hit");
@@ -69,7 +67,6 @@ public class PlaylistController {
         return playlistEvolution;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")//testing purposes
     @GetMapping("test")
     public String testAPI(){
         return "OK";
