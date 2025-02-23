@@ -37,7 +37,7 @@ public class EvolutionService {
       .excludeFieldsWithoutExposeAnnotation() // Only serialize fields annotated with @Expose
       .create();
 
-  public List<LocalDate> createEqualPeriods(LocalDate startDate, LocalDate endDate) {
+  private List<LocalDate> createEqualPeriods(LocalDate startDate, LocalDate endDate) {
     int numOfPeriods = 20;
     // Calculate the total number of days between the two dates
     long totalDays = ChronoUnit.DAYS.between(startDate, endDate);
@@ -62,7 +62,7 @@ public class EvolutionService {
     return periods;
   }
 
-  public Map<String, Integer> countArtists(JsonArray playlistTracks) {
+  private Map<String, Integer> countArtists(JsonArray playlistTracks) {
     Map<String, Integer> artistOccurences = new LinkedHashMap<String, Integer>();
     for (JsonElement element : playlistTracks) {
       // Convert each JsonElement to JsonObject
@@ -90,7 +90,7 @@ public class EvolutionService {
     return sortedMap;
   }
 
-  public Map<String, Integer> sliceArtistFrequency(Map<String, Integer> artistOccurences, int n) {//get only n top aritsts
+  private Map<String, Integer> sliceArtistFrequency(Map<String, Integer> artistOccurences, int n) {//get only n top aritsts
     // Convert the map entries to a list
     List<Map.Entry<String, Integer>> entryList = new ArrayList<>(artistOccurences.entrySet());
 
