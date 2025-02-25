@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 export default function PrivacyPolicy(){
   const location = useLocation();
 
-  useEffect(() => {
+  useEffect(() => {//scroll to top of page on load
     window.scrollTo(0, 0);
   }, [location]);
 
@@ -42,11 +42,23 @@ export default function PrivacyPolicy(){
       We do not share your data for any marketing purposes or with any external organizations.
       </p>
 
+      <h6>Cloudflare</h6>
+      <p>
+      We use Cloudflare, a content delivery network and internet security service, to manage the DNS and route traffic to our website.
+      <br></br><br></br>
+      As part of providing these services, Cloudflare may collect information about your device and web traffic, such as IP addresses, for security and performance optimization purposes.
+      <br></br><br></br>
+      For more details, please refer to Cloudflare's here,&nbsp;
+      <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">
+        https://www.cloudflare.com/privacypolicy/
+      </a>
+      </p>
+
       <h6>Contact</h6>
       <p>
       If you have any questions about this Privacy Policy you can contact us at&nbsp;
-      <a href="mailto:insightifyhq@gmail.com" target="_blank" rel="noopener noreferrer">
-        insightifyhq@gmail.com
+      <a href="mailto:contact@insightifyapp.com" target="_blank" rel="noopener noreferrer">
+        contact@insightifyapp.com
       </a>
       </p>
 

@@ -17,6 +17,7 @@ export default class App extends Component{
     
     const topItemsLimit = 50;//limit 1-50 
     this.state = {
+      isReadyToRender: false,
       token: "",
       refresh_token: "",
       auth_code:"",
@@ -55,6 +56,7 @@ export default class App extends Component{
       window.addEventListener('code', this.storeAuthCode)
       console.log(code)
       if (code==null || code==="undefined"){
+        this.setState({isReadyToRender:true})
         return
       }
       this.getTokenAuthFlow(code)//get token and auth code
@@ -101,11 +103,15 @@ export default class App extends Component{
     promise.then(function(token_promise) {
       that.setState({
         token : token_promise.access_token,
+        isReadyToRender:true,
         isLoggedIn: true,
       });
 
       if (token_promise.refresh_token !== undefined){
-        this.setState({refresh_token:token_promise.refresh_token})
+        this.setState({
+          refresh_token:token_promise.refresh_token,
+        })
+       
         window.localStorage.setItem("refresh_token", token_promise.refresh_token)
       }
     })
@@ -123,6 +129,7 @@ export default class App extends Component{
       that.setState({
         token : token_promise.access_token, 
         refresh_token:token_promise.refresh_token,
+        isReadyToRender:true,
         isLoggedIn: true
       });
       window.localStorage.setItem("refresh_token", token_promise.refresh_token)
@@ -131,13 +138,26 @@ export default class App extends Component{
   }
 
   render() {
+    if (!this.state.isReadyToRender){
+      return(
+        <React.Fragment>
+          <div className="App">
+            <NavigationBar isLoggedIn={this.state.isLoggedIn} onLogout={this.logout}/>
+          </div>
+          <Footer></Footer>
+        </React.Fragment>
+      )
+    }
     if (this.state.token ===""){//wait for token before rendering to avoid any issues - \
       return(
         <React.Fragment>
           <div className="App">
             <NavigationBar isLoggedIn={this.state.isLoggedIn} onLogout={this.logout}/>
-            <Home token={null} topTracksObj={null} updateTopTracksFunc={null}
-                                    topArtistsObj={null} updateTopArtistsFunc={null} isLoggedIn={this.state.isLoggedIn}/>
+            <Routes>
+              <Route path='privacy' element={<PrivacyPolicy />} />
+              <Route index element = {<Home token={null} topTracksObj={null} updateTopTracksFunc={null} topArtistsObj={null} updateTopArtistsFunc={null} isLoggedIn={this.state.isLoggedIn}/>} />
+              <Route path="*" element = {<Home token={null} topTracksObj={null} updateTopTracksFunc={null} topArtistsObj={null} updateTopArtistsFunc={null} isLoggedIn={this.state.isLoggedIn}/>} />
+            </Routes>
           </div>
           <Footer></Footer>
         </React.Fragment>

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./Footer.css";
 
 export default function NavigationBar() {
@@ -14,9 +13,9 @@ export default function NavigationBar() {
       </div>
 
       <div className="footer-right">
-        <Link to="privacy">
+        <a href="/privacy">
           <p>Privacy Policy</p>
-        </Link>
+        </a>
 
         <a href="https://github.com/abishanB/Insightify" target="_blank" rel="noopener noreferrer">
           <p>Github</p>

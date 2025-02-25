@@ -26,7 +26,7 @@ public class ArtistService {
   @Autowired
   private ArtistRepository artistRepository;
 
-  private final int artistDatabaseThresholdTime = 14;//in days, artists are deleted after this time
+  private final int artistDatabaseThresholdTime = 21;//in days, artists are deleted after this time
   private final int artistPopularityThreshold = 0;// only save artists above this threshold, 0-100
 
   private final HttpClient client = HttpClient.newHttpClient();
