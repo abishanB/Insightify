@@ -17,7 +17,7 @@
 
 :open_file_folder: **Database:** PostgreSQL
 
-
+## Getting Started
 
 ### Prerequisites
 
@@ -26,7 +26,6 @@
 3. Create a Spotify Developer account and set up an application to get your **Spotify API credentials**.
 
 ### Installation
-
 1. Clone the repository:
     ```bash
     git clone https://github.com/yourusername/insightify.git
