@@ -1,14 +1,12 @@
 .home-cards {
-  --home-card-height: 13vw;
+  --home-card-height: 25vh;
   --image_size: calc(calc(var(--home-card-height)) - calc(1vw));
-  --card-margin-top: 3vh;
   --border-radius: 10px;
   width: 55vw;
-  min-width: 500px;
-  max-width: 800px;
+  min-width: 750px;
+  max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: var(--card-margin-top);
 }
 
 .page-card-container{
@@ -16,7 +14,10 @@
   margin-right: auto;
   width: 100%;
   display: flex;
+  /* viewport height - navbar height */
+  height: calc(100vh - 50px);
   flex-direction: column;
+  justify-content: space-evenly;
 }
 
 body:has(.view-top-items:nth-child(2):hover) .top-item-img:nth-child(1), body:has(.top-item-img:nth-child(1):hover) .view-top-items:nth-child(2), /* top track card */
@@ -37,7 +38,7 @@ background-color: #262d3f;
 }
 
 .view-top-items , .home-playlist-card span:nth-child(1){
-  font-size: 3.2vw;
+  font-size: 2.7rem;
   font-family: var(--page-font-family);
   color: var(--whiteColor);
 }
@@ -50,7 +51,6 @@ background-color: #262d3f;
 
 .view-top-items:nth-child(1){
   /* top artist card */
-  margin-top: var(--card-margin-top);
   border-top-left-radius: var(--border-radius);
   border-bottom-left-radius: var(--border-radius);
 }
@@ -69,7 +69,6 @@ background-color: #262d3f;
 
 .top-item-img:nth-child(2){
   /* top artists */
-  margin-top: var(--card-margin-top);
   border-radius: 150px 0 0 150px;
   transform: rotate(180deg);
 }
@@ -113,7 +112,6 @@ background-color: #262d3f;
   width: calc(100%);
   border-radius: var(--border-radius);
   height: var(--home-card-height);
-  margin-top: var(--card-margin-top);
   float: left;
 
   justify-content: center;
@@ -132,7 +130,7 @@ background-color: #262d3f;
   /* View an analysis of your playlists text */
   display: block;
   margin-top: 4px;
-  font-size: 1vw;
+  font-size: 1rem;
   font-family: var(--page-font-family);
   color: var(--grayColor);
 }
@@ -141,7 +139,7 @@ background-color: #262d3f;
   display: flex;
   width: fit-content;
   height: fit-content;
-  padding: 8px 14px;
+  padding: 10px 16px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 10px;
@@ -149,7 +147,7 @@ background-color: #262d3f;
   background-color: #1ED760; 
   color: #FFFFFF;
   font-family: var(--page-font-family);
-  font-size: min(2.3vw, 18px);
+  font-size: 1rem;
   justify-content: center;
   text-align: center;
   align-items: center;
@@ -157,32 +155,45 @@ background-color: #262d3f;
 
 @media (max-width: 1100px) { 
   .home-cards{
-    --home-card-height: 18vw;
-    min-width: 70vw;
+    min-width: 85vw;
+  }
+  .view-top-items , .home-playlist-card span:nth-child(1){
+    font-size: 2.3rem;
+  }
+  .home-playlist-card span:nth-child(2){
+    /* View an analysis of your playlists text */
+    font-size: 1.2rem;
   }
 }
 
 @media (max-width: 850px) { 
   .home-cards{
-    --home-card-height: 22vw;
-    min-width: 80vw;
+    --home-card-height: 20vh;
+    min-width: 90vw;
   }
+
   .view-top-items , .home-playlist-card span:nth-child(1){
-    font-size: 4.5vw;
+    font-size: 4vw;
   }
   .home-playlist-card span:nth-child(2){
     /* View an analysis of your playlists text */
-    font-size: 2.2vw;
+    font-size: 2.5vw;
   }
-  .login-btn {
-    font-size: 3vw;
+  .login-btn{
+    font-size: 0.9rem;
   }
 }
 
-@media (max-width: 500px) { 
+@media (max-width: 600px) { 
+  .page-card-container{
+    justify-content: flex-start;
+  }
   .home-cards{
-    width: 85vw;
     --home-card-height: 25vw;
+    min-width: 90vw;
+  }
+  .page-card-container a{
+    margin: 20px 0;
   }
   .top-item-img:nth-child(1) img{
     /* top track*/

@@ -3,7 +3,7 @@ import { Doughnut } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import LoadingIcon from "../components/LoadingIcon";
-
+import "./styles/GenreChart.css"
 Chart.register(CategoryScale);
 
 function calculateGenreComposition(data) {
