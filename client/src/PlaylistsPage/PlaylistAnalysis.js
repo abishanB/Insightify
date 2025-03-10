@@ -190,7 +190,7 @@ export default function PlaylistAnalysis({token, statePlaylistData, updateStateP
     if (topGenresInPlaylist === null || topArtistsInPlaylist === null || statePlaylistData.hasOwnProperty(playlistID)){
       return
     }
-    console.log("A")
+    
     let playlistDataObj = {
       playlist: playlist,
       playlistTracks: playlistTracks,

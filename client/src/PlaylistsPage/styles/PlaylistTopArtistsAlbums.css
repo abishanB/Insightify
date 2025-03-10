@@ -103,6 +103,9 @@
     /* stack lists on each other when not enough space for side by side */
       flex-wrap: wrap;
   }
+  .top-items-title{
+    font-size: 1rem;
+}
   .playlist-top-items-listing{
       font-size: 1.2rem;
   }

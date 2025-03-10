@@ -7,54 +7,7 @@ import "./styles/EvolutionChart.css";
 
 Chart.register(CategoryScale);
 
-
 //line chart options
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top",
-      labels: {
-        boxWidth: 24,
-        color: "#b3b7bd",
-        font: {
-          size: 12,
-        },
-      },
-    },
-  },
-
-  scales: {
-    x: {
-      grid: {
-        color: "rgba(132, 132, 132, 0.3)", // X-axis gridline color
-      },
-      ticks: {
-        color: "#F2F4F7", // Change X-axis font color
-        maxRotation: 45,
-        minRotation: 45,
-      },
-      title: {
-        display: true,
-      },
-    },
-    y: {
-      grid: {
-        color: "rgba(132, 132, 132, 0.3)", // X-axis gridline color
-      },
-      ticks: {
-        color: "#F2F4F7", // Change Y-axis font color
-        stepSize: 1, // Set interval to 1
-      },
-      suggestedMin: 5, // Ensures the axis includes at least 0
-
-      title: {
-        display: true,
-        color: "#F2F4F7", // Change Y-axis title color
-      },
-    },
-  },
-};
 
 function createDataSets(topArtistsOverTime) {
   const colors = [
@@ -115,7 +68,6 @@ function createDataSets(topArtistsOverTime) {
 }
 
 export default function LineChart({playlistEvolutionDataset}) {
-
   const chartRef = useRef(null);
   const [chartDatasets, setChartDatasets] = useState({});
 
@@ -157,6 +109,81 @@ export default function LineChart({playlistEvolutionDataset}) {
     // eslint-disable-next-line
   }, [playlistEvolutionDataset]);
 
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "top",
+        labels: {
+          boxWidth: (context) => {
+            const width = context.chart.width;
+            return width < 600 ? 14 : 24; // Adjust based on width
+          },
+          color: "#b3b7bd",
+          font: {
+            size: (context) => {
+              const width = context.chart.width;
+              return width < 600 ? 8 : 12; // Adjust based on width
+            },
+          },
+        },
+      },
+    },
+    layout:{
+      padding: 0,
+      margin: 0
+    },
+    scales: {
+      x: {
+        grid: {
+          color: "rgba(132, 132, 132, 0.3)", // X-axis gridline color
+        },
+        ticks: {
+          display: (context) => {
+            const width = context.chart.width;
+            return width > 600 ? true : false; // Adjust based on width
+          },
+          font: {
+            size: 12, // Set font size for Y axis ticks
+          },
+          color: "#F2F4F7", // Change X-axis font color
+          maxRotation: 45,
+          minRotation: 45,
+        },
+        title: {
+          display: (context) => {
+            const width = context.chart.width;
+            return width > 600 ? true : false; // Adjust based on width
+          },
+        },
+      },
+      y: {
+        grid: {
+          color: "rgba(132, 132, 132, 0.3)", // X-axis gridline color
+        },
+        ticks: {
+          font: {
+            size: (context) => {
+              const width = context.chart.width;
+              return width < 600 ? 8 : 12; // Adjust based on width
+            },
+          },
+          color: "#F2F4F7", // Change Y-axis font color
+          stepSize: 1, // Set interval to 1
+        },
+        suggestedMin: 5, // Ensures the axis includes at least 0
+  
+        title: {
+          display: true,
+          color: "#F2F4F7", // Change Y-axis title color
+        },
+      },
+    },
+  };
+  
+
   if (chartDatasets === null){//null indicates there is not enough data to create a line chart
     return (
       <div id="line-chart-card" className="playlist-card">
@@ -183,7 +210,11 @@ export default function LineChart({playlistEvolutionDataset}) {
       <button className="deselect-all-btn" onClick={handleHideAllLines}>
         Deselect All
       </button>
-      <Line data={chartDatasets} options={options} ref={chartRef} />
+
+
+      <div className="evolution-chart-container">
+        <Line data={chartDatasets} options={options} ref={chartRef} />
+      </div>
     </div>
   );
 }

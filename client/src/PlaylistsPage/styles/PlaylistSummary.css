@@ -1,114 +1,169 @@
-#summary-card{
+#summary-card {
   --coverSize: 460px;
   --summaryFontSize: 1.9rem;
   height: 590px;
 }
-.playlistCover{
+.playlistCover {
   margin-left: var(--sideMargin);
   height: var(--coverSize);
   width: var(--coverSize);
 }
 
-.by-owner{
+.by-owner {
   width: fit-content;
   margin: 10px 0;
 }
-.by-owner img{
+.by-owner img {
   margin-left: 3px;
   width: 22px;
   height: 22px;
 }
-.by-owner a{  /* playlist owner hyperlink */
+.by-owner a {
+  /* playlist owner hyperlink */
   display: flex;
-  align-items: center; 
+  align-items: center;
   text-align: center;
   white-space: nowrap;
-  overflow:hidden;
+  overflow: hidden;
   text-overflow: ellipsis;
   margin-left: var(--sideMargin);
   text-decoration: none;
   font-size: 1rem;
   font-weight: bold;
-  color:var(--grayColor);
+  color: var(--grayColor);
 }
-.by-owner a:hover{
+.by-owner a:hover {
   color: #469edd;
 }
 
-.summary-container{
+.summary-container {
   display: flex;
   flex-wrap: nowrap;
   gap: 35px;
-  min-width: 0; 
+  min-width: 0;
 }
 
-.details{
-  overflow:hidden;
+.details {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  max-height: var(--coverSize);
+  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: left;
   align-content: center;
   float: left;
-  font-size:var(--summaryFontSize); 
+  font-size: var(--summaryFontSize);
   color: var(--whiteColor);
 }
-.details span{
-  display: inherit;
+.details span {
+  display: inline;
 }
 .details span span {
-  margin: 1vw 0;
+  margin: 0;
   font-weight: bold;
-  font-size: var(--summaryFontSize); 
+
   color: var(--blueColor);
-  display: inline-block;  
+  display: inline-block;
 }
 
-@media (max-width: 1300px) { /* Adjust for smaller screens */
-  #summary-card{
+@media (max-width: 1300px) {
+  /* Adjust for smaller screens */
+  #summary-card {
     --coverSize: 420px;
     --summaryFontSize: 1.7rem;
     height: 560px;
   }
 }
 
-@media (max-width: 1000px) { /* Adjust for smaller screens */
-  #summary-card{
+@media (max-width: 1000px) {
+  /* Adjust for smaller screens */
+  #summary-card {
     --coverSize: 380px;
     --summaryFontSize: 1.6rem;
     height: 510px;
   }
-  .summary-container{
-    gap: 20px
+  .summary-container {
+    gap: 20px;
   }
 }
 
-@media (max-width: 800px) { /* Adjust for smaller screens */
-  #summary-card{
+@media (max-width: 850px) {
+  /* Adjust for smaller screens */
+  #summary-card {
     --coverSize: 340px;
     --summaryFontSize: 1.3rem;
     height: 460px;
   }
-  .by-owner a{
+  .by-owner a {
     font-size: 0.875rem;
   }
 }
 
-@media (max-width: 700px) { /* Adjust for smaller screens */
-  #summary-card{
-    --coverSize: 42vw;
-    --summaryFontSize: 3.2vw;
+@media (max-width: 750px) {
+  /* Adjust for smaller screens */
+  #summary-card {
+    --coverSize: 320px;
+    --summaryFontSize: 1rem;
     height: fit-content;
-    padding: 3px 0;
+    padding: 10px 0;
   }
-  .by-owner{
-    margin: 1px 0;
+
+  .by-owner {
+    margin: 2px 0;
   }
   .by-owner img {
     height: 12px;
     width: 12px;
   }
-  .by-owner a{
+  .by-owner a {
     font-size: 0.7rem;
   }
 }
+@media (max-width: 650px) {
+  /* Adjust for smaller screens */
+  #summary-card {
+    --coverSize: 280px;
+    --summaryFontSize: 0.9rem;
+  } 
+}
+
+@media (max-width: 600px) {
+  /* Adjust for smaller screens */
+  #summary-card {
+    --coverSize: 240px;
+  } 
+}
+
+@media (max-width: 550px) {
+  /* Adjust for smaller screens */
+  #summary-card {
+    --coverSize: 200px;
+  } 
+}
+
+@media (max-width: 500px) {
+  /* Adjust for smaller screens */
+  #summary-card {
+    --coverSize: 160px;
+    --summaryFontSize: 0.7rem;
+  } 
+  .by-owner img {
+    height: 10px;
+    width: 10px;
+  }
+  .by-owner a {
+    font-size: 0.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  /* Adjust for smaller screens */
+  #summary-card {
+    --coverSize: 140px;
+    --summaryFontSize: 0.6rem;
+  } 
+}
+
 

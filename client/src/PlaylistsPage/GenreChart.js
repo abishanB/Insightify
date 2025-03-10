@@ -3,7 +3,7 @@ import { Doughnut } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import LoadingIcon from "../components/LoadingIcon";
-import "./styles/GenreChart.css"
+import "./styles/GenreChart.css";
 Chart.register(CategoryScale);
 
 function calculateGenreComposition(data) {
@@ -70,8 +70,11 @@ export default function GenreChart({ topGenres }) {
   const [genreReadyToRender, setGenreReadyToRender] = useState(false);
   const [chartData, setChartData] = useState(null);
 
-  useEffect(() => { //NESSAACERY WAIT
-    if (topGenres === null) {return}
+  useEffect(() => {
+    //NESSAACERY WAIT
+    if (topGenres === null) {
+      return;
+    }
 
     setGenreReadyToRender(true);
   }, [topGenres]);
@@ -116,7 +119,36 @@ export default function GenreChart({ topGenres }) {
   }, [genreReadyToRender]);
 
 
-  if (topGenres === null) {return <LoadingIcon/>}
+  const options={
+    responsive: true,
+    maintainAspectRatio: false,
+   
+    layout: {
+      padding: 0,
+      margin: 0,
+    },
+    plugins: {
+      legend: {
+        position: "top",
+        labels: {
+          margin: 0,
+          boxWidth: 24,
+          color: "#b3b7bd",
+          font: {
+            size: (context) => {
+              const width = context.chart.width;
+              return width < 750 ? 9 : 12; // Adjust based on width
+            },
+          },
+          padding: 8,
+        },
+      },
+    },
+  }
+
+  if (topGenres === null) {
+    return <LoadingIcon />;
+  }
   if (chartData === null) {
     return <div id="genre-chart-card" className="playlist-card"></div>;
   }
@@ -125,27 +157,11 @@ export default function GenreChart({ topGenres }) {
       <div className="card-title">
         <span>Genres</span>
       </div>
+
       <div className="chart-container">
         <Doughnut
-          width={1000}
-          height={800}
           data={chartData}
-          options={{
-            responsive: true,
-            maintainAspectRatio: false,
-            layout: {},
-            plugins: {
-              legend: {
-                labels: {
-                  boxWidth: 24,
-                  color: "#b3b7bd",
-                  font: {
-                    size: 12,
-                  },
-                },
-              },
-            },
-          }}
+          options={options}
         />
       </div>
     </div>
