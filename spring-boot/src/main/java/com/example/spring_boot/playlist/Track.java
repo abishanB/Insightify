@@ -28,13 +28,13 @@ public class Track {
   @Column(columnDefinition = "VARCHAR(255)")
   @Expose
   private String album_name;
-  @Column(columnDefinition = "VARCHAR(255)")
-  @Expose
-  private String album_href;
   @Column(columnDefinition = "VARCHAR(255) NOT NULL")
   @Expose
-  private String image_url;
+  private String album_href;
   @Column(columnDefinition = "VARCHAR(255)")
+  @Expose
+  private String image_url;
+  @Column(columnDefinition = "VARCHAR(255) NOT NULL")
   @Expose
   private String href;
   @Column(columnDefinition = "VARCHAR(255) NOT NULL")
