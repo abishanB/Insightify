@@ -77,7 +77,7 @@ export default function TopItems({ type, token, storedTopItems, updateTopItemsFu
   }
  
   if (error) { throw new Error(`Failed to fetch ${type} - ${currentTab}`); }
-  if (items[currentTab].items === null) {
+  if (items[currentTab].items === null) {//if there are no top tracks/artists
     return (
       <div>
         {pageTitle()}

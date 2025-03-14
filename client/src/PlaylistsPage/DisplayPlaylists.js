@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { getEndpointResult } from '../apiCalls.js';
 import LoadingIcon from '../components/LoadingIcon.js'
 import './styles/DisplayPlaylists.css'; 
+import spotifyIcon from "../Spotify_Primary_Logo_RGB_White.png"
 import { Link } from 'react-router-dom';
 
 function removeSpotifyPlaylists(playlistsObj){//removes spotify dj & spotify playlists which return as null
@@ -91,6 +92,8 @@ export default function DisplayPlaylists({token, storedUserPlaylists, updateUser
     <React.Fragment>
       <div className='page-title'>
         <h1>Your Playlists ({playlists.length})</h1>
+        <img src={spotifyIcon} alt="SpotifyIcon"></img>
+        
       </div> 
            
       <div className="playlist-container">

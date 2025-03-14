@@ -1,131 +1,159 @@
 #top-artists-albums-card {
-    height: 700px;
-  }
-
-.top-items-title {  /* top artists and top albums titles */
-  color: var(--whiteColor);
-  font-size: 1.8rem;
-  width: calc(100%);
+  height: 700px;
 }
 
-.top-artists-albums-container{
+.top-items-title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.top-items-title img {
+  /* spotify logo */
+  width: 42px;
+  height: 42px;
+  margin-left: 16px;
+}
+
+.top-items-title h2 {
+  /* top artists and top albums titles */
+  color: var(--whiteColor);
+  font-size: 1.8rem;
+}
+
+.top-artists-albums-container {
   display: flex;
   justify-content: space-between;
   margin: 0 var(--sideMargin);
-  }
-  
-.top-items-list{
+}
+
+.top-items-list {
   justify-content: space-between;
   max-width: 600px;
   height: 595px;
-  overflow-y:auto;  /* scrolling */
-  }
-.top-items-list img{
+  overflow-y: auto; /* scrolling */
+}
+.top-items-list img {
   height: 48px;
   width: 48px;
 }
-  
-.playlist-top-items-listing { 
+
+.playlist-top-items-listing {
   height: 52px;
-  color:var(--page-text-color);
+  color: var(--page-text-color);
   font-size: 1.3rem;
   max-width: 100%;
 }
 
-.playlist-top-items-listing td {   /* text overflow */
+.playlist-top-items-listing td {
+  /* text overflow */
   max-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.playlist-top-items-image{
+.playlist-top-items-image {
   min-width: 55px;
 }
-.playlist-top-items-image img{
+.playlist-top-items-image img {
   margin: auto;
   vertical-align: middle;
 }
-.playlist-artist-cover{ /* make artist image rounded */
+.playlist-artist-cover {
+  /* make artist image rounded */
   border-radius: 50%;
 }
-.item-occurences{
+.item-occurences {
   text-align: right;
 }
 
-.playlist-top-items-rank{
+.playlist-top-items-rank {
   font-size: 1.2rem;
   min-width: 28px;
   text-align: center;
 }
-  
-@media (max-width: 1000px) { /* Adjust for smaller screens */
-  .playlist-top-items-listing{
-      font-size: 1.1rem;
+
+@media (max-width: 1000px) {
+  /* Adjust for smaller screens */
+  .playlist-top-items-listing {
+    font-size: 1.1rem;
   }
-  .item-occurences{/* ensure # of songs can is visible */
+  .item-occurences {
+    /* ensure # of songs can is visible */
     min-width: 45px;
   }
 }
 
-  
-@media (max-width: 800px) { /* Adjust for smaller screens */
-  #top-artists-albums-card{
+@media (max-width: 800px) {
+  /* Adjust for smaller screens */
+  #top-artists-albums-card {
     height: 675px;
   }
-  .top-items-title{
-      font-size: 1.4rem;
+  .top-items-title h2 {
+    font-size: 1.4rem;
   }
-  .playlist-top-items-listing{
-      height: 45px;
-      font-size: 1.1rem;
+  .top-items-title img {
+    width: 36px;
+    height: 36px;
   }
-  .playlist-top-items-rank{
-      min-width: 20px;
-      max-width: 20px;
-      font-size: 0.95rem;
-  }
-  .top-items-list img{
-      width: 42px;
-      height: 42px;
-  }
-  .playlist-top-items-image{
-      min-width: 45px;
-      max-width: 45px;
-    }
 
+  .playlist-top-items-listing {
+    height: 45px;
+    font-size: 1.1rem;
+  }
+  .playlist-top-items-rank {
+    min-width: 20px;
+    max-width: 20px;
+    font-size: 0.95rem;
+  }
+  .top-items-list img {
+    width: 42px;
+    height: 42px;
+  }
+  .playlist-top-items-image {
+    min-width: 45px;
+    max-width: 45px;
+  }
 }
-@media (max-width: 680px) { /* Adjust for smaller screens */
+@media (max-width: 680px) {
+  /* Adjust for smaller screens */
   #top-artists-albums-card {
     height: 845px;
   }
-  .top-artists-albums-container{
+  .top-artists-albums-container {
     /* stack lists on each other when not enough space for side by side */
-      flex-wrap: wrap;
+    flex-wrap: wrap;
   }
-  .top-items-title{
+  .top-items-title h2 {
     font-size: 1rem;
-}
-  .playlist-top-items-listing{
-      font-size: 1.2rem;
   }
-  .playlist-top-items-rank{
-      font-size:  1rem;
+
+  .top-items-title img {
+    width: 24px;
+    height: 24px;
+    margin-left: 8px;
   }
-  .top-items-list{
+
+  .playlist-top-items-listing {
+    font-size: 1.2rem;
+  }
+  .playlist-top-items-rank {
+    font-size: 1rem;
+  }
+  .top-items-list {
     /* make lists smaller when stacked on each other */
     height: 360px;
   }
-
 }
-@media (max-width: 400px) { /* Adjust for smaller screens */
-  .playlist-top-items-listing{
-      font-size: 1rem;
+@media (max-width: 400px) {
+  /* Adjust for smaller screens */
+  .playlist-top-items-listing {
+    font-size: 1rem;
   }
-  .playlist-top-items-rank{
-      font-size:  0.9rem;
+  .playlist-top-items-rank {
+    font-size: 0.9rem;
   }
-  .top-items-list img{
+  .top-items-list img {
     width: 38px;
     height: 38px;
   }
