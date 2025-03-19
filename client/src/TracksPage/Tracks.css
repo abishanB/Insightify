@@ -9,10 +9,6 @@
     margin-right: auto;
 }
 
-.track {
-    cursor: pointer;
-}
-
 .track-name, .track-artist-name, .track-album {/* text overflow on everything */
     max-width: 0;
     overflow: hidden;
@@ -33,6 +29,7 @@
     margin-right: auto;
     height: 48px;
     width: 48px;
+    border-radius: 4px;
 } 
 
 @media (max-width: 1000px) { /* Adjust for smaller screens */
@@ -51,18 +48,29 @@
 
 @media (max-width: 525px) { /* Adjust for smaller screens */
     .track-rank{
-        font-size: 0.9rem;
+        min-width: 24px;
+        font-size: 0.875;
     }
-    .track-name, .track-artist-name, .track-album {
+    .track-name, .track-artist-name {
         font-size: 0.775rem;
     }
+    .track-name{
+        min-width: 50vw;
+    }
+    .track-artist-name{
+        min-width: 31vw;
+    }
+    .track-album{/* hide album on small screens */
+        display: none;
+    }
     .track-cover{
-        min-width: 30px;
+        min-width: 34px;
     }
     .track-cover img{
-        max-width: 28px;
-        height: 28px;
-        width: 28px;
+        max-width: 32px;
+        height: 32px;
+        width: 32px;
+        border-radius: 2px;
     }
     .track-table{
         max-width: 100%;

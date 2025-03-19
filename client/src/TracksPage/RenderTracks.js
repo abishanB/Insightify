@@ -14,14 +14,18 @@ export default function RenderTracks({tracks}){
       </colgroup>
 
       <tbody>
-        <tr key={trackRank} className='track' onClick={() => window.open(track.external_urls.spotify, "_blank")}>
+        <tr key={trackRank} className='track'>
           <td className="track-rank">{parseInt(trackRank)+1}</td>
           <td className='track-cover'>
             <a href={track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
               <img src={track.album.images[0].url} height="42" width="42" alt="albumImg" loading='lazy'/>
             </a>
           </td>
-          <td className='track-name'>{track.name}</td>
+          <td className='track-name'>
+            <a href={track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+            {track.name}
+            </a>
+          </td>
           <td className='track-artist-name'>{track.artists[0].name} </td>
           <td className='track-album'>{track.album.name}</td>
         </tr>
