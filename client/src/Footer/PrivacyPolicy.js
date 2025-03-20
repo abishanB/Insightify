@@ -18,7 +18,7 @@ export default function PrivacyPolicy(){
 
       <h6>Data Collection </h6>
       <p>   
-        We gather your information directly through the Spotify Web API. To provide our service, we access your top tracks, top artists, your user profile, and your saved playlists. 
+        We gather your information directly through the Spotify Web API. To provide our service, we access your top tracks, top artists, your user profile, your saved tracks and your saved playlists. 
         <br></br><br></br>
         Insightify does not use cookies, tracking technologies, or any third-party analytics tools to collect user data.
         <br></br><br></br>
@@ -30,7 +30,7 @@ export default function PrivacyPolicy(){
 
       <h6>Data Storage</h6>
       <p>
-        We may temporarily store your user ID and playlist information to efficent processing.
+        We may temporarily store your user ID and playlist data to ensure efficient processing and reduce load times.
         <br></br><br></br>
         This data is stored in a database accessible only to Insightify and is automatically deleted after 7 days.
       </p>
@@ -48,7 +48,7 @@ export default function PrivacyPolicy(){
       <br></br><br></br>
       As part of providing these services, Cloudflare may collect information about your device and web traffic, such as IP addresses, for security and performance optimization purposes.
       <br></br><br></br>
-      For more details, please refer to Cloudflare's here,&nbsp;
+      For more details, please refer to Cloudflare's Privacy Policy here,&nbsp;
       <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">
         https://www.cloudflare.com/privacypolicy/
       </a>
