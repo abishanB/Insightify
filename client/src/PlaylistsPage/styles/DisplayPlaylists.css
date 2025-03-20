@@ -25,7 +25,7 @@
 }
 
 .playlist-cover {
-    padding: 5px;
+    border-radius: 4px;
     width: var(--playlistImgSize);
     height: var(--playlistImgSize);
 }
@@ -57,5 +57,8 @@
     }
     .playlist-name{
         font-size: 0.7rem;
+    }
+    .playlist-cover{
+        border-radius: 2px;
     }
 }

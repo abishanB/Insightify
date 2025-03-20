@@ -1,7 +1,7 @@
 .home-cards {
   --home-card-height: 25vh;
-  --image_size: calc(calc(var(--home-card-height)) - calc(1vw));
-  --border-radius: 10px;
+  --image_size: calc(calc(var(--home-card-height)) - calc(1vw) - 4px);
+  --border-radius: 8px;
   width: 55vw;
   min-width: 750px;
   max-width: 1000px;
@@ -85,8 +85,8 @@ background-color: #262d3f;
 .top-item-img:nth-child(1) img{
   /* top track*/
   border-radius: 4px;
-  padding: 4px;
 }
+
 
 .top-item-img:nth-child(2) img{
   /* flip image because parent div was flipped */
@@ -198,7 +198,6 @@ background-color: #262d3f;
   .top-item-img:nth-child(1) img{
     /* top track*/
     border-radius: 2px;
-    padding: 4px;
   }
 }
 

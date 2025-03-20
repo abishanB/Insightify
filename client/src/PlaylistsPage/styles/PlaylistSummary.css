@@ -4,6 +4,7 @@
   height: 590px;
 }
 .playlistCover {
+  border-radius: 4px;
   margin-left: var(--sideMargin);
   height: var(--coverSize);
   width: var(--coverSize);
@@ -141,6 +142,9 @@
   #summary-card {
     --coverSize: 200px;
   } 
+  .playlistCover{
+    border-radius: 2px;
+  }
 }
 
 @media (max-width: 500px) {

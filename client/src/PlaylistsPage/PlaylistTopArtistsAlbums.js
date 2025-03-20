@@ -69,7 +69,7 @@ function renderAlbums(albums) {
             </td>
             <td className="playlist-top-items-image">
               <a href={album[1].href} target="_blank" rel="noopener noreferrer">
-                <img src={album[1].imageURL} alt="artistImg" loading="eager" />
+                <img className="playlist-album-cover" src={album[1].imageURL} alt="artistImg" loading="eager" />
               </a>
             </td>
             <td>
