@@ -150,7 +150,7 @@
 @media (max-width: 500px) {
   /* Adjust for smaller screens */
   #summary-card {
-    --coverSize: 160px;
+    --coverSize: 180px;
     --summaryFontSize: 0.7rem;
   } 
   .by-owner img {
@@ -160,14 +160,18 @@
   .by-owner a {
     font-size: 0.5rem;
   }
+  .summary-container{
+    gap: 10px
+  }
 }
 
 @media (max-width: 400px) {
   /* Adjust for smaller screens */
   #summary-card {
-    --coverSize: 140px;
-    --summaryFontSize: 0.6rem;
-  } 
+    --coverSize: 160px;
+    --summaryFontSize: 0.7rem;
+  }
+  
 }
 
 

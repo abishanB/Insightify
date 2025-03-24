@@ -24,7 +24,7 @@ export async function getToken(){//client credentials flow
   }
   
 export async function getTokenWithRefreshToken(refreshToken){//gets access token using previos refresh token
-    console.log("fetching token with refresh token")
+    //console.log("fetching token with refresh token")
     var details = {
         grant_type: 'refresh_token',
         refresh_token: refreshToken,
@@ -81,7 +81,7 @@ export async function getTokenWithAuthCode(code, redirect_uri='http://localhost:
   }
   
 export async function getEndpointResult(access_token, endpoint, endpointType=null){//for calls with custom endpoint ie next calls
-  if (endpointType!=null) {console.log("ENDPOINT CALL -",endpointType)}
+  //if (endpointType!=null) {console.log("ENDPOINT CALL -",endpointType)}
   
   const response = await fetch(endpoint, {
     method:'GET',

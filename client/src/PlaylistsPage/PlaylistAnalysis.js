@@ -233,9 +233,10 @@ export default function PlaylistAnalysis({token, statePlaylistData, updateStateP
         
         //add artist image, set to blank image if undefined
         artistProperties.imageURL = artistsObj[artistName]?.image_url ?? "https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999"
+        let genres = [];
         
-        let genres = artistsObj[artistName].genres;
-        
+        //safety measure
+        try{genres = artistsObj[artistName].genres;}catch{}
         //iterate through artist genres and add increment genre occurences based on artist occurences
         for (let genre of genres) {
           let genreName = capitalizeFirstLetter(genre)

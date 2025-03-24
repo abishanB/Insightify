@@ -1,11 +1,21 @@
 #genre-chart-card{
-  height: 820px;
+  height: 800px;
+  max-height: 97vh;
 }
 
-.chart-container {
-  width: 100%; 
+.bar-chart-container {
+  width: 98%; 
   height: 90%;
   display: flex;
   justify-content: center;
+  padding:6px;
 }
 
+@media (max-width: 450px) { 
+  .bar-chart-container{
+    height: 95%;
+  }
+  #genre-chart-card{
+    height: 480px;
+  }
+}

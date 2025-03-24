@@ -38,7 +38,6 @@ export default class App extends Component{
   }
 
   componentDidMount(){//when page loads and after page loads on login
-    console.log("app.js mounted")
     const hash = window.location.href
     let code = window.localStorage.getItem("code")
     let refresh_token = window.localStorage.getItem("refresh_token")

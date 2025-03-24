@@ -1,69 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Doughnut } from "react-chartjs-2";
-import Chart from "chart.js/auto";
-import { CategoryScale } from "chart.js";
+import { Bar } from "react-chartjs-2";
 import LoadingIcon from "../components/LoadingIcon";
 import "./styles/GenreChart.css";
-Chart.register(CategoryScale);
+
+const NUMBER_OF_TOP_GENRES = 12;//number of genres to display
 
 function calculateGenreComposition(data) {
-  const THRESHOLD_PERCENTAGE = 0.75; //exclude genres that dont take up at least this percentage
-  const MAX_OTHER_PERCENTAGE = 15;
   const totalGenreOccurrences = data.reduce(
     (sum, [_, details]) => sum + details.totalOccurences,
     0
   ); //total occureneces of each genre
 
   // Calculate percentages
-  const processedData = data.map(([genre, details]) => {
+  const topGenres = data.map(([genre, details]) => {
     const percentage = (details.totalOccurences / totalGenreOccurrences) * 100;
-    return { name: genre, occurrences: details.totalOccurences, percentage };
+    return { name: genre, occurrences: details.totalOccurences, percentage: Math.round(percentage*10)/10 };
   });
-
-  // Separate top genres and "Other"
-  const topGenres = [];
-  let otherOccurrences = 0;
-
-  processedData.forEach((item) => {
-    if (item.percentage >= THRESHOLD_PERCENTAGE) {
-      topGenres.push(item);
-    } else {
-      otherOccurrences += item.occurrences;
-    }
-  });
-
-  // Calculate "Other" contribution
-  const otherPercentage = (otherOccurrences / totalGenreOccurrences) * 100;
-
-  if (otherPercentage > MAX_OTHER_PERCENTAGE) {
-    const excessPercentage = otherPercentage - MAX_OTHER_PERCENTAGE;
-
-    // Redistribute excess percentage among top genres proportionally
-    topGenres.forEach((genre) => {
-      const additionalPercentage =
-        (genre.percentage /
-          topGenres.reduce((sum, g) => sum + g.percentage, 0)) *
-        excessPercentage;
-      genre.percentage += additionalPercentage;
-    });
-
-    // Cap Other at the max allowed percentage
-    topGenres.push({
-      name: "Other",
-      occurrences: Math.round(
-        (MAX_OTHER_PERCENTAGE / 100) * totalGenreOccurrences
-      ),
-      percentage: MAX_OTHER_PERCENTAGE,
-    });
-  } else {
-    // Add Other directly if it doesn't exceed the limit
-    topGenres.push({
-      name: "Other",
-      occurrences: otherOccurrences,
-      percentage: otherPercentage,
-    });
-  }
-  return topGenres;
+  return topGenres.slice(0, NUMBER_OF_TOP_GENRES)
 }
 
 export default function GenreChart({ topGenres }) {
@@ -89,9 +42,8 @@ export default function GenreChart({ topGenres }) {
       labels: genreData.map((data) => data.name),
       datasets: [
         {
-          radius: 340,
-          label: "",
-          data: genreData.map((data) => data.occurrences),
+          label: "%",
+          data: genreData.map((data) => data.percentage),
           backgroundColor: [
             "#F4A261", // Soft Orange
             "#2A9D8F", // Muted Teal
@@ -118,33 +70,50 @@ export default function GenreChart({ topGenres }) {
     // eslint-disable-next-line
   }, [genreReadyToRender]);
 
-
-  const options={
+  const options = {
     responsive: true,
     maintainAspectRatio: false,
-   
+    indexAxis: "y", // This makes it horizontal
     layout: {
       padding: 0,
       margin: 0,
     },
     plugins: {
       legend: {
-        position: "top",
-        labels: {
-          margin: 0,
-          boxWidth: 24,
-          color: "#b3b7bd",
+        display: false
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: "#F2F4F7", // X-axis labels color
           font: {
             size: (context) => {
               const width = context.chart.width;
-              return width < 750 ? 9 : 12; // Adjust based on width
+              return width < 600 ? 8 : 12; // Adjust based on width
             },
           },
-          padding: 8,
+        },
+        grid: {
+          display: false, // Removes vertical grid lines
+        },
+      },
+      y: {
+        ticks: {
+          color: "#F2F4F7", // Y-axis labels color
+          font: {
+            size: (context) => {
+              const width = context.chart.width;
+              return width < 600 ? 8 : 12; // Adjust based on width
+            },
+          },
+        },
+        grid: {
+          display: false, // Removes vertical grid lines
         },
       },
     },
-  }
+  };
 
   if (topGenres === null) {
     return <LoadingIcon />;
@@ -155,14 +124,11 @@ export default function GenreChart({ topGenres }) {
   return (
     <div id="genre-chart-card" className="playlist-card">
       <div className="card-title">
-        <span>Genres</span>
+        <span>Top Genres</span>
       </div>
 
-      <div className="chart-container">
-        <Doughnut
-          data={chartData}
-          options={options}
-        />
+      <div className="bar-chart-container">
+        <Bar data={chartData} options={options} />
       </div>
     </div>
   );
