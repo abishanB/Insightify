@@ -9,6 +9,7 @@ import DisplayPlaylists from "./PlaylistsPage/DisplayPlaylists.js";
 import NavigationBar from "./components/NavigationBar.js";
 import Footer from "./Footer/Footer.js"
 import PrivacyPolicy from "./Footer/PrivacyPolicy.js";
+import EndUserAgreement from "./Footer/EndUserAgreement.js";
 import { ErrorBoundary } from './ErrorBoundary';
 
 export default class App extends Component{
@@ -176,6 +177,7 @@ export default class App extends Component{
           <Route path='playlists' element={<DisplayPlaylists token={this.state.token} storedUserPlaylists={this.state.userPlaylists} updateUserPlaylistsFunc={this.updateUserPlaylists}/>}/>
           <Route exact path="/playlists/:playlistID" element={<PlaylistAnalysis token={this.state.token} statePlaylistData={this.state.playlistData} updateStatePlaylistDataFunc={this.updatePlaylistData} />} />
           <Route path='privacy' element={<PrivacyPolicy />} />
+          <Route path='end-user-agreement' element={<EndUserAgreement />} />
         </Routes>
       </ErrorBoundary>
       

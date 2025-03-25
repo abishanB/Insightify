@@ -6,27 +6,27 @@ function artistListingHTML(artist, artistRank){
   const imageSize = 80;
   return (
     <table key ={artistRank} className="artist-table-listing">
-        <colgroup>
-          <col />{/* Artist Rank*/}
-          <col />{/*  Image */}
-          <col />{/* Artist Name*/}
-        </colgroup>
+      <colgroup>
+        <col />{/* Artist Rank*/}
+        <col />{/*  Image */}
+        <col />{/* Artist Name*/}
+      </colgroup>
 
-        <tbody>
-          <tr key={artistRank} className='artist'>
-            <td className="artist-rank">{artistRank}</td>
-            <td className='artist-cover'>
-              <a href={artist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-                <img src={artist.images[0].url}  height={imageSize} width={imageSize} alt="artistImg" loading='lazy'/>
-              </a>
-            </td>
-            <td className="artist-name">
+      <tbody>
+        <tr key={artistRank} className='artist'>
+          <td className="artist-rank">{artistRank}</td>
+          <td className='artist-cover'>
             <a href={artist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-            {artist.name}
+              <img src={artist.images[0].url}  height={imageSize} width={imageSize} alt="artistImg" loading='lazy'/>
             </a>
-            </td>
-          </tr>
-        </tbody>
+          </td>
+          <td className="artist-name">
+          <a href={artist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+          {artist.name}
+          </a>
+          </td>
+        </tr>
+      </tbody>
       </table>
   )
 }

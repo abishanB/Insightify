@@ -12,10 +12,6 @@
     /* background-image: linear-gradient(to top,#1F2633,#181C25 90%); */
 } 
 
-.gradient{
-    height: 10px;
-    background-image: linear-gradient(to top,var(--page-background-color),#181C25 95%);
-}
 
 #nav li a {
     text-decoration: none;

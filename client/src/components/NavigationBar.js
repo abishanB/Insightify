@@ -86,7 +86,6 @@ export default function NavigationBar(props) {
           </li>
         )}
       </ul>
-      <div className="gradient"></div>
     </React.Fragment>
   );
 }
