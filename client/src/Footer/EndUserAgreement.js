@@ -35,7 +35,7 @@ export default function PrivacyPolicy() {
         We are solely responsible for the products and services provided through Insightify.
         <br></br>
         <br></br>
-        We disclaim any liability arising from your use of the Spotify Platform, Spotify Service, or Spotify Content, and you agree that Spotify is not liable for any damages, losses, or claims that may arise from your use of Insightify or any third-party services or content incorporated into the app.
+        You agree that Spotify is not liable for any damages, losses, or claims that may arise from your use of Insightify or any third-party services or content incorporated into the app.
       </p>
 
       <h6>Third-Party Beneficiary</h6>

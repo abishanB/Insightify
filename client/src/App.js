@@ -155,6 +155,7 @@ export default class App extends Component{
             <NavigationBar isLoggedIn={this.state.isLoggedIn} onLogout={this.logout}/>
             <Routes>
               <Route path='privacy' element={<PrivacyPolicy />} />
+              <Route path='end-user-agreement' element={<EndUserAgreement />} />
               <Route index element = {<Home token={null} topTracksObj={null} updateTopTracksFunc={null} topArtistsObj={null} updateTopArtistsFunc={null} isLoggedIn={this.state.isLoggedIn}/>} />
               <Route path="*" element = {<Home token={null} topTracksObj={null} updateTopTracksFunc={null} topArtistsObj={null} updateTopArtistsFunc={null} isLoggedIn={this.state.isLoggedIn}/>} />
             </Routes>
