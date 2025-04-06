@@ -76,16 +76,17 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
   if (topTrackImg==null || topArtistImg==null) return <LoadingIcon/>
   return (
     <React.Fragment>
-    {!isLoggedIn 
-    ?
-    <a href={getSpotifyLoginURL(URI)}>
-      <div className='login-btn'>
-          <span>Login With Spoitfy</span>
-      </div>
-    </a>
-    :<></>
-    }
-    <div className='page-card-container'>
+      <div className='page-card-container'>
+      {!isLoggedIn 
+      ?
+      <a href={getSpotifyLoginURL(URI)}>
+        <div className='login-btn'>
+            <span>Login With Spoitfy</span>
+        </div>
+      </a>
+      :<></>
+      }
+
       <Link to={isLoggedIn ? "tracks" : getSpotifyLoginURL(`${URI}/tracks`)} style={{ textDecoration: 'none' }}>
         <div className="home-cards">
           <div className="top-item-img">
