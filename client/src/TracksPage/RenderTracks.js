@@ -26,8 +26,16 @@ export default function RenderTracks({tracks}){
             {track.name}
             </a>
           </td>
-          <td className='track-artist-name'>{track.artists[0].name} </td>
-          <td className='track-album'>{track.album.name}</td>
+          <td className='track-artist-name'>
+            <a href={track.artists[0].external_urls.spotify} target="_blank" rel="noopener noreferrer">
+              {track.artists[0].name}
+            </a>
+          </td>
+          <td className='track-album'>
+            <a href={track.album.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+              {track.album.name}
+            </a>
+          </td>
         </tr>
       </tbody>
     </table>

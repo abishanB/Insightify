@@ -19,9 +19,6 @@ export default function NavigationBar() {
         <a href="/end-user-agreement">
           <p>End User Agreement</p>
         </a>
-        <a href="https://github.com/abishanB/Insightify" target="_blank" rel="noopener noreferrer">
-          <p>Github</p>
-        </a>
       </div>
     </footer>
   );

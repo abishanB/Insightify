@@ -16,8 +16,11 @@
 }
 .by-owner img {
   margin-left: 3px;
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26ßpx;
+  min-width: 21px;
+  min-height: 21px;
+
 }
 .by-owner a {
   /* playlist owner hyperlink */
@@ -29,7 +32,7 @@
   text-overflow: ellipsis;
   margin-left: var(--sideMargin);
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: bold;
   color: var(--grayColor);
 }
@@ -156,9 +159,10 @@
   .by-owner img {
     height: 10px;
     width: 10px;
+    margin-bottom: 2px;
   }
   .by-owner a {
-    font-size: 0.5rem;
+    font-size: 0.7rem;
   }
   .summary-container{
     gap: 10px
