@@ -3,7 +3,7 @@ import "./Home.css"
 import { getEndpointResult } from '../apiCalls';
 import LoadingIcon from '../components/LoadingIcon';
 import { Link } from 'react-router-dom';
-import spotifyLogo from "../Spotify_Primary_Logo_RGB_White.png"
+import spotifyLogo from "../icon.png"
 const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI
 //Links to tracks, artists, and playlists page
 //Displays top track's artist image and top artist image
@@ -79,11 +79,14 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
       <div className='page-card-container'>
       {!isLoggedIn 
       ?
-      <a href={getSpotifyLoginURL(URI)}>
-        <div className='login-btn'>
-            <span>Login With Spoitfy</span>
-        </div>
-      </a>
+      <div className='login-field'>
+        <a href={getSpotifyLoginURL(URI)}>
+          <div className='login-btn'>
+              <span>Login With Spoitfy</span>
+          </div>
+        </a>
+        <span className='login-confirm'>By loggin in, you agree to our <a href='/privacy'>privacy policy</a> and <a href='/end-user-agreement'>end user agreement</a></span>
+      </div>
       :<></>
       }
 

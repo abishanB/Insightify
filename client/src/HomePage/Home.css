@@ -77,7 +77,7 @@ background-color: #262d3f;
   height:var(--image_size);
   width: var(--image_size);
   position: relative;
-  
+  object-fit: contain;
   left:calc(var(--home-card-height)/2 - var(--image_size)/2);
   top: calc(var(--home-card-height)/2 - var(--image_size)/2);
 }
@@ -153,6 +153,22 @@ background-color: #262d3f;
   align-items: center;
 }
 
+.login-field{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 8px;
+}
+
+.login-confirm{
+
+  font-size: 0.8rem;
+}
+.login-confirm a{
+  text-decoration: underline;
+}
+
 @media (max-width: 1100px) { 
   .home-cards{
     min-width: 85vw;
@@ -198,6 +214,9 @@ background-color: #262d3f;
   .top-item-img:nth-child(1) img{
     /* top track*/
     border-radius: 2px;
+  }
+  .login-confirm{
+    font-size: 0.675rem;
   }
 }
 

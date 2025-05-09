@@ -9,7 +9,7 @@ footer {
   height: fit-content;
 }
 footer a:hover {
-  color: lightblue;
+  color: rgb(87, 154, 213);
 }
 footer p{
   margin: 6px 0;
