@@ -14,4 +14,4 @@ COPY --from=build target/spring-boot-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 
 # Run the application
-ENTRYPOINT ["java", "-Xms512m", "-Xmx1024m", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xms512m", "-Xmx768m", "-jar", "app.jar"]
