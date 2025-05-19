@@ -54,7 +54,7 @@ export default class App extends Component{
       window.location.hash = ""
       window.localStorage.setItem("code", code)
       window.addEventListener('code', this.storeAuthCode)
-      console.log(code)
+      //console.log(code)
       if (code==null || code==="undefined"){
         this.setState({isReadyToRender:true})
         return
@@ -76,7 +76,7 @@ export default class App extends Component{
   
   logout = (logoutClick) => {
     logoutClick.preventDefault();//prevents page reload
-    console.log("LOGOUT")
+    //console.log("LOGOUT")
     this.setState({
       token: "",
       refresh_token: "",
@@ -133,7 +133,7 @@ export default class App extends Component{
         isLoggedIn: true
       });
       window.localStorage.setItem("refresh_token", token_promise.refresh_token)
-      console.log(token_promise.access_token)
+      //console.log(token_promise.access_token)
     })
   }
 

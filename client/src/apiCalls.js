@@ -53,7 +53,7 @@ export async function getTokenWithRefreshToken(refreshToken){//gets access token
   
 export async function getTokenWithAuthCode(code, redirect_uri='http://localhost:3000'){//gets access token using auth code
     //redirect_uri redirects to the current page, ex /tracks, /artists
-    console.log("fetching token with auth code")
+    //console.log("fetching token with auth code")
     var details = {
         grant_type: 'authorization_code',
         code: code,
