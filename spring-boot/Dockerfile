@@ -1,5 +1,5 @@
 # Use a base image with Java
-FROM maven:3.8.3-openjdk-17 as build
+FROM maven:3.8.3-openjdk-17 AS build
 
 # Set the working directory for the container
 COPY . .
@@ -14,4 +14,4 @@ COPY --from=build target/spring-boot-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 
 # Run the application
-ENTRYPOINT ["java", "-Xms512m", "-Xmx768m", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xmx512m", "-jar", "app.jar"]
