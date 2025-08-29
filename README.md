@@ -10,14 +10,14 @@
     <img src="https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white"/>
     <img src="https://img.shields.io/github/license/abishanB/Insightify"/>
   </p>
-  Discover your music like never before. Track your top artists, explore your playlists, and unlock hidden trends in your listening.
+  Discover your music like never before. Track your most-played songs, favourite artists, explore your playlists, and uncover hidden trends in your listening habits.
 </div>
 
 
 ## Features  🎵
-✔️ Explore your top artists and tracks across different time ranges
+✔️ Explore your top tracks and artists across different time ranges
 
-✔️ Get an in-depth breakdown of your playlists, including top genres, top artists & top albums
+✔️ Get an in-depth breakdown of your playlists, including playlist top artists, albums & genres
 
 ✔️ Track how your playlists have evolved over time
 
