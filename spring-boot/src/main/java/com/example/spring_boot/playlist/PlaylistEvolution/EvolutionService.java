@@ -68,12 +68,14 @@ public class EvolutionService {
       // Convert each JsonElement to JsonObject
       JsonObject track = element.getAsJsonObject();
       JsonArray artistsArray = gson.fromJson(track.get("artists").getAsString(), JsonArray.class);
-      String artistName = artistsArray.get(0)
-          .getAsJsonObject().get("name").getAsString();
-      if (artistOccurences.containsKey(artistName)) {
-        artistOccurences.put(artistName, artistOccurences.get(artistName) + 1);
-      } else {
-        artistOccurences.put(artistName, 1);
+
+      for (JsonElement artist : artistsArray){
+        String artistName = artist.getAsJsonObject().get("name").getAsString();
+        if (artistOccurences.containsKey(artistName)) {
+          artistOccurences.put(artistName, artistOccurences.get(artistName) + 1);
+        } else {
+          artistOccurences.put(artistName, 1);
+        }
       }
     }
     // Convert the Map to a List of entries
