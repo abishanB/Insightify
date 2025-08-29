@@ -24,15 +24,15 @@
 ✔️ Visualize your playlist breakdown through interactive charts
 
 ## Tools & Technologies
-💻: **Frontend:** ReactJS 18.2.0
+💻 **Frontend:** ReactJS 18.2.0
 
 📊 **Visualization Library:** Chart.js 4.4.3
 
-🌐: **Backend:** Spring Boot 3.4.1 (Maven) 
+🌐 **Backend:** Spring Boot 3.4.1 (Maven) 
 
-📂: **Database:** PostgreSQL
+📂 **Database:** PostgreSQL
 
-⚡: **Powered By:** Spotify Web API 
+⚡  **Powered By:** Spotify Web API 
 
 
 ## Home Page
