@@ -32,7 +32,7 @@
 
 📂: **Database:** PostgreSQL
 
-⚡: **Powered By:** Spotify Web API  
+⚡: **Powered By:** Spotify Web API 
 
 
 ## Home Page
@@ -48,7 +48,7 @@
     <img src="./images/playlist-evolution.png" alt="Logo 4" height="250"  />
 </p>
 <p align="center">
-    <img src="./images/playlist-top=artistsalbums.png" alt="Logo 5" height="250" s/>
+    <img src="./images/playlist-top-artists-albums.png" alt="Logo 5" height="250" s/>
     <img src="./images/playlist-genres.png" alt="Logo 6" height="250"  />
 </p>
 
