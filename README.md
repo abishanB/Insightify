@@ -1,7 +1,20 @@
-# **Insightify**  
-**Insightify is a web application that leverages the Spotify Web API to deliver personalized music insights**  :musical_note:
+<div align="center">
+  <img src="./images/logo-transparent.png" alt="Logo" width="400"/>
 
-## Features
+  <p>
+    <img src="https://img.shields.io/badge/React-18.2.0-61DAFB?logo=react&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Spring%20Boot-3.4.1-6DB33F?logo=springboot&logoColor=white"/>
+    <img src="https://img.shields.io/badge/PostgreSQL-316192?logo=postgresql&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Spotify-1DB954?logo=spotify&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Maven-C71A36?logo=apachemaven&logoColor=white"/>
+    <img src="https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white"/>
+    <img src="https://img.shields.io/github/license/abishanB/Insightify"/>
+  </p>
+  Discover your music like never before. Track your top artists, explore your playlists, and unlock hidden trends in your listening.
+</div>
+
+
+## Features  🎵
 :heavy_check_mark: Explore your top artists and tracks across different time ranges
 
 :heavy_check_mark: Get an in-depth breakdown of your playlists, including top genres, top artists & top albums
@@ -10,12 +23,34 @@
 
 :heavy_check_mark: Visualize your playlist breakdown through interactive charts
 
-## Tech Stack
-:computer: **Frontend:** React
+## Tools & Technologies
+💻: **Frontend:** ReactJS 18.2.0
 
-:globe_with_meridians: **Backend:** Spring Boot
+📊 **Visualization Library:** Chart.js 4.4.3
 
-:open_file_folder: **Database:** PostgreSQL
+🌐: **Backend:** Spring Boot 3.4.1 (Maven) 
+
+📂: **Database:** PostgreSQL
+
+⚡: **Powered By:** Spotify Web API  
+
+
+## Home Page
+<img src="./images/home.png" alt="Logo1" height="500" />
+
+## Top Tracks & Artists Page
+<img src="./images/top-tracks.png" alt="Logo1" height="500" />
+<img src="./images/top-artists.png" alt="Logo2" height="500" />
+
+## Playlist Breakdown
+<p align="center">
+    <img src="./images/playlist-summary.png" alt="Logo 3" height="250" />
+    <img src="./images/playlist-evolution.png" alt="Logo 4" height="250"  />
+</p>
+<p align="center">
+    <img src="./images/playlist-top=artistsalbums.png" alt="Logo 5" height="250" s/>
+    <img src="./images/playlist-genres.png" alt="Logo 6" height="250"  />
+</p>
 
 ## Getting Started
 
@@ -64,3 +99,7 @@
     ```
 
 The app will be available at `http://localhost:3000` for the frontend and `http://localhost:8080` for the backend.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
