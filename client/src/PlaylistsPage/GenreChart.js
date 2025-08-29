@@ -3,7 +3,7 @@ import { Bar } from "react-chartjs-2";
 import LoadingIcon from "../components/LoadingIcon";
 import "./styles/GenreChart.css";
 
-const NUMBER_OF_TOP_GENRES = 12;//number of genres to display
+const NUMBER_OF_TOP_GENRES = 10;//number of genres to display
 
 function calculateGenreComposition(data) {
   const totalGenreOccurrences = data.reduce(
