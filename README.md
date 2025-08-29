@@ -15,13 +15,13 @@
 
 
 ## Features  🎵
-:heavy_check_mark: Explore your top artists and tracks across different time ranges
+✔️ Explore your top artists and tracks across different time ranges
 
-:heavy_check_mark: Get an in-depth breakdown of your playlists, including top genres, top artists & top albums
+✔️ Get an in-depth breakdown of your playlists, including top genres, top artists & top albums
 
-:heavy_check_mark: Track how your playlists have evolved over time
+✔️ Track how your playlists have evolved over time
 
-:heavy_check_mark: Visualize your playlist breakdown through interactive charts
+✔️ Visualize your playlist breakdown through interactive charts
 
 ## Tools & Technologies
 💻: **Frontend:** ReactJS 18.2.0
