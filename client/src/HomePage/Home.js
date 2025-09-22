@@ -90,37 +90,31 @@ export default function Home({token , topTracksObj, updateTopTracksFunc, topArti
       :<></>
       }
 
-      <Link to={isLoggedIn ? "tracks" : getSpotifyLoginURL(`${URI}/tracks`)} style={{ textDecoration: 'none' }}>
-        <div className="home-cards">
-          <div className="top-item-img">
-            <img src={topTrackImg} alt="topTrackImg" loading='lazy'/>
-          </div>
-          <div className="view-top-items">
-              <span>View Your Top Tracks</span>
-          </div>
+      <Link className="home-cards" to={isLoggedIn ? "tracks" : getSpotifyLoginURL(`${URI}/tracks`)} style={{ textDecoration: 'none' }}>
+        <div className="top-item-img">
+          <img src={topTrackImg} alt="topTrackImg" loading='lazy'/>
         </div>
+        <div className="view-top-items">
+            <span>View Your Top Tracks</span>
+        </div> 
       </Link>
 
-      <Link to={isLoggedIn ? "artists" : getSpotifyLoginURL(`${URI}/artists`)} style={{ textDecoration: 'none' }}>
-        <div className="home-cards">
-          <div className="view-top-items">
-              <span>View Your Top Artists</span>
-          </div>
-          <div className="top-item-img">
-            <img src={topArtistImg} alt="topArtistImg" loading='lazy'/>
-          </div>   
+      <Link className="home-cards" to={isLoggedIn ? "artists" : getSpotifyLoginURL(`${URI}/artists`)} style={{ textDecoration: 'none' }}>
+        <div className="view-top-items">
+            <span>View Your Top Artists</span>
         </div>
+        <div className="top-item-img">
+          <img src={topArtistImg} alt="topArtistImg" loading='lazy'/>
+        </div>   
       </Link>
 
-      <Link to={isLoggedIn ? "playlists" : getSpotifyLoginURL(`${URI}/playlists`)} style={{ textDecoration: 'none' }}>
-         <div className="home-cards">
-            <div className="home-playlist-card">
-              <div>
-                <span>View Your Playlists</span>
-                <span>Get an analysis for your playlists</span>
-              </div>
-            </div>
-         </div>
+      <Link className="home-cards" to={isLoggedIn ? "playlists" : getSpotifyLoginURL(`${URI}/playlists`)} style={{ textDecoration: 'none' }}>
+        <div className="home-playlist-card">
+          <div>
+            <span>View Your Playlists</span>
+            <span>Get an analysis for your playlists</span>
+          </div>
+        </div>
       </Link>
     </div>
     
