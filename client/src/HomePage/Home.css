@@ -202,7 +202,9 @@ background-color: #262d3f;
 
 @media (max-width: 600px) { 
   .page-card-container{
+    padding-top: 2.5vh;
     justify-content: flex-start;
+    align-items: center;
   }
   .home-cards{
     --home-card-height: 25vw;
